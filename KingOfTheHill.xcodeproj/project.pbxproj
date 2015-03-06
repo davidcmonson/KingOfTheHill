@@ -14,6 +14,7 @@
 		77D6FB351AA92CAC00E97862 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 77D6FB341AA92CAC00E97862 /* Images.xcassets */; };
 		77D6FB381AA92CAC00E97862 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 77D6FB361AA92CAC00E97862 /* LaunchScreen.xib */; };
 		77D6FB441AA92CAC00E97862 /* KingOfTheHillTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 77D6FB431AA92CAC00E97862 /* KingOfTheHillTests.m */; };
+		77D6FB4F1AA930E000E97862 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 77D6FB4E1AA930E000E97862 /* User.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +41,8 @@
 		77D6FB3D1AA92CAC00E97862 /* KingOfTheHillTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KingOfTheHillTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		77D6FB421AA92CAC00E97862 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		77D6FB431AA92CAC00E97862 /* KingOfTheHillTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KingOfTheHillTests.m; sourceTree = "<group>"; };
+		77D6FB4D1AA930E000E97862 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
+		77D6FB4E1AA930E000E97862 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,6 +87,8 @@
 				77D6FB2B1AA92CAC00E97862 /* AppDelegate.h */,
 				77D6FB2C1AA92CAC00E97862 /* AppDelegate.m */,
 				77D6FB2E1AA92CAC00E97862 /* ViewController.h */,
+				77D6FB4D1AA930E000E97862 /* User.h */,
+				77D6FB4E1AA930E000E97862 /* User.m */,
 				77D6FB2F1AA92CAC00E97862 /* ViewController.m */,
 				77D6FB311AA92CAC00E97862 /* Main.storyboard */,
 				77D6FB341AA92CAC00E97862 /* Images.xcassets */,
@@ -219,6 +224,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				77D6FB4F1AA930E000E97862 /* User.m in Sources */,
 				77D6FB301AA92CAC00E97862 /* ViewController.m in Sources */,
 				77D6FB2D1AA92CAC00E97862 /* AppDelegate.m in Sources */,
 				77D6FB2A1AA92CAC00E97862 /* main.m in Sources */,
@@ -412,6 +418,7 @@
 				77D6FB491AA92CAC00E97862 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		77D6FB4A1AA92CAC00E97862 /* Build configuration list for PBXNativeTarget "KingOfTheHillTests" */ = {
 			isa = XCConfigurationList;
@@ -420,6 +427,7 @@
 				77D6FB4C1AA92CAC00E97862 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

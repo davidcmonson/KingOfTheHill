@@ -11,14 +11,8 @@
 
 @interface Video : NSObject
 
-@property (nonatomic,strong) NSString *location;
-@property (nonatomic) NSInteger durationOfVideoInSeconds;
-@property (nonatomic,strong) NSDate *date;
-@property (nonatomic) float ratingOfVideo;
-@property (nonatomic,strong) NSString *descriptionOfVideo;
-@property (nonatomic,strong) User *ownerOfVideo;
-
-
-
+@property (nonatomic, strong) CKRecord *asset;
+@property (nonatomic, strong) NSString *location;
+@property (nonatomic, strong) NSString *videoUniqueId;
 
 @end

@@ -10,14 +10,8 @@
 
 @interface User : NSObject
 
-@property (nonatomic, strong) NSString *firstLastName;
-@property (nonatomic, strong) NSString *userName;
-@property (nonatomic, strong) NSString *userEmail;
-@property (nonatomic, strong) NSString *userBio;
-@property (nonatomic) float userRating;  //?CGFloat?
-@property (nonatomic, strong) NSURL *userUrl;
-@property (nonatomic, strong) NSArray *userVideos;
-
-
+@property (nonatomic, assign) float votes;
+@property (nonatomic, strong) NSArray *videos;
+@property (nonatomic, strong) NSString *name;
 
 @end

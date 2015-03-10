@@ -7,7 +7,10 @@
 //
 
 #import <Parse/Parse.h>
+#import "User.h"
 
 @interface Video : PFObject
+
+@property (nonatomic, strong) User *ownerOfVideo;
 
 @end

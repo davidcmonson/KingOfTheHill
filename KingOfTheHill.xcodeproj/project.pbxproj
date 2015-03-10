@@ -8,10 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		49F462C51AA9356E00E56599 /* VideoController.m in Sources */ = {isa = PBXBuildFile; fileRef = 49F462C41AA9356E00E56599 /* VideoController.m */; };
-		49F462C81AA9393D00E56599 /* Video.m in Sources */ = {isa = PBXBuildFile; fileRef = 49F462C71AA9393D00E56599 /* Video.m */; };
 		49F462CB1AA93A5400E56599 /* Location.m in Sources */ = {isa = PBXBuildFile; fileRef = 49F462CA1AA93A5400E56599 /* Location.m */; };
 		705183BE1AAE574500A365FF /* Vote.m in Sources */ = {isa = PBXBuildFile; fileRef = 705183BD1AAE574500A365FF /* Vote.m */; };
-		705183C11AAE5A2C00A365FF /* References.m in Sources */ = {isa = PBXBuildFile; fileRef = 705183C01AAE5A2C00A365FF /* References.m */; };
 		708554B71AAE6B47006DEB38 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 708554B61AAE6B47006DEB38 /* MapKit.framework */; };
 		708554BA1AAE6BA8006DEB38 /* LocationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 708554B91AAE6BA8006DEB38 /* LocationViewController.m */; };
 		70A189161AAF8D080044F98D /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70A189141AAF8D080044F98D /* Bolts.framework */; };
@@ -28,6 +26,7 @@
 		70A1892C1AAF8E130044F98D /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70A1892B1AAF8E130044F98D /* SystemConfiguration.framework */; };
 		70A1892E1AAF8E1C0044F98D /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 70A1892D1AAF8E1C0044F98D /* libz.dylib */; };
 		70A189301AAF8E250044F98D /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 70A1892F1AAF8E250044F98D /* libsqlite3.dylib */; };
+		70A189391AAF923E0044F98D /* Video.m in Sources */ = {isa = PBXBuildFile; fileRef = 70A189381AAF923E0044F98D /* Video.m */; };
 		77D6FB2A1AA92CAC00E97862 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 77D6FB291AA92CAC00E97862 /* main.m */; };
 		77D6FB2D1AA92CAC00E97862 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 77D6FB2C1AA92CAC00E97862 /* AppDelegate.m */; };
 		77D6FB301AA92CAC00E97862 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 77D6FB2F1AA92CAC00E97862 /* ViewController.m */; };
@@ -51,14 +50,10 @@
 /* Begin PBXFileReference section */
 		49F462C31AA9356E00E56599 /* VideoController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoController.h; sourceTree = "<group>"; };
 		49F462C41AA9356E00E56599 /* VideoController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VideoController.m; sourceTree = "<group>"; };
-		49F462C61AA9393D00E56599 /* Video.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Video.h; sourceTree = "<group>"; };
-		49F462C71AA9393D00E56599 /* Video.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Video.m; sourceTree = "<group>"; };
 		49F462C91AA93A5400E56599 /* Location.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Location.h; sourceTree = "<group>"; };
 		49F462CA1AA93A5400E56599 /* Location.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Location.m; sourceTree = "<group>"; };
 		705183BC1AAE574500A365FF /* Vote.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Vote.h; sourceTree = "<group>"; };
 		705183BD1AAE574500A365FF /* Vote.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Vote.m; sourceTree = "<group>"; };
-		705183BF1AAE5A2C00A365FF /* References.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = References.h; sourceTree = "<group>"; };
-		705183C01AAE5A2C00A365FF /* References.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = References.m; sourceTree = "<group>"; };
 		708554B61AAE6B47006DEB38 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		708554B81AAE6BA8006DEB38 /* LocationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationViewController.h; sourceTree = "<group>"; };
 		708554B91AAE6BA8006DEB38 /* LocationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationViewController.m; sourceTree = "<group>"; };
@@ -76,6 +71,8 @@
 		70A1892B1AAF8E130044F98D /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		70A1892D1AAF8E1C0044F98D /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		70A1892F1AAF8E250044F98D /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
+		70A189371AAF923E0044F98D /* Video.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Video.h; sourceTree = "<group>"; };
+		70A189381AAF923E0044F98D /* Video.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Video.m; sourceTree = "<group>"; };
 		77D6FB241AA92CAC00E97862 /* KingOfTheHill.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KingOfTheHill.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		77D6FB281AA92CAC00E97862 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		77D6FB291AA92CAC00E97862 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -131,12 +128,10 @@
 			children = (
 				77D6FB4D1AA930E000E97862 /* User.h */,
 				77D6FB4E1AA930E000E97862 /* User.m */,
-				705183BF1AAE5A2C00A365FF /* References.h */,
-				705183C01AAE5A2C00A365FF /* References.m */,
 				49F462C31AA9356E00E56599 /* VideoController.h */,
 				49F462C41AA9356E00E56599 /* VideoController.m */,
-				49F462C61AA9393D00E56599 /* Video.h */,
-				49F462C71AA9393D00E56599 /* Video.m */,
+				70A189371AAF923E0044F98D /* Video.h */,
+				70A189381AAF923E0044F98D /* Video.m */,
 				705183BC1AAE574500A365FF /* Vote.h */,
 				705183BD1AAE574500A365FF /* Vote.m */,
 			);
@@ -348,12 +343,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				705183BE1AAE574500A365FF /* Vote.m in Sources */,
-				705183C11AAE5A2C00A365FF /* References.m in Sources */,
 				77D6FB4F1AA930E000E97862 /* User.m in Sources */,
 				49F462CB1AA93A5400E56599 /* Location.m in Sources */,
+				70A189391AAF923E0044F98D /* Video.m in Sources */,
 				77D6FB301AA92CAC00E97862 /* ViewController.m in Sources */,
 				49F462C51AA9356E00E56599 /* VideoController.m in Sources */,
-				49F462C81AA9393D00E56599 /* Video.m in Sources */,
 				77D6FB2D1AA92CAC00E97862 /* AppDelegate.m in Sources */,
 				77D6FB2A1AA92CAC00E97862 /* main.m in Sources */,
 				708554BA1AAE6BA8006DEB38 /* LocationViewController.m in Sources */,

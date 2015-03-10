@@ -23,6 +23,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    PFObject *testObject = [PFObject objectWithClassName:@"TestObject"];
+    testObject[@"foo"] = @"bar";
+    [testObject saveInBackground];
+    
     self.map = [[MKMapView alloc] initWithFrame:self.view.bounds];
     self.map.mapType = MKMapTypeHybrid;
     [self.view addSubview:self.map];
@@ -39,10 +43,6 @@
     self.locationManager.distanceFilter = kCLDistanceFilterNone;
     self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
     self.locationManager.delegate = self;
-    
-    CLLocationCoordinate2D denverLocation = CLLocationCoordinate2DMake(39.7392, 04.9903);
-    Video *videoAnnotation = [[Video alloc] initWithVideoTitle:@"mucho" atLocation:denverLocation];
-    [self.map addAnnotation:videoAnnotation];
 
 }
 
@@ -51,29 +51,29 @@
     [self.map setCenterCoordinate:self.map.userLocation.location.coordinate animated:YES];
 }
 
-- (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation
-{
-//    if ([annotation isKindOfClass:[MKUserLocation class]]) {
-//        return nil;
+//- (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation
+//{
+////    if ([annotation isKindOfClass:[MKUserLocation class]]) {
+////        return nil;
+////    }
+//    
+//    if ([annotation isKindOfClass:[Video class]]) {
+//    
+//        Video *video = (Video *)annotation;
+//        
+//        MKAnnotationView *annotationView = [mapView dequeueReusableAnnotationViewWithIdentifier:videoAnnotationKey];
+//        
+//        if (annotationView == nil) {
+//            annotationView = video.annotationView;
+//        }
+//        else {
+//            annotationView.annotation = annotation;
+//            
+//            return annotationView;
+//        }
 //    }
-    
-    if ([annotation isKindOfClass:[Video class]]) {
-    
-        Video *video = (Video *)annotation;
-        
-        MKAnnotationView *annotationView = [mapView dequeueReusableAnnotationViewWithIdentifier:videoAnnotationKey];
-        
-        if (annotationView == nil) {
-            annotationView = video.annotationView;
-        }
-        else {
-            annotationView.annotation = annotation;
-            
-            return annotationView;
-        }
-    }
-        return nil;
-}
+//        return nil;
+//}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

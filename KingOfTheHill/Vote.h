@@ -6,9 +6,9 @@
 //  Copyright (c) 2015 David Monson. All rights reserved.
 //
 
+#import <Parse/Parse.h>
 #import <Foundation/Foundation.h>
 #import "User.h"
-#import "Video.h"
 
 static NSString *voteReferenceKey = @"vote";
 
@@ -17,10 +17,9 @@ static NSString *voteOnUserKey = @"user";
 static NSString *voteOnVideoKey = @"video";
 static NSString *likeVoteKey = @"like";
 
-@interface Vote : NSObject
+@interface Vote : PFObject
 
 @property (nonatomic, strong) User *user;
-@property (nonatomic, strong) Video *video;
 @property (nonatomic, assign) BOOL *likeVote;
 @property (nonatomic, strong) NSString *uniqueId;
 

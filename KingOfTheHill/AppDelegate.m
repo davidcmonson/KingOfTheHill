@@ -6,6 +6,7 @@
 //  Copyright (c) 2015 David Monson. All rights reserved.
 //
 
+#import <Parse/Parse.h>
 #import "LocationViewController.h"
 #import "AppDelegate.h"
 
@@ -18,6 +19,16 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    
+    [Parse enableLocalDatastore];
+    
+    // Initialize Parse.
+    [Parse setApplicationId:@"vj7GwT9vLALBJxbfC8XpXDBT0MaEQU2IxoKUATwj"
+                  clientKey:@"PafompYCKXgr7DuqariZL1rguCNuaG8VrQOYqEVU"];
+    
+    // [Optional] Track statistics around application opens.
+    [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
+    
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
     self.window.rootViewController = [LocationViewController new];

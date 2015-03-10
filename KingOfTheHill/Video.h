@@ -12,15 +12,18 @@
 //#import "Location.h"
 
 static NSString *videoAnnotationKey = @"videoAnnotation";
+static NSString *videoReferenceKey = @"video";
+
+static NSString *uniqueVideoIDKey = @"uniqueID";
+static NSString *locationKey = @"location";
+static NSString *videoOwnderKey = @"user";
 
 @interface Video : NSObject <MKAnnotation>
 
-//@property (nonatomic, strong) CKRecord *asset;
-//@property (nonatomic, strong) Location *location;
-//@property (nonatomic, strong) User *userName;
-@property (nonatomic, copy) NSString *title;
+@property (nonatomic, strong) User *videoOwner;
+@property (nonatomic, strong) NSString *uniqueVideoID;
+@property (nonatomic, copy) NSString *location;
 @property (nonatomic, readonly) CLLocationCoordinate2D coordinate;
-@property (nonatomic, strong) NSString *videoUniqueId;
 
 - (id)initWithVideoTitle:(NSString *)title atLocation:(CLLocationCoordinate2D)location;
 - (MKAnnotationView *)annotationView;

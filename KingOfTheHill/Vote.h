@@ -10,11 +10,18 @@
 #import "User.h"
 #import "Video.h"
 
+static NSString *voteReferenceKey = @"vote";
+
+static NSString *voteIDKey = @"uniqueID";
+static NSString *voteOnUserKey = @"user";
+static NSString *voteOnVideoKey = @"video";
+static NSString *likeVoteKey = @"like";
+
 @interface Vote : NSObject
 
 @property (nonatomic, strong) User *user;
 @property (nonatomic, strong) Video *video;
-@property (nonatomic, assign) BOOL *like;
+@property (nonatomic, assign) BOOL *likeVote;
 @property (nonatomic, strong) NSString *uniqueId;
 
 @end

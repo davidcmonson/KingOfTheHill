@@ -8,6 +8,12 @@
 
 #import <Foundation/Foundation.h>
 
+static NSString *userReferenceKey = @"user";
+
+static NSString *nameKey = @"name";
+static NSString *votesKey = @"votes";
+static NSString *userVideoKey = @"video";
+
 @interface User : NSObject
 
 @property (nonatomic, assign) float votes;

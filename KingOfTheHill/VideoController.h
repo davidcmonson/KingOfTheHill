@@ -12,11 +12,16 @@
 
 @interface VideoController : NSObject
 
+@property (nonatomic, strong) NSArray *arrayOfVideos;
+
++ (VideoController *)sharedInstance;
+
 - (void)addVideo:(NSDictionary *)dictionary;
 - (void)createCKRecord;
 - (void)createCKAssest;
 - (void)saveToCloudKit;
 - (void)createCKReferenceToUser:(User *)user;
+- (NSArray *)addVideoToMap;
 
 // - builder methods convert from ckrecords to objects and objects to ckrecords;
 // - CKReferences child to parent, video -> user.... vote -> video
@@ -24,6 +29,6 @@
 - (void)addVote:(Vote *)vote toVideo:(Video *)video;
 - (void)createVoteCKRecord;
 - (void)createCKReferencetoVideo:(Video *)video;
-- (void)getVideosFromLocation:(CALocation *)location withRadius:(Location *)radius;
+//- (void)getVideosFromLocation:(CALocation *)location withRadius:(Location *)radius;
 
 @end

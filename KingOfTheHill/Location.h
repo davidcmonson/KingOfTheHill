@@ -17,8 +17,4 @@
 @property (nonatomic,strong) NSString *locationName;
 @property (nonatomic,strong) User *kingOfTheHill; // Figure out "lingo" for locations: "Hill"? "Spot"? "Boot"?
 
-
-
-
-
 @end

@@ -10,9 +10,10 @@
 		49F462C51AA9356E00E56599 /* VideoController.m in Sources */ = {isa = PBXBuildFile; fileRef = 49F462C41AA9356E00E56599 /* VideoController.m */; };
 		49F462C81AA9393D00E56599 /* Video.m in Sources */ = {isa = PBXBuildFile; fileRef = 49F462C71AA9393D00E56599 /* Video.m */; };
 		49F462CB1AA93A5400E56599 /* Location.m in Sources */ = {isa = PBXBuildFile; fileRef = 49F462CA1AA93A5400E56599 /* Location.m */; };
-		49F462CE1AA93B9800E56599 /* LocationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 49F462CD1AA93B9800E56599 /* LocationController.m */; };
 		705183BE1AAE574500A365FF /* Vote.m in Sources */ = {isa = PBXBuildFile; fileRef = 705183BD1AAE574500A365FF /* Vote.m */; };
 		705183C11AAE5A2C00A365FF /* References.m in Sources */ = {isa = PBXBuildFile; fileRef = 705183C01AAE5A2C00A365FF /* References.m */; };
+		708554B71AAE6B47006DEB38 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 708554B61AAE6B47006DEB38 /* MapKit.framework */; };
+		708554BA1AAE6BA8006DEB38 /* LocationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 708554B91AAE6BA8006DEB38 /* LocationViewController.m */; };
 		77D6FB2A1AA92CAC00E97862 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 77D6FB291AA92CAC00E97862 /* main.m */; };
 		77D6FB2D1AA92CAC00E97862 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 77D6FB2C1AA92CAC00E97862 /* AppDelegate.m */; };
 		77D6FB301AA92CAC00E97862 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 77D6FB2F1AA92CAC00E97862 /* ViewController.m */; };
@@ -40,12 +41,13 @@
 		49F462C71AA9393D00E56599 /* Video.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Video.m; sourceTree = "<group>"; };
 		49F462C91AA93A5400E56599 /* Location.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Location.h; sourceTree = "<group>"; };
 		49F462CA1AA93A5400E56599 /* Location.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Location.m; sourceTree = "<group>"; };
-		49F462CC1AA93B9800E56599 /* LocationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationController.h; sourceTree = "<group>"; };
-		49F462CD1AA93B9800E56599 /* LocationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationController.m; sourceTree = "<group>"; };
 		705183BC1AAE574500A365FF /* Vote.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Vote.h; sourceTree = "<group>"; };
 		705183BD1AAE574500A365FF /* Vote.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Vote.m; sourceTree = "<group>"; };
 		705183BF1AAE5A2C00A365FF /* References.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = References.h; sourceTree = "<group>"; };
 		705183C01AAE5A2C00A365FF /* References.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = References.m; sourceTree = "<group>"; };
+		708554B61AAE6B47006DEB38 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		708554B81AAE6BA8006DEB38 /* LocationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationViewController.h; sourceTree = "<group>"; };
+		708554B91AAE6BA8006DEB38 /* LocationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationViewController.m; sourceTree = "<group>"; };
 		77D6FB241AA92CAC00E97862 /* KingOfTheHill.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KingOfTheHill.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		77D6FB281AA92CAC00E97862 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		77D6FB291AA92CAC00E97862 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -68,6 +70,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				708554B71AAE6B47006DEB38 /* MapKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -103,8 +106,8 @@
 			children = (
 				49F462C91AA93A5400E56599 /* Location.h */,
 				49F462CA1AA93A5400E56599 /* Location.m */,
-				49F462CC1AA93B9800E56599 /* LocationController.h */,
-				49F462CD1AA93B9800E56599 /* LocationController.m */,
+				708554B81AAE6BA8006DEB38 /* LocationViewController.h */,
+				708554B91AAE6BA8006DEB38 /* LocationViewController.m */,
 			);
 			name = Location;
 			sourceTree = "<group>";
@@ -112,6 +115,7 @@
 		77D6FB1B1AA92CAC00E97862 = {
 			isa = PBXGroup;
 			children = (
+				708554B61AAE6B47006DEB38 /* MapKit.framework */,
 				77D6FB261AA92CAC00E97862 /* KingOfTheHill */,
 				77D6FB401AA92CAC00E97862 /* KingOfTheHillTests */,
 				77D6FB251AA92CAC00E97862 /* Products */,
@@ -219,6 +223,12 @@
 				TargetAttributes = {
 					77D6FB231AA92CAC00E97862 = {
 						CreatedOnToolsVersion = 6.1.1;
+						DevelopmentTeam = VBJ3B2RNGL;
+						SystemCapabilities = {
+							com.apple.Maps.iOS = {
+								enabled = 1;
+							};
+						};
 					};
 					77D6FB3C1AA92CAC00E97862 = {
 						CreatedOnToolsVersion = 6.1.1;
@@ -276,10 +286,10 @@
 				49F462CB1AA93A5400E56599 /* Location.m in Sources */,
 				77D6FB301AA92CAC00E97862 /* ViewController.m in Sources */,
 				49F462C51AA9356E00E56599 /* VideoController.m in Sources */,
-				49F462CE1AA93B9800E56599 /* LocationController.m in Sources */,
 				49F462C81AA9393D00E56599 /* Video.m in Sources */,
 				77D6FB2D1AA92CAC00E97862 /* AppDelegate.m in Sources */,
 				77D6FB2A1AA92CAC00E97862 /* main.m in Sources */,
+				708554BA1AAE6BA8006DEB38 /* LocationViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -355,7 +365,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -390,7 +400,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
@@ -401,7 +411,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = KingOfTheHill/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -411,7 +423,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = KingOfTheHill/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};

@@ -10,16 +10,10 @@
 #import <Foundation/Foundation.h>
 #import "User.h"
 
-static NSString *voteReferenceKey = @"vote";
-
-static NSString *voteIDKey = @"uniqueID";
-static NSString *voteOnUserKey = @"user";
-static NSString *voteOnVideoKey = @"video";
-static NSString *likeVoteKey = @"like";
+static NSString *voteKey = @"Vote";
 
 @interface Vote : PFObject
 
-@property (nonatomic, strong) User *user;
 @property (nonatomic, assign) BOOL *likeVote;
 @property (nonatomic, strong) NSString *uniqueId;
 

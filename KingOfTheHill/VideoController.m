@@ -21,21 +21,82 @@
     return sharedInstance;
 }
 
-//- (NSArray *)addVideoToMap
+//- (void)relationshipBetweenVideoAndUser
 //{
-//    NSMutableArray *mutable = [[NSMutableArray alloc] initWithArray:self.arrayOfVideos];
+//    // create user object
+//    PFObject *user = [PFObject objectWithClassName:@"User"];
 //    
-//    MKPointAnnotation *marker = [MKPointAnnotation new];
-//    marker.coordinate = CLLocationCoordinate2DMake(41.1456, 104.8019);
-//    [mutable addObject:marker];
+//    // user video
+//    PFObject *video = [PFObject objectWithClassName:@"Video"];
 //    
-//    MKPointAnnotation *marker2 = [MKPointAnnotation new];
-//    marker2.coordinate = CLLocationCoordinate2DMake(39.7392, 104.9903);
-//    [mutable addObject:marker2];
-//    
-//    self.arrayOfVideos = mutable;
-//    
-//    return self.arrayOfVideos;
+//    // set who the video is creatd by
+//    [video setObject:user forKeyedSubscript:@"ownerOfVideo"];
 //}
+//
+//- (void)relationshipBetweenVoteAndVideo
+//{
+//    PFObject *video = [PFObject objectWithClassName:@"video"];
+//    
+//    PFObject *vote = [PFObject objectWithClassName:@"vote"];
+//    
+//    [vote setObject:video forKeyedSubscript:@"voteSetOnVideo"];
+//}
+
+- (void)videoToParse
+{
+    Video *video = (Video *)[PFObject objectWithClassName:videoKey];
+    video[titleOfVideoKey] = video.titleOfVideo;
+    video[ownerOfVideoKey] = video.ownerOfVideo;
+#warning come back here
+    //    video[coordinateOfVideoKey] = video.coordinate;
+    [video pin];
+    [video saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        if (succeeded) {
+            NSLog(@"videoKey saved");
+        }
+        else {
+            NSLog(@"%@", error);
+        }
+    }];
+}
+
+- (void)userToParse
+{
+    User *user = (User *)[PFObject objectWithClassName:userKey];
+    user[userVideoKey] = user.video;
+    user[userVoteKey] = user.votes;
+    [user pin];
+    [user saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        if (succeeded) {
+            NSLog(@"userKey saved");
+                  }
+                  else {
+                      NSLog(@"%@", error);
+                  }
+                  }];
+}
+
+- (void)userToVoteToVideo
+{
+    PFObject *likedVideo = [PFObject objectWithClassName:videoKey];
+    PFObject *vote = [PFObject objectWithClassName:voteKey];
+    [vote setObject:[PFUser currentUser] forKey:@"fromUser"];
+    [vote setValue:likedVideo forKey:@"toVideo"];
+    [vote saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        if (succeeded) {
+            NSLog(@"two way relation from user to vote to video saved");
+        }
+        else {
+            NSLog(@"%@", error);
+        }
+    }];
+}
+
+- (NSInteger)totalVotesOnVideoWithIdentifier:(NSString *)identifier
+{
+    PFQuery *votesOnVideo = [PFQuery queryWithClassName:voteKey];
+    [votesOnVideo whereKey:@"toVideo" equalTo:identifier];
+    return [votesOnVideo countObjects];
+}
 
 @end

@@ -10,6 +10,7 @@
 
 @implementation User
 
-
+@dynamic votes;
+@dynamic video;
 
 @end

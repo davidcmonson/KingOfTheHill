@@ -8,17 +8,17 @@
 
 #import <Parse/Parse.h>
 #import <Foundation/Foundation.h>
+#import "Video.h"
 
-static NSString *userReferenceKey = @"user";
+static NSString *userKey = @"User";
 
-static NSString *nameKey = @"name";
-static NSString *votesKey = @"votes";
-static NSString *userVideoKey = @"video";
+static NSString *userVideoKey = @"userVideo";
+static NSString *userVoteKey = @"userVote";
 
 @interface User : PFObject
 
-@property (nonatomic, assign) float votes;
-@property (nonatomic, strong) NSArray *videos;
-@property (nonatomic, strong) NSString *name;
+@property (nonatomic, strong) Video *video;
+@property (nonatomic, assign) NSString *votes;
+
 
 @end

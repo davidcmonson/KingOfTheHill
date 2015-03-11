@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <Parse/Parse.h>
 #import "Video.h"
 #import "Vote.h"
 
@@ -15,13 +16,11 @@
 @property (nonatomic, strong) NSArray *arrayOfVideos;
 
 + (VideoController *)sharedInstance;
-
-//- (NSArray *)addVideoToMap;
-
-// - builder methods convert from ckrecords to objects and objects to ckrecords;
-// - CKReferences child to parent, video -> user.... vote -> video
-
-
-//- (void)getVideosFromLocation:(CALocation *)location withRadius:(Location *)radius;
+//- (void)relationshipBetweenVideoAndUser;
+//- (void)relationshipBetweenVoteAndVideo;
+- (void)videoToParse;
+- (void)userToParse;
+- (void)userToVoteToVideo;
+- (NSInteger)totalVotesOnVideoWithIdentifier:(NSString *)identifier;
 
 @end

@@ -7,6 +7,7 @@
 //
 
 #import "ViewController.h"
+#import "PresentViewController.h"
 
 @interface ViewController ()
 
@@ -17,6 +18,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
+    [self beginViewPresentation];
+}
+- (void)beginViewPresentation {
+    PresentViewController *pageViewController = [PresentViewController new];
+    [self presentViewController:pageViewController animated:YES completion:nil];
 }
 
 - (void)didReceiveMemoryWarning {

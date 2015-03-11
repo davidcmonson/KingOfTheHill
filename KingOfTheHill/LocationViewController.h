@@ -8,8 +8,6 @@
 
 #import "ViewController.h"
 
-static NSString *userLocationKey = @"userLocation";
-
 @interface LocationViewController : ViewController
 
 @end

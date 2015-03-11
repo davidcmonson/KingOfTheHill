@@ -12,6 +12,7 @@
 
 static NSString *videoAnnotationKey = @"videoAnnotation";
 static NSString *videoKey = @"Video";
+static NSString *videoLocationKey = @"videoLocation";
 
 static NSString *titleOfVideoKey = @"title";
 static NSString *ownerOfVideoKey = @"owner";

@@ -58,7 +58,6 @@
 - (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation
 {
     [self.map setCenterCoordinate:self.map.userLocation.location.coordinate animated:YES];
-    [[NSNotificationCenter defaultCenter] postNotificationName:userLocationKey object:self.map.userLocation];
 }
 
 - (void)queryForAllVideosNearLocation:(CLLocation *)currentLocation withinDistance:(CLLocationAccuracy *)distanceFromUser
@@ -66,7 +65,7 @@
     PFQuery *queryForVideos = [PFQuery queryWithClassName:videoKey];
     
     PFGeoPoint *geoPoint = [PFGeoPoint geoPointWithLatitude:currentLocation.coordinate.latitude longitude:currentLocation.coordinate.longitude];
-    [queryForVideos whereKey:userLocationKey nearGeoPoint:geoPoint withinKilometers:kCLDistanceFilterNone];
+    [queryForVideos whereKey:videoLocationKey nearGeoPoint:geoPoint withinKilometers:kCLDistanceFilterNone];
     
     [queryForVideos findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (error) {
@@ -75,7 +74,7 @@
         else {
             NSMutableArray *arrayOfVideos = [[NSMutableArray alloc] initWithArray:objects];
             
-            for (PFObject *video in objects) {
+            for (Video *video in objects) {
                 [arrayOfVideos addObject:video];
             }
             

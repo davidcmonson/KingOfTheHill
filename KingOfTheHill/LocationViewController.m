@@ -15,7 +15,7 @@
 @property (nonatomic, strong) MKMapView *map;
 @property (nonatomic, strong) CLLocationManager *locationManager;
 @property (nonatomic, strong) Video *video;
-
+@property (nonatomic) CLLocationCoordinate2D myCoordinates;
 @property (nonatomic, strong) NSArray *arrayOfVideos;
 
 @end
@@ -31,9 +31,26 @@
     if ([self.locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)]) {
         [self.locationManager requestWhenInUseAuthorization];
     }
-
-    [self.map addAnnotations:self.arrayOfVideos];
+    
+    
+    
+     //[self.map addAnnotations:self.arrayOfVideos];
 }
+
+
+- (void)dropPinAtCoordinates:(CLLocationCoordinate2D)myCoordinate {
+    //Create your annotation
+    MKPointAnnotation *point = [[MKPointAnnotation alloc] init];
+    // Set your annotation to point at your coordinate
+    point.coordinate = myCoordinate;
+    //If you want to clear other pins/annotations this is how to do it
+//    for (id annotation in self.map.annotations) {
+//        [self.map removeAnnotation:annotation];
+//    }
+    //Drop pin on map
+    [self.map addAnnotation:point];
+}
+
 
 - (void)mapView
 {
@@ -55,8 +72,12 @@
     return _locationManager;
 }
 
+#pragma mark MKMapView delegate
 - (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation
 {
+    self.myCoordinates = self.map.userLocation.location.coordinate;
+    NSLog(@"%f %f",self.myCoordinates.latitude,self.myCoordinates.longitude);
+    [self dropPinAtCoordinates:self.myCoordinates];
     [self.map setCenterCoordinate:self.map.userLocation.location.coordinate animated:YES];
 }
 

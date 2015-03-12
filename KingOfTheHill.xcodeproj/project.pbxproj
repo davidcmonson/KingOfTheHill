@@ -7,6 +7,34 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		499F2C601AB2256F00B3FDDF /* a_filter.cisf in Resources */ = {isa = PBXBuildFile; fileRef = 499F2C381AB2256F00B3FDDF /* a_filter.cisf */; };
+		499F2C611AB2256F00B3FDDF /* capture_flip@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 499F2C391AB2256F00B3FDDF /* capture_flip@2x.png */; };
+		499F2C621AB2256F00B3FDDF /* capture_onion@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 499F2C3A1AB2256F00B3FDDF /* capture_onion@2x.png */; };
+		499F2C631AB2256F00B3FDDF /* capture_onion_selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 499F2C3B1AB2256F00B3FDDF /* capture_onion_selected@2x.png */; };
+		499F2C641AB2256F00B3FDDF /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 499F2C3C1AB2256F00B3FDDF /* Default-568h@2x.png */; };
+		499F2C651AB2256F00B3FDDF /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 499F2C3D1AB2256F00B3FDDF /* Default.png */; };
+		499F2C661AB2256F00B3FDDF /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 499F2C3E1AB2256F00B3FDDF /* Default@2x.png */; };
+		499F2C671AB2256F00B3FDDF /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 499F2C3F1AB2256F00B3FDDF /* InfoPlist.strings */; };
+		499F2C681AB2256F00B3FDDF /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 499F2C411AB2256F00B3FDDF /* Images.xcassets */; };
+		499F2C691AB2256F00B3FDDF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 499F2C421AB2256F00B3FDDF /* main.m */; };
+		499F2C6A1AB2256F00B3FDDF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 499F2C431AB2256F00B3FDDF /* Main.storyboard */; };
+		499F2C6B1AB2256F00B3FDDF /* Pause-Normal-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 499F2C441AB2256F00B3FDDF /* Pause-Normal-icon.png */; };
+		499F2C6C1AB2256F00B3FDDF /* Play-Normal-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 499F2C451AB2256F00B3FDDF /* Play-Normal-icon.png */; };
+		499F2C6D1AB2256F00B3FDDF /* Play-Pressed-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 499F2C461AB2256F00B3FDDF /* Play-Pressed-icon.png */; };
+		499F2C6E1AB2256F00B3FDDF /* Record-Normal-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 499F2C471AB2256F00B3FDDF /* Record-Normal-icon.png */; };
+		499F2C6F1AB2256F00B3FDDF /* Record-Pressed-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 499F2C481AB2256F00B3FDDF /* Record-Pressed-icon.png */; };
+		499F2C701AB2256F00B3FDDF /* SCAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 499F2C4A1AB2256F00B3FDDF /* SCAppDelegate.m */; };
+		499F2C711AB2256F00B3FDDF /* SCAudioRecordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 499F2C4C1AB2256F00B3FDDF /* SCAudioRecordViewController.m */; };
+		499F2C721AB2256F00B3FDDF /* SCEditVideoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 499F2C4E1AB2256F00B3FDDF /* SCEditVideoViewController.m */; };
+		499F2C731AB2256F00B3FDDF /* SCImageDisplayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 499F2C501AB2256F00B3FDDF /* SCImageDisplayerViewController.m */; };
+		499F2C741AB2256F00B3FDDF /* SCRecorderExamples-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 499F2C511AB2256F00B3FDDF /* SCRecorderExamples-Info.plist */; };
+		499F2C751AB2256F00B3FDDF /* SCRecorderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 499F2C541AB2256F00B3FDDF /* SCRecorderViewController.m */; };
+		499F2C761AB2256F00B3FDDF /* SCRecordSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 499F2C561AB2256F00B3FDDF /* SCRecordSessionManager.m */; };
+		499F2C771AB2256F00B3FDDF /* SCSessionListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 499F2C581AB2256F00B3FDDF /* SCSessionListViewController.m */; };
+		499F2C781AB2256F00B3FDDF /* SCSessionTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 499F2C5A1AB2256F00B3FDDF /* SCSessionTableViewCell.m */; };
+		499F2C791AB2256F00B3FDDF /* SCTouchDetector.m in Sources */ = {isa = PBXBuildFile; fileRef = 499F2C5C1AB2256F00B3FDDF /* SCTouchDetector.m */; };
+		499F2C7A1AB2256F00B3FDDF /* SCVideoPlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 499F2C5E1AB2256F00B3FDDF /* SCVideoPlayerViewController.m */; };
+		499F2C7B1AB2256F00B3FDDF /* Stop-Normal-Red-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 499F2C5F1AB2256F00B3FDDF /* Stop-Normal-Red-icon.png */; };
 		49F462C51AA9356E00E56599 /* VideoController.m in Sources */ = {isa = PBXBuildFile; fileRef = 49F462C41AA9356E00E56599 /* VideoController.m */; };
 		49F462CB1AA93A5400E56599 /* Location.m in Sources */ = {isa = PBXBuildFile; fileRef = 49F462CA1AA93A5400E56599 /* Location.m */; };
 		705183BE1AAE574500A365FF /* Vote.m in Sources */ = {isa = PBXBuildFile; fileRef = 705183BD1AAE574500A365FF /* Vote.m */; };
@@ -48,6 +76,45 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		499F2C381AB2256F00B3FDDF /* a_filter.cisf */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; path = a_filter.cisf; sourceTree = "<group>"; };
+		499F2C391AB2256F00B3FDDF /* capture_flip@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "capture_flip@2x.png"; sourceTree = "<group>"; };
+		499F2C3A1AB2256F00B3FDDF /* capture_onion@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "capture_onion@2x.png"; sourceTree = "<group>"; };
+		499F2C3B1AB2256F00B3FDDF /* capture_onion_selected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "capture_onion_selected@2x.png"; sourceTree = "<group>"; };
+		499F2C3C1AB2256F00B3FDDF /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		499F2C3D1AB2256F00B3FDDF /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		499F2C3E1AB2256F00B3FDDF /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		499F2C401AB2256F00B3FDDF /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		499F2C411AB2256F00B3FDDF /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		499F2C421AB2256F00B3FDDF /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		499F2C431AB2256F00B3FDDF /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		499F2C441AB2256F00B3FDDF /* Pause-Normal-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Pause-Normal-icon.png"; sourceTree = "<group>"; };
+		499F2C451AB2256F00B3FDDF /* Play-Normal-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Play-Normal-icon.png"; sourceTree = "<group>"; };
+		499F2C461AB2256F00B3FDDF /* Play-Pressed-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Play-Pressed-icon.png"; sourceTree = "<group>"; };
+		499F2C471AB2256F00B3FDDF /* Record-Normal-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Record-Normal-icon.png"; sourceTree = "<group>"; };
+		499F2C481AB2256F00B3FDDF /* Record-Pressed-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Record-Pressed-icon.png"; sourceTree = "<group>"; };
+		499F2C491AB2256F00B3FDDF /* SCAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCAppDelegate.h; sourceTree = "<group>"; };
+		499F2C4A1AB2256F00B3FDDF /* SCAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCAppDelegate.m; sourceTree = "<group>"; };
+		499F2C4B1AB2256F00B3FDDF /* SCAudioRecordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCAudioRecordViewController.h; sourceTree = "<group>"; };
+		499F2C4C1AB2256F00B3FDDF /* SCAudioRecordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCAudioRecordViewController.m; sourceTree = "<group>"; };
+		499F2C4D1AB2256F00B3FDDF /* SCEditVideoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCEditVideoViewController.h; sourceTree = "<group>"; };
+		499F2C4E1AB2256F00B3FDDF /* SCEditVideoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCEditVideoViewController.m; sourceTree = "<group>"; };
+		499F2C4F1AB2256F00B3FDDF /* SCImageDisplayerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCImageDisplayerViewController.h; sourceTree = "<group>"; };
+		499F2C501AB2256F00B3FDDF /* SCImageDisplayerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCImageDisplayerViewController.m; sourceTree = "<group>"; };
+		499F2C511AB2256F00B3FDDF /* SCRecorderExamples-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "SCRecorderExamples-Info.plist"; sourceTree = "<group>"; };
+		499F2C521AB2256F00B3FDDF /* SCRecorderExamples-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SCRecorderExamples-Prefix.pch"; sourceTree = "<group>"; };
+		499F2C531AB2256F00B3FDDF /* SCRecorderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCRecorderViewController.h; sourceTree = "<group>"; };
+		499F2C541AB2256F00B3FDDF /* SCRecorderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCRecorderViewController.m; sourceTree = "<group>"; };
+		499F2C551AB2256F00B3FDDF /* SCRecordSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCRecordSessionManager.h; sourceTree = "<group>"; };
+		499F2C561AB2256F00B3FDDF /* SCRecordSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCRecordSessionManager.m; sourceTree = "<group>"; };
+		499F2C571AB2256F00B3FDDF /* SCSessionListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCSessionListViewController.h; sourceTree = "<group>"; };
+		499F2C581AB2256F00B3FDDF /* SCSessionListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCSessionListViewController.m; sourceTree = "<group>"; };
+		499F2C591AB2256F00B3FDDF /* SCSessionTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCSessionTableViewCell.h; sourceTree = "<group>"; };
+		499F2C5A1AB2256F00B3FDDF /* SCSessionTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCSessionTableViewCell.m; sourceTree = "<group>"; };
+		499F2C5B1AB2256F00B3FDDF /* SCTouchDetector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCTouchDetector.h; sourceTree = "<group>"; };
+		499F2C5C1AB2256F00B3FDDF /* SCTouchDetector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCTouchDetector.m; sourceTree = "<group>"; };
+		499F2C5D1AB2256F00B3FDDF /* SCVideoPlayerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCVideoPlayerViewController.h; sourceTree = "<group>"; };
+		499F2C5E1AB2256F00B3FDDF /* SCVideoPlayerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCVideoPlayerViewController.m; sourceTree = "<group>"; };
+		499F2C5F1AB2256F00B3FDDF /* Stop-Normal-Red-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Stop-Normal-Red-icon.png"; sourceTree = "<group>"; };
 		49F462C31AA9356E00E56599 /* VideoController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoController.h; sourceTree = "<group>"; };
 		49F462C41AA9356E00E56599 /* VideoController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VideoController.m; sourceTree = "<group>"; };
 		49F462C91AA93A5400E56599 /* Location.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Location.h; sourceTree = "<group>"; };
@@ -123,6 +190,53 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		499F2C371AB2256F00B3FDDF /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				499F2C381AB2256F00B3FDDF /* a_filter.cisf */,
+				499F2C391AB2256F00B3FDDF /* capture_flip@2x.png */,
+				499F2C3A1AB2256F00B3FDDF /* capture_onion@2x.png */,
+				499F2C3B1AB2256F00B3FDDF /* capture_onion_selected@2x.png */,
+				499F2C3C1AB2256F00B3FDDF /* Default-568h@2x.png */,
+				499F2C3D1AB2256F00B3FDDF /* Default.png */,
+				499F2C3E1AB2256F00B3FDDF /* Default@2x.png */,
+				499F2C3F1AB2256F00B3FDDF /* InfoPlist.strings */,
+				499F2C411AB2256F00B3FDDF /* Images.xcassets */,
+				499F2C421AB2256F00B3FDDF /* main.m */,
+				499F2C431AB2256F00B3FDDF /* Main.storyboard */,
+				499F2C441AB2256F00B3FDDF /* Pause-Normal-icon.png */,
+				499F2C451AB2256F00B3FDDF /* Play-Normal-icon.png */,
+				499F2C461AB2256F00B3FDDF /* Play-Pressed-icon.png */,
+				499F2C471AB2256F00B3FDDF /* Record-Normal-icon.png */,
+				499F2C481AB2256F00B3FDDF /* Record-Pressed-icon.png */,
+				499F2C491AB2256F00B3FDDF /* SCAppDelegate.h */,
+				499F2C4A1AB2256F00B3FDDF /* SCAppDelegate.m */,
+				499F2C4B1AB2256F00B3FDDF /* SCAudioRecordViewController.h */,
+				499F2C4C1AB2256F00B3FDDF /* SCAudioRecordViewController.m */,
+				499F2C4D1AB2256F00B3FDDF /* SCEditVideoViewController.h */,
+				499F2C4E1AB2256F00B3FDDF /* SCEditVideoViewController.m */,
+				499F2C4F1AB2256F00B3FDDF /* SCImageDisplayerViewController.h */,
+				499F2C501AB2256F00B3FDDF /* SCImageDisplayerViewController.m */,
+				499F2C511AB2256F00B3FDDF /* SCRecorderExamples-Info.plist */,
+				499F2C521AB2256F00B3FDDF /* SCRecorderExamples-Prefix.pch */,
+				499F2C531AB2256F00B3FDDF /* SCRecorderViewController.h */,
+				499F2C541AB2256F00B3FDDF /* SCRecorderViewController.m */,
+				499F2C551AB2256F00B3FDDF /* SCRecordSessionManager.h */,
+				499F2C561AB2256F00B3FDDF /* SCRecordSessionManager.m */,
+				499F2C571AB2256F00B3FDDF /* SCSessionListViewController.h */,
+				499F2C581AB2256F00B3FDDF /* SCSessionListViewController.m */,
+				499F2C591AB2256F00B3FDDF /* SCSessionTableViewCell.h */,
+				499F2C5A1AB2256F00B3FDDF /* SCSessionTableViewCell.m */,
+				499F2C5B1AB2256F00B3FDDF /* SCTouchDetector.h */,
+				499F2C5C1AB2256F00B3FDDF /* SCTouchDetector.m */,
+				499F2C5D1AB2256F00B3FDDF /* SCVideoPlayerViewController.h */,
+				499F2C5E1AB2256F00B3FDDF /* SCVideoPlayerViewController.m */,
+				499F2C5F1AB2256F00B3FDDF /* Stop-Normal-Red-icon.png */,
+			);
+			name = Sources;
+			path = SCRecorderExternal/Examples/Sources;
+			sourceTree = "<group>";
+		};
 		49F462CF1AA93BB800E56599 /* Users&Video */ = {
 			isa = PBXGroup;
 			children = (
@@ -177,6 +291,7 @@
 				77D6FB261AA92CAC00E97862 /* KingOfTheHill */,
 				77D6FB401AA92CAC00E97862 /* KingOfTheHillTests */,
 				77D6FB251AA92CAC00E97862 /* Products */,
+				499F2C371AB2256F00B3FDDF /* Sources */,
 			);
 			sourceTree = "<group>";
 		};
@@ -324,7 +439,24 @@
 			buildActionMask = 2147483647;
 			files = (
 				77D6FB331AA92CAC00E97862 /* Main.storyboard in Resources */,
+				499F2C7B1AB2256F00B3FDDF /* Stop-Normal-Red-icon.png in Resources */,
+				499F2C651AB2256F00B3FDDF /* Default.png in Resources */,
+				499F2C741AB2256F00B3FDDF /* SCRecorderExamples-Info.plist in Resources */,
+				499F2C6C1AB2256F00B3FDDF /* Play-Normal-icon.png in Resources */,
+				499F2C661AB2256F00B3FDDF /* Default@2x.png in Resources */,
 				77D6FB381AA92CAC00E97862 /* LaunchScreen.xib in Resources */,
+				499F2C6E1AB2256F00B3FDDF /* Record-Normal-icon.png in Resources */,
+				499F2C611AB2256F00B3FDDF /* capture_flip@2x.png in Resources */,
+				499F2C631AB2256F00B3FDDF /* capture_onion_selected@2x.png in Resources */,
+				499F2C6D1AB2256F00B3FDDF /* Play-Pressed-icon.png in Resources */,
+				499F2C621AB2256F00B3FDDF /* capture_onion@2x.png in Resources */,
+				499F2C6A1AB2256F00B3FDDF /* Main.storyboard in Resources */,
+				499F2C6B1AB2256F00B3FDDF /* Pause-Normal-icon.png in Resources */,
+				499F2C6F1AB2256F00B3FDDF /* Record-Pressed-icon.png in Resources */,
+				499F2C641AB2256F00B3FDDF /* Default-568h@2x.png in Resources */,
+				499F2C601AB2256F00B3FDDF /* a_filter.cisf in Resources */,
+				499F2C681AB2256F00B3FDDF /* Images.xcassets in Resources */,
+				499F2C671AB2256F00B3FDDF /* InfoPlist.strings in Resources */,
 				77D6FB351AA92CAC00E97862 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -343,14 +475,25 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				499F2C791AB2256F00B3FDDF /* SCTouchDetector.m in Sources */,
+				499F2C691AB2256F00B3FDDF /* main.m in Sources */,
+				499F2C721AB2256F00B3FDDF /* SCEditVideoViewController.m in Sources */,
+				499F2C731AB2256F00B3FDDF /* SCImageDisplayerViewController.m in Sources */,
 				705183BE1AAE574500A365FF /* Vote.m in Sources */,
 				77D6FB4F1AA930E000E97862 /* User.m in Sources */,
+				499F2C751AB2256F00B3FDDF /* SCRecorderViewController.m in Sources */,
+				499F2C701AB2256F00B3FDDF /* SCAppDelegate.m in Sources */,
+				499F2C771AB2256F00B3FDDF /* SCSessionListViewController.m in Sources */,
+				499F2C761AB2256F00B3FDDF /* SCRecordSessionManager.m in Sources */,
 				49F462CB1AA93A5400E56599 /* Location.m in Sources */,
 				70A189391AAF923E0044F98D /* Video.m in Sources */,
 				77D6FB301AA92CAC00E97862 /* ViewController.m in Sources */,
 				49F462C51AA9356E00E56599 /* VideoController.m in Sources */,
 				77D6FB2D1AA92CAC00E97862 /* AppDelegate.m in Sources */,
 				77D6FB2A1AA92CAC00E97862 /* main.m in Sources */,
+				499F2C711AB2256F00B3FDDF /* SCAudioRecordViewController.m in Sources */,
+				499F2C7A1AB2256F00B3FDDF /* SCVideoPlayerViewController.m in Sources */,
+				499F2C781AB2256F00B3FDDF /* SCSessionTableViewCell.m in Sources */,
 				708554BA1AAE6BA8006DEB38 /* LocationViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -374,6 +517,14 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		499F2C3F1AB2256F00B3FDDF /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				499F2C401AB2256F00B3FDDF /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
 		77D6FB311AA92CAC00E97862 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (

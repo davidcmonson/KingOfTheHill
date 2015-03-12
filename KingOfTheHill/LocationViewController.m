@@ -34,7 +34,17 @@
         [self.locationManager requestWhenInUseAuthorization];
     }
     
+    
+    /////////////// TEMP CODE for Simulator purposes
+    CLLocation *tempLocation = [[CLLocation alloc] initWithLatitude:40.1 longitude:-111.1];
+    self.myCoordinates = tempLocation.coordinate;
     [self queryForAllVideosNearLocation:self.myCoordinates withinDistance:20000];
+    [self.map setCenterCoordinate:self.map.userLocation.location.coordinate animated:YES];
+    ////////////////
+    
+    
+    MKCoordinateRegion adjustedRegionForInitialZoomLevel = [self.map regionThatFits:MKCoordinateRegionMakeWithDistance(self.myCoordinates, 3000, 3000)];
+    [self.map setRegion:adjustedRegionForInitialZoomLevel animated:YES];
     
     //[self.map addAnnotations:self.arrayOfVideos]; <--- does nothing
 }
@@ -72,7 +82,7 @@
 - (void)mapView
 {
     self.map = [[MKMapView alloc] initWithFrame:self.view.bounds];
-    self.map.mapType = MKMapTypeHybrid;
+    self.map.mapType = MKMapTypeStandard;
     [self.view addSubview:self.map];
     
     self.map.delegate = self;
@@ -123,7 +133,7 @@
     
 }
 
-
+#pragma mark Annotations section
 - (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation
 {
     MKPinAnnotationView *pin = (MKPinAnnotationView *) [mapView dequeueReusableAnnotationViewWithIdentifier:videoAnnotationKey];
@@ -137,10 +147,25 @@
     } else {
         pin.annotation = annotation;
     }
-    pin.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
-    pin.pinColor = MKPinAnnotationColorRed;    // We can pick the color of the Pin!! Woohoo!
+    pin.image = [UIImage imageNamed:@"Skateboarding-50"];
+
+    pin.enabled = YES;
+    pin.canShowCallout = YES;
+    //pin.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
+    pin.pinColor = MKPinAnnotationColorGreen;    // We can pick the color of the Pin!! Woohoo!
     pin.animatesDrop = YES;
-    return pin;     // NOTE: Usually NOT a good idea to have more than one "return" most of the time
+    
+    // We can add a target/action by separating UIButton as a separate instance.
+    UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
+    [rightButton addTarget:nil action:nil forControlEvents:UIControlEventTouchUpInside];
+    pin.rightCalloutAccessoryView = rightButton;
+    
+    // Add a custom image to the left side of the callout.
+    UIImageView *myCustomImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Skateboarding-50"]];
+    pin.leftCalloutAccessoryView = myCustomImage;
+    
+    
+    return pin;
     
     // Don't really know whats going on here....
     //    if ([annotation isKindOfClass:[MKUserLocation class]]) {
@@ -168,13 +193,12 @@
     //    return nil;
 }
 
-// Add the following method
-//- (void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control {
-//    MyLocation *location = (MyLocation*)view.annotation;
-//
-//    NSDictionary *launchOptions = @{MKLaunchOptionsDirectionsModeKey : MKLaunchOptionsDirectionsModeDriving};
-//    [location.mapItem openInMapsWithLaunchOptions:launchOptions];
-//}
+- (void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control
+{
+//    InfoView *infoView = [[InfoView alloc]initWithNibName:@"InfoView" bundle:nil];
+//    [self.navigationController pushViewController:infoView animated:YES];
+    NSLog(@"Pin was tapped");
+}
 
 
 - (void)didReceiveMemoryWarning {

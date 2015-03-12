@@ -45,8 +45,8 @@
 - (void)videoToParse
 {
     Video *video = (Video *)[PFObject objectWithClassName:videoKey];
-    video[titleOfVideoKey] = video.titleOfVideo;
-    video[ownerOfVideoKey] = video.ownerOfVideo;
+    video[@"name"] = video.nameOfVideo;
+    video[@"user"] = video.ownerOfVideo;
 #warning come back here
     //    video[coordinateOfVideoKey] = video.coordinate;
     [video pin];
@@ -63,17 +63,17 @@
 - (void)userToParse
 {
     User *user = (User *)[PFObject objectWithClassName:userKey];
-    user[userVideoKey] = user.video;
-    user[userVoteKey] = user.votes;
-    [user pin];
+    user[usernameKey] = user.username;
+    user[passwordKey] = user.password;
+    user[emailKey] = user.email;
     [user saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         if (succeeded) {
             NSLog(@"userKey saved");
-                  }
-                  else {
-                      NSLog(@"%@", error);
-                  }
-                  }];
+        }
+        else {
+            NSLog(@"%@", error);
+        }
+    }];
 }
 
 - (void)userToVoteToVideo

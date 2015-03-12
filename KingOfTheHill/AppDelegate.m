@@ -9,6 +9,7 @@
 #import <Parse/Parse.h>
 #import "LocationViewController.h"
 #import "AppDelegate.h"
+#import "Video.h"
 
 @interface AppDelegate ()
 
@@ -19,6 +20,8 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    
+    //[Video registerSubclass]; // This is object is connected to [Entry object] in ViewController.m
     
     //[Parse enableLocalDatastore];
     

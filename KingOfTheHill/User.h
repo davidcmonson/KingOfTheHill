@@ -12,13 +12,17 @@
 
 static NSString *userKey = @"User";
 
-static NSString *userVideoKey = @"userVideo";
-static NSString *userVoteKey = @"userVote";
+static NSString *objectIDKey = @"objectId";
+static NSString *usernameKey = @"username";
+static NSString *passwordKey = @"password";
+static NSString *emailKey = @"email";
 
 @interface User : PFObject
 
-@property (nonatomic, strong) Video *video;
-@property (nonatomic, assign) NSString *votes;
+@property (nonatomic, strong) NSString *objectID;
+@property (nonatomic, strong) NSString *username;
+@property (nonatomic, strong) NSString *password;
+@property (nonatomic, strong) NSString *email;
 
 
 @end

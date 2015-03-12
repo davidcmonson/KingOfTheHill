@@ -35,14 +35,14 @@
     }
     
     
-    /////////////// TEMP CODE for Simulator purposes
-    CLLocation *tempLocation = [[CLLocation alloc] initWithLatitude:40.1 longitude:-111.1];
-    self.myCoordinates = tempLocation.coordinate;
+/////////////// TEMP CODE for Simulator purposes
+//    CLLocation *tempLocation = [[CLLocation alloc] initWithLatitude:40.1 longitude:-111.1];
+//    self.myCoordinates = tempLocation.coordinate;
+////////////////
+    
     [self queryForAllVideosNearLocation:self.myCoordinates withinDistance:20000];
     [self.map setCenterCoordinate:self.map.userLocation.location.coordinate animated:YES];
-    ////////////////
-    
-    
+
     MKCoordinateRegion adjustedRegionForInitialZoomLevel = [self.map regionThatFits:MKCoordinateRegionMakeWithDistance(self.myCoordinates, 3000, 3000)];
     [self.map setRegion:adjustedRegionForInitialZoomLevel animated:YES];
     
@@ -111,7 +111,8 @@
                        withinDistance:(double)radiusFromLocationInMeters
 {
     // Parse query calls.
-    PFQuery *queryForVideos = [PFQuery queryWithClassName:videoKey];
+
+    PFQuery *queryForVideos = [PFQuery queryWithClassName:@"Video"];
     PFGeoPoint *geoPoint = [PFGeoPoint geoPointWithLatitude:coordinates.latitude
                                                   longitude:coordinates.longitude];
     [queryForVideos whereKey:videoLocationKey

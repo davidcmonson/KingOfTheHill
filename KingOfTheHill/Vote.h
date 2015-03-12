@@ -18,3 +18,4 @@ static NSString *voteKey = @"Vote";
 @property (nonatomic, strong) NSString *uniqueId;
 
 @end
+

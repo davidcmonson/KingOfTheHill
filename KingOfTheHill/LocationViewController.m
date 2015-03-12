@@ -12,7 +12,7 @@
 //#import <Parse/Parse.h>
 //#import <ParseUI/ParseUI.h>
 
-@interface LocationViewController () <MKMapViewDelegate, CLLocationManagerDelegate>
+@interface LocationViewController () <MKMapViewDelegate, CLLocationManagerDelegate, MKAnnotation>
 
 @property (nonatomic, strong) MKMapView *map;
 @property (nonatomic, strong) CLLocationManager *locationManager;
@@ -33,7 +33,9 @@
     if ([self.locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)]) {
         [self.locationManager requestWhenInUseAuthorization];
     }
-
+    
+    
+    
     //[self.map addAnnotations:self.arrayOfVideos]; <--- does nothing
 }
 
@@ -89,7 +91,6 @@
 - (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation
 {
     self.myCoordinates = self.map.userLocation.location.coordinate;
-    //NSLog(@"%f %f",self.myCoordinates.latitude,self.myCoordinates.longitude);
     [self queryForAllVideosNearLocation:self.myCoordinates withinDistance:20000];
     [self.map setCenterCoordinate:self.map.userLocation.location.coordinate animated:YES];
 }
@@ -121,29 +122,59 @@
     
 }
 
+
 - (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation
 {
+    MKPinAnnotationView *pin = (MKPinAnnotationView *) [mapView dequeueReusableAnnotationViewWithIdentifier:videoAnnotationKey];
+    
     if ([annotation isKindOfClass:[MKUserLocation class]]) {
         return nil;
     }
-    
-    if ([annotation isKindOfClass:[Video class]]) {
-        
-        Video *video = (Video *)annotation;
-        
-        MKAnnotationView *annotationView = [mapView dequeueReusableAnnotationViewWithIdentifier:videoAnnotationKey];
-        
-        if (annotationView == nil) {
-            annotationView = video.annotationView;
-        }
-        else {
-            annotationView.annotation = annotation;
-            
-            return annotationView;
-        }
+    if (pin == nil) {
+        pin = [[MKPinAnnotationView alloc] initWithAnnotation: annotation
+                                              reuseIdentifier: videoAnnotationKey];
+    } else {
+        pin.annotation = annotation;
     }
-    return nil;
+    pin.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
+    pin.pinColor = MKPinAnnotationColorRed;    // We can pick the color of the Pin!! Woohoo!
+    pin.animatesDrop = YES;
+    return pin;     // NOTE: Usually NOT a good idea to have more than one "return" most of the time
+    
+    // Don't really know whats going on here....
+    //    if ([annotation isKindOfClass:[MKUserLocation class]]) {
+    //        return nil; // Not a good idea to hav
+    //    }
+    //
+    //    if ([annotation isKindOfClass:[Video class]]) {
+    //
+    //        Video *video = (Video *)annotation;
+    //
+    //        MKAnnotationView *annotationView = [mapView dequeueReusableAnnotationViewWithIdentifier:videoAnnotationKey];
+    //
+    //        // Add to mapView:viewForAnnotation: after setting the image on the annotation view
+    //        annotationView.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
+    //
+    //        if (annotationView == nil) {
+    //            annotationView = video.annotationView;
+    //        }
+    //        else {
+    //            annotationView.annotation = annotation;
+    //
+    //            return annotationView;
+    //        }
+    //    }
+    //    return nil;
 }
+
+// Add the following method
+//- (void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control {
+//    MyLocation *location = (MyLocation*)view.annotation;
+//
+//    NSDictionary *launchOptions = @{MKLaunchOptionsDirectionsModeKey : MKLaunchOptionsDirectionsModeDriving};
+//    [location.mapItem openInMapsWithLaunchOptions:launchOptions];
+//}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

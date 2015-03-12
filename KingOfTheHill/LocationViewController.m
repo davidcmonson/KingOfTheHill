@@ -34,10 +34,12 @@
         [self.locationManager requestWhenInUseAuthorization];
     }
     
-    
+    [self queryForAllVideosNearLocation:self.myCoordinates withinDistance:20000];
     
     //[self.map addAnnotations:self.arrayOfVideos]; <--- does nothing
 }
+
+
 
 
 - (void)dropPinAtCoordinatesForVideosInVideosArray:(NSArray *)array {
@@ -91,7 +93,6 @@
 - (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation
 {
     self.myCoordinates = self.map.userLocation.location.coordinate;
-    [self queryForAllVideosNearLocation:self.myCoordinates withinDistance:20000];
     [self.map setCenterCoordinate:self.map.userLocation.location.coordinate animated:YES];
 }
 

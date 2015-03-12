@@ -9,6 +9,8 @@
 #import <MapKit/MapKit.h>
 #import "LocationViewController.h"
 #import "VideoController.h"
+//#import <Parse/Parse.h>
+//#import <ParseUI/ParseUI.h>
 
 @interface LocationViewController () <MKMapViewDelegate, CLLocationManagerDelegate>
 
@@ -31,24 +33,35 @@
     if ([self.locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)]) {
         [self.locationManager requestWhenInUseAuthorization];
     }
-    
-    
-    
-     //[self.map addAnnotations:self.arrayOfVideos];
+
+    //[self.map addAnnotations:self.arrayOfVideos]; <--- does nothing
 }
 
 
-- (void)dropPinAtCoordinates:(CLLocationCoordinate2D)myCoordinate {
-    //Create your annotation
-    MKPointAnnotation *point = [[MKPointAnnotation alloc] init];
-    // Set your annotation to point at your coordinate
-    point.coordinate = myCoordinate;
-    //If you want to clear other pins/annotations this is how to do it
-//    for (id annotation in self.map.annotations) {
-//        [self.map removeAnnotation:annotation];
-//    }
-    //Drop pin on map
-    [self.map addAnnotation:point];
+- (void)dropPinAtCoordinatesForVideosInVideosArray:(NSArray *)array {
+    
+    for (NSInteger index = 0; index < array.count; index++) {
+        // Create video instance to make it easier to read when getting coordinates from it.
+        PFObject *videoDictionaryAtIndex = array[index];
+        PFGeoPoint *geoPointOfVideo = videoDictionaryAtIndex[videoLocationKey];
+        //Create your annotation
+        MKPointAnnotation *point = [[MKPointAnnotation alloc] init];
+        // Set your annotation to point at your coordinate
+        point.coordinate = [self convertPFGeoPointToLocationCoordinate2D:geoPointOfVideo];
+        //    If you want to clear other pins/annotations this is how to do it
+        //        for (id annotation in self.map.annotations) {
+        //            [self.map removeAnnotation:annotation];
+        //        }
+        //    Drop pin on map
+        [self.map addAnnotation:point];
+    }
+}
+
+-(CLLocationCoordinate2D)convertPFGeoPointToLocationCoordinate2D:(PFGeoPoint *)geoPoint {
+    CLLocationCoordinate2D coordinates;
+    coordinates.latitude = geoPoint.latitude;
+    coordinates.longitude = geoPoint.longitude;
+    return coordinates;
 }
 
 
@@ -59,7 +72,7 @@
     [self.view addSubview:self.map];
     
     self.map.delegate = self;
-    self.map.showsUserLocation = YES;
+    self.map.showsUserLocation = YES; // Must be YES in order for the MKMapView protocol to fire.
 }
 
 - (CLLocationManager *)locationManager
@@ -76,17 +89,22 @@
 - (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation
 {
     self.myCoordinates = self.map.userLocation.location.coordinate;
-    NSLog(@"%f %f",self.myCoordinates.latitude,self.myCoordinates.longitude);
-    [self dropPinAtCoordinates:self.myCoordinates];
+    //NSLog(@"%f %f",self.myCoordinates.latitude,self.myCoordinates.longitude);
+    [self queryForAllVideosNearLocation:self.myCoordinates withinDistance:20000];
     [self.map setCenterCoordinate:self.map.userLocation.location.coordinate animated:YES];
 }
 
-- (void)queryForAllVideosNearLocation:(CLLocation *)currentLocation withinDistance:(CLLocationAccuracy *)distanceFromUser
+
+- (void)queryForAllVideosNearLocation:(CLLocationCoordinate2D)coordinates
+                       withinDistance:(double)radiusFromLocationInMeters
 {
+    // Parse query calls.
     PFQuery *queryForVideos = [PFQuery queryWithClassName:videoKey];
-    
-    PFGeoPoint *geoPoint = [PFGeoPoint geoPointWithLatitude:currentLocation.coordinate.latitude longitude:currentLocation.coordinate.longitude];
-    [queryForVideos whereKey:videoLocationKey nearGeoPoint:geoPoint withinKilometers:kCLDistanceFilterNone];
+    PFGeoPoint *geoPoint = [PFGeoPoint geoPointWithLatitude:coordinates.latitude
+                                                  longitude:coordinates.longitude];
+    [queryForVideos whereKey:videoLocationKey
+                nearGeoPoint:geoPoint
+            withinKilometers:radiusFromLocationInMeters];
     
     [queryForVideos findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (error) {
@@ -94,14 +112,13 @@
         }
         else {
             NSMutableArray *arrayOfVideos = [[NSMutableArray alloc] initWithArray:objects];
-            
-            for (Video *video in objects) {
-                [arrayOfVideos addObject:video];
-            }
+            [self dropPinAtCoordinatesForVideosInVideosArray:arrayOfVideos];
             
             self.arrayOfVideos = arrayOfVideos;
+            NSLog(@"%ld",self.arrayOfVideos.count);
         }
     }];
+    
 }
 
 - (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation
@@ -111,7 +128,7 @@
     }
     
     if ([annotation isKindOfClass:[Video class]]) {
-    
+        
         Video *video = (Video *)annotation;
         
         MKAnnotationView *annotationView = [mapView dequeueReusableAnnotationViewWithIdentifier:videoAnnotationKey];
@@ -125,7 +142,7 @@
             return annotationView;
         }
     }
-        return nil;
+    return nil;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -134,13 +151,13 @@
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

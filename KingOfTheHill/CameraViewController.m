@@ -35,8 +35,6 @@
     
     [self.view addGestureRecognizer:gestureRecognizer];
     
-    
-    
 }
 
 - (void)bringUpProfile: (UISwipeGestureRecognizer *)recognizer {

@@ -47,44 +47,17 @@
 ////////////// TEST VIDEO ///////////////
 - (void)viewDidAppear:(BOOL)animated {
     
-    //AnnotationVideoPlayerViewViewController *viewPlayer = [AnnotationVideoPlayerViewViewController new];
-    //[self.view addSubview:viewPlayer.view];
     PFFile *videoFile = self.arrayOfVideos[1][videoFileKey];
     NSURL *videoURL = [NSURL URLWithString:videoFile.url];
-    NSLog(@"%@",videoFile.url);
-    
     AVAsset *video = [AVAsset assetWithURL:videoURL];
     AVPlayerItem *item = [[AVPlayerItem alloc] initWithAsset:video];
     AVPlayer *player = [AVPlayer playerWithPlayerItem:item];
     AVPlayerLayer *layer = [AVPlayerLayer playerLayerWithPlayer:player];
-    
     UIView *playerView = [[UIView alloc]initWithFrame:self.view.bounds];
-    
     layer.frame = self.view.frame;
     [playerView.layer addSublayer:layer];
-    
+    [self.view addSubview: playerView];
     [player play];
-
-    
-//    MPMoviePlayerController *player = [[MPMoviePlayerController alloc] initWithContentURL:videoURL];
-//    [player.view setFrame:self.view.bounds];
-//    [player play];
-//    [self.view addSubview:player.view];
-
-    
-//    
-//    [self.view addSubview:playerView];
-//    
-//    self.player = [[AVPlayer alloc] initWithURL:videoURL];
-//    AVPlayerLayer *playerLayer;
-//    [playerLayer setPlayer:self.player];
-//    //    playerLayer.videoGravity = AVLayerVideoGravityResizeAspect;
-//    [playerView addSubview:playerLayer];
-//    [self.player play];
-
-    
-    NSLog(@"%@",videoFile);
-    
 }
 //////////////////////////////////////////
 

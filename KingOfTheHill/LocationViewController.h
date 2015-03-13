@@ -8,6 +8,7 @@
 
 #import "ViewController.h"
 
-@interface LocationViewController : ViewController
+
+@interface LocationViewController : UIViewController
 
 @end

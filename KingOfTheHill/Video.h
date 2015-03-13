@@ -14,7 +14,7 @@ static NSString *videoKey = @"Video";
 
 static NSString *videoAnnotationKey = @"Annotation";
 static NSString *videoLocationKey = @"location";
-
+static NSString *videoFileKey = @"videoFile";
 static NSString *nameOfVideoKey = @"name";
 static NSString *ownerOfVideoKey = @"user";
 static NSString *videoId = @"objectId";

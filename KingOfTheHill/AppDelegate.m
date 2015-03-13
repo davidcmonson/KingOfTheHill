@@ -8,7 +8,9 @@
 
 #import <Parse/Parse.h>
 #import "LocationViewController.h"
+#import "CameraViewController.h"
 #import "AppDelegate.h"
+#import "SwipePageViewController.h"
 #import "Video.h"
 
 @interface AppDelegate ()
@@ -34,8 +36,8 @@
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
-    self.window.rootViewController = [LocationViewController new];
-
+    self.window.rootViewController = [SwipePageViewController new];
+    
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     

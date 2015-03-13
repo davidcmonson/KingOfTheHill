@@ -9,20 +9,74 @@
 #import <MapKit/MapKit.h>
 #import "LocationViewController.h"
 #import "VideoController.h"
+#import "CameraViewController.h"
+
+// Test Purposes
+#import "AnnotationVideoPlayerViewViewController.h"
+#import <MediaPlayer/MediaPlayer.h>
+#import <MobileCoreServices/MobileCoreServices.h>
+#import "AVPlayerDemoPlaybackView.h"
+
+#import <AVKit/AVKit.h>
+#import <UIKit/UIKit.h>
+#import <AVFoundation/AVFoundation.h>
+
+
+
+
 //#import <Parse/Parse.h>
 //#import <ParseUI/ParseUI.h>
 
 @interface LocationViewController () <MKMapViewDelegate, CLLocationManagerDelegate, MKAnnotation>
+
+
 
 @property (nonatomic, strong) MKMapView *map;
 @property (nonatomic, strong) CLLocationManager *locationManager;
 @property (nonatomic, strong) Video *video;
 @property (nonatomic) CLLocationCoordinate2D myCoordinates;
 @property (nonatomic, strong) NSArray *arrayOfVideos;
+@property (nonatomic, strong) UIButton *backButton;
+
+@property (nonatomic, strong) AVPlayer *player;
 
 @end
 
 @implementation LocationViewController
+
+////////////// TEST VIDEO ///////////////
+- (void)viewDidAppear:(BOOL)animated {
+    
+    //AnnotationVideoPlayerViewViewController *viewPlayer = [AnnotationVideoPlayerViewViewController new];
+    //[self.view addSubview:viewPlayer.view];
+    PFFile *videoFile = self.arrayOfVideos[1][videoFileKey];
+    NSURL *videoURL = [NSURL URLWithString:videoFile.url];
+    NSLog(@"%@",videoFile.url);
+
+    
+//    MPMoviePlayerController *player = [[MPMoviePlayerController alloc] initWithContentURL:videoURL];
+//    [player.view setFrame:self.view.bounds];
+//    [player play];
+//    [self.view addSubview:player.view];
+    
+//    UIView *playerView = [[UIView alloc]initWithFrame:self.view.bounds];
+//
+//    [self.view addSubview:playerView];
+//
+    self.player = [[AVPlayer alloc] initWithURL:videoURL];
+    [self.player play];
+    
+    //AVPlayerLayer *playerLayer = [[AVPlayer alloc] initWithURL:videoURL];
+//    playerLayer.videoGravity = AVLayerVideoGravityResizeAspect;
+    
+    
+
+
+    
+    NSLog(@"%@",videoFile);
+    
+}
+//////////////////////////////////////////
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -30,23 +84,32 @@
     
     [self mapView];
     
+    UIView *mapSwipeBarView = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - 50, self.view.frame.size.width, 50)];
+    mapSwipeBarView.backgroundColor = [UIColor colorWithRed:0.5 green:0.5 blue:0.5 alpha:0.5];
+    [self.view addSubview:mapSwipeBarView];
+    
+    UILabel *mapSwipeBarLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - 40, self.view.frame.size.width, 30)];
+    mapSwipeBarLabel.text = @">> Swipe Back To Camera >>";
+    mapSwipeBarLabel.font = [UIFont fontWithName:@"Avenir-BlackOblique" size:18];
+    mapSwipeBarLabel.textAlignment = NSTextAlignmentCenter;
+    mapSwipeBarLabel.textColor = [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:1.0];
+    [self.view addSubview:mapSwipeBarLabel];
+    
     if ([self.locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)]) {
         [self.locationManager requestWhenInUseAuthorization];
     }
     
-    
-/////////////// TEMP CODE for Simulator purposes
-//    CLLocation *tempLocation = [[CLLocation alloc] initWithLatitude:40.1 longitude:-111.1];
-//    self.myCoordinates = tempLocation.coordinate;
-////////////////
+    /////////////// TEMP CODE for Simulator purposes
+    //    CLLocation *tempLocation = [[CLLocation alloc] initWithLatitude:40.1 longitude:-111.1];
+    //    self.myCoordinates = tempLocation.coordinate;
+    ////////////////
     
     [self queryForAllVideosNearLocation:self.myCoordinates withinDistance:20000];
     [self.map setCenterCoordinate:self.map.userLocation.location.coordinate animated:YES];
-
+    
     MKCoordinateRegion adjustedRegionForInitialZoomLevel = [self.map regionThatFits:MKCoordinateRegionMakeWithDistance(self.myCoordinates, 3000, 3000)];
     [self.map setRegion:adjustedRegionForInitialZoomLevel animated:YES];
     
-    //[self.map addAnnotations:self.arrayOfVideos]; <--- does nothing
 }
 
 
@@ -111,7 +174,7 @@
                        withinDistance:(double)radiusFromLocationInMeters
 {
     // Parse query calls.
-
+    
     PFQuery *queryForVideos = [PFQuery queryWithClassName:@"Video"];
     PFGeoPoint *geoPoint = [PFGeoPoint geoPointWithLatitude:coordinates.latitude
                                                   longitude:coordinates.longitude];
@@ -129,6 +192,7 @@
             
             self.arrayOfVideos = arrayOfVideos;
             NSLog(@"%ld",self.arrayOfVideos.count);
+            
         }
     }];
     
@@ -149,7 +213,7 @@
         pin.annotation = annotation;
     }
     pin.image = [UIImage imageNamed:@"Skateboarding-50"];
-
+    
     pin.enabled = YES;
     pin.canShowCallout = YES;
     //pin.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
@@ -196,8 +260,8 @@
 
 - (void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control
 {
-//    InfoView *infoView = [[InfoView alloc]initWithNibName:@"InfoView" bundle:nil];
-//    [self.navigationController pushViewController:infoView animated:YES];
+    //    InfoView *infoView = [[InfoView alloc]initWithNibName:@"InfoView" bundle:nil];
+    //    [self.navigationController pushViewController:infoView animated:YES];
     NSLog(@"Pin was tapped");
 }
 

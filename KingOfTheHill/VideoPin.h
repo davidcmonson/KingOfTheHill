@@ -16,6 +16,13 @@ static NSString *videoPinKey = @"videoPin";
 
 @property (nonatomic, strong) Video *video;
 
-- (MKAnnotationView *)annotation;
+- (id)initWithName:(NSString*)name
+       description:(NSString *)descrption
+        coordinate:(CLLocationCoordinate2D)coordinate;
+
+- (CLLocationCoordinate2D)coordinate;
+- (MKMapItem*)mapItem;
+
+//- (MKAnnotationView *)annotation;
 
 @end

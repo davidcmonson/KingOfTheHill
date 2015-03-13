@@ -8,8 +8,13 @@
 
 #import "CameraViewController.h"
 #import "ProfileViewController.h"
+#import <MediaPlayer/MediaPlayer.h>
+#import <MobileCoreServices/MobileCoreServices.h>
 
-@interface CameraViewController ()
+@interface CameraViewController () <UIImagePickerControllerDelegate, UINavigationControllerDelegate>
+
+@property (nonatomic,strong) NSURL *videoURL;
+@property (nonatomic,strong) MPMoviePlayerController *playerController;
 
 @end
 
@@ -17,10 +22,23 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
-    
-    self.view.backgroundColor = [UIColor blueColor];
+    self.allowsEditing = YES;
+    self.sourceType = UIImagePickerControllerSourceTypeCamera;
+    self.mediaTypes = [[NSArray alloc]initWithObjects:(NSString *) kUTTypeMovie, nil];
+    [self setHidesBottomBarWhenPushed:YES];
+    [self setVideoQuality:UIImagePickerControllerQualityTypeMedium];
+
+    //self.view.backgroundColor = [UIColor blueColor];
     [self theSteezyProfile];
+}
+
+-(void) imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
+    self.videoURL = info[UIImagePickerControllerMediaURL];
+    [picker dismissViewControllerAnimated:YES completion:nil];
+    self.playerController = [[MPMoviePlayerController alloc]initWithContentURL:self.videoURL];
+    [self.playerController.view setFrame:self.view.bounds];
+    [self.view addSubview:self.playerController.view];
+    [self.playerController play];
 }
 
 - (void)didReceiveMemoryWarning {

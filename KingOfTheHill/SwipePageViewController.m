@@ -6,10 +6,10 @@
 //  Copyright (c) 2015 David Monson. All rights reserved.
 //
 #import "SwipePageViewController.h"
-#import "CameraViewController.h"
 #import "VideoFeedViewController.h"
 #import "LocationViewController.h"
 #import "ProfileViewController.h"
+#import "CameraViewController.h"
 
 @interface SwipePageViewController () <UIPageViewControllerDataSource>
 

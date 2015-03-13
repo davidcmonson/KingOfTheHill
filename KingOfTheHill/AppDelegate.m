@@ -8,7 +8,7 @@
 
 #import <Parse/Parse.h>
 #import "LocationViewController.h"
-#import "CameraViewController.h"
+
 #import "AppDelegate.h"
 #import "SwipePageViewController.h"
 #import "Video.h"

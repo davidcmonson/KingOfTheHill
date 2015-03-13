@@ -9,7 +9,7 @@
 #import <MapKit/MapKit.h>
 #import "LocationViewController.h"
 #import "VideoController.h"
-#import "CameraViewController.h"
+
 
 // Test Purposes
 #import "AnnotationVideoPlayerViewViewController.h"
@@ -52,25 +52,35 @@
     PFFile *videoFile = self.arrayOfVideos[1][videoFileKey];
     NSURL *videoURL = [NSURL URLWithString:videoFile.url];
     NSLog(@"%@",videoFile.url);
+    
+    AVAsset *video = [AVAsset assetWithURL:videoURL];
+    AVPlayerItem *item = [[AVPlayerItem alloc] initWithAsset:video];
+    AVPlayer *player = [AVPlayer playerWithPlayerItem:item];
+    AVPlayerLayer *layer = [AVPlayerLayer playerLayerWithPlayer:player];
+    
+    UIView *playerView = [[UIView alloc]initWithFrame:self.view.bounds];
+    
+    layer.frame = self.view.frame;
+    [playerView.layer addSublayer:layer];
+    
+    [player play];
 
     
 //    MPMoviePlayerController *player = [[MPMoviePlayerController alloc] initWithContentURL:videoURL];
 //    [player.view setFrame:self.view.bounds];
 //    [player play];
 //    [self.view addSubview:player.view];
-    
-//    UIView *playerView = [[UIView alloc]initWithFrame:self.view.bounds];
-//
-//    [self.view addSubview:playerView];
-//
-    self.player = [[AVPlayer alloc] initWithURL:videoURL];
-    [self.player play];
-    
-    //AVPlayerLayer *playerLayer = [[AVPlayer alloc] initWithURL:videoURL];
-//    playerLayer.videoGravity = AVLayerVideoGravityResizeAspect;
-    
-    
 
+    
+//    
+//    [self.view addSubview:playerView];
+//    
+//    self.player = [[AVPlayer alloc] initWithURL:videoURL];
+//    AVPlayerLayer *playerLayer;
+//    [playerLayer setPlayer:self.player];
+//    //    playerLayer.videoGravity = AVLayerVideoGravityResizeAspect;
+//    [playerView addSubview:playerLayer];
+//    [self.player play];
 
     
     NSLog(@"%@",videoFile);

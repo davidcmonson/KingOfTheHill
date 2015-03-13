@@ -10,15 +10,13 @@
 #import "LocationViewController.h"
 #import "VideoController.h"
 
-#import <AVKit/AVKit.h>
-#import <UIKit/UIKit.h>
+//#import "AnnotationVideoPlayerViewViewController.h"
+//#import <AVKit/AVKit.h>
+//#import <UIKit/UIKit.h>
 #import <AVFoundation/AVFoundation.h>
 
+#import "VideoPin.h"
 
-
-
-//#import <Parse/Parse.h>
-//#import <ParseUI/ParseUI.h>
 
 @interface LocationViewController () <MKMapViewDelegate, CLLocationManagerDelegate, MKAnnotation>
 
@@ -39,24 +37,24 @@
 
 
 
-////////////// TEST VIDEO ///////////////
-
-- (void)viewDidAppear:(BOOL)animated {
-    
-    PFFile *videoFile = self.arrayOfVideos[1][videoFileKey];
-    NSURL *videoURL = [NSURL URLWithString:videoFile.url];
-    AVAsset *video = [AVAsset assetWithURL:videoURL];
-    AVPlayerItem *item = [[AVPlayerItem alloc] initWithAsset:video];
-    AVPlayer *player = [AVPlayer playerWithPlayerItem:item];
-    AVPlayerLayer *layer = [AVPlayerLayer playerLayerWithPlayer:player];
-    UIView *playerView = [[UIView alloc]initWithFrame:self.view.bounds];
-    layer.frame = self.view.frame;
-    [playerView.layer addSublayer:layer];
-    [self.view addSubview: playerView];
-    [player play];
-}
-// This will be put in the DetailViewController
-//////////////////////////////////////////
+//////////////// TEST VIDEO ///////////////
+//
+//- (void)viewDidAppear:(BOOL)animated {
+//    
+//    PFFile *videoFile = self.arrayOfVideos[1][videoFileKey];
+//    NSURL *videoURL = [NSURL URLWithString:videoFile.url];
+//    AVAsset *video = [AVAsset assetWithURL:videoURL];
+//    AVPlayerItem *item = [[AVPlayerItem alloc] initWithAsset:video];
+//    AVPlayer *player = [AVPlayer playerWithPlayerItem:item];
+//    AVPlayerLayer *layer = [AVPlayerLayer playerLayerWithPlayer:player];
+//    UIView *playerView = [[UIView alloc]initWithFrame:self.view.bounds];
+//    layer.frame = self.view.frame;
+//    [playerView.layer addSublayer:layer];
+//    [self.view addSubview: playerView];
+//    [player play];
+//}
+//// This will be put in AnnotationVideoPlayerViewController
+////////////////////////////////////////////
 
 
 
@@ -183,7 +181,6 @@
 - (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation
 {
     MKPinAnnotationView *pin = (MKPinAnnotationView *) [mapView dequeueReusableAnnotationViewWithIdentifier:videoAnnotationKey];
-    
     if ([annotation isKindOfClass:[MKUserLocation class]]) {
         return nil;
     }
@@ -191,13 +188,13 @@
         pin = [[MKPinAnnotationView alloc] initWithAnnotation: annotation
                                               reuseIdentifier: videoAnnotationKey];
     } else {
+        annotation = [VideoPin new];
         pin.annotation = annotation;
     }
     pin.image = [UIImage imageNamed:@"Skateboarding-50"];
-    
     pin.enabled = YES;
     pin.canShowCallout = YES;
-    //pin.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
+    
     pin.pinColor = MKPinAnnotationColorGreen;    // We can pick the color of the Pin!! Woohoo!
     pin.animatesDrop = YES;
     
@@ -206,6 +203,7 @@
     [rightButton addTarget:nil action:nil forControlEvents:UIControlEventTouchUpInside];
     pin.rightCalloutAccessoryView = rightButton;
     
+    
     // Add a custom image to the left side of the callout.
     UIImageView *myCustomImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Skateboarding-50"]];
     pin.leftCalloutAccessoryView = myCustomImage;
@@ -213,30 +211,31 @@
     
     return pin;
     
-    // Don't really know whats going on here....
-    //    if ([annotation isKindOfClass:[MKUserLocation class]]) {
-    //        return nil; // Not a good idea to hav
-    //    }
-    //
-    //    if ([annotation isKindOfClass:[Video class]]) {
-    //
-    //        Video *video = (Video *)annotation;
-    //
-    //        MKAnnotationView *annotationView = [mapView dequeueReusableAnnotationViewWithIdentifier:videoAnnotationKey];
-    //
-    //        // Add to mapView:viewForAnnotation: after setting the image on the annotation view
-    //        annotationView.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
-    //
-    //        if (annotationView == nil) {
-    //            annotationView = video.annotationView;
-    //        }
-    //        else {
-    //            annotationView.annotation = annotation;
-    //
-    //            return annotationView;
-    //        }
-    //    }
-    //    return nil;
+//
+//        if ([annotation isKindOfClass:[MKUserLocation class]]) {
+//            return nil;
+//        }
+//    
+//        if ([annotation isKindOfClass:[Video class]]) {
+//    
+//            Video *video = (Video *)annotation;
+//    
+//            MKAnnotationView *annotationView = [mapView dequeueReusableAnnotationViewWithIdentifier:videoAnnotationKey];
+//    
+//            // Add to mapView:viewForAnnotation: after setting the image on the annotation view
+//            annotationView.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
+//            annotationView.annotation = annotation;
+//            
+//            if (annotationView == nil) {
+//                annotationView = video.annotationView;
+//            }
+//            else {
+//                annotationView.annotation = annotation;
+//    
+//                return annotationView;
+//            }
+//        }
+//        return nil;
 }
 
 - (void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control

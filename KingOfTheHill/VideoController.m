@@ -25,10 +25,10 @@
 //{
 //    // create user object
 //    PFObject *user = [PFObject objectWithClassName:@"User"];
-//    
+//
 //    // user video
 //    PFObject *video = [PFObject objectWithClassName:@"Video"];
-//    
+//
 //    // set who the video is creatd by
 //    [video setObject:user forKeyedSubscript:@"ownerOfVideo"];
 //}
@@ -36,20 +36,20 @@
 //- (void)relationshipBetweenVoteAndVideo
 //{
 //    PFObject *video = [PFObject objectWithClassName:@"video"];
-//    
+//
 //    PFObject *vote = [PFObject objectWithClassName:@"vote"];
-//    
+//
 //    [vote setObject:video forKeyedSubscript:@"voteSetOnVideo"];
 //}
 
 - (void)videoToParse
 {
     Video *video = (Video *)[PFObject objectWithClassName:videoKey];
-    video[titleOfVideoKey] = video.titleOfVideo;
-    video[ownerOfVideoKey] = video.ownerOfVideo;
+    video[@"name"] = video.nameOfVideo;
+    video[@"user"] = video.ownerOfVideo;
 #warning come back here
     //    video[coordinateOfVideoKey] = video.coordinate;
-    [video pin];
+    // [video pin];
     [video saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         if (succeeded) {
             NSLog(@"videoKey saved");
@@ -60,26 +60,36 @@
     }];
 }
 
-- (void)userToParse
+// Method to fetch videos
+//
+//
+//
+//
+//
+
+
+- (void)userToParse//:(User *)user video:(Video *)video
 {
+#warning if (user) & if (video) stuff
     User *user = (User *)[PFObject objectWithClassName:userKey];
-    user[userVideoKey] = user.video;
-    user[userVoteKey] = user.votes;
-    [user pin];
+    user[usernameKey] = user.username;
+    user[passwordKey] = user.password;
+    user[emailKey] = user.email;
     [user saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         if (succeeded) {
             NSLog(@"userKey saved");
-                  }
-                  else {
-                      NSLog(@"%@", error);
-                  }
-                  }];
+        }
+        else {
+            NSLog(@"%@", error);
+        }
+    }];
 }
 
-- (void)userToVoteToVideo
+- (void)userToVoteToVideo:(Video *)video
 {
     PFObject *likedVideo = [PFObject objectWithClassName:videoKey];
     PFObject *vote = [PFObject objectWithClassName:voteKey];
+#warning attach vote to Video
     [vote setObject:[PFUser currentUser] forKey:@"fromUser"];
     [vote setValue:likedVideo forKey:@"toVideo"];
     [vote saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {

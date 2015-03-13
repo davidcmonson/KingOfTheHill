@@ -10,24 +10,20 @@
 #import <Parse/Parse.h>
 @class User;
 
-static NSString *videoAnnotationKey = @"videoAnnotation";
 static NSString *videoKey = @"Video";
-static NSString *videoLocationKey = @"videoLocation";
 
-static NSString *titleOfVideoKey = @"title";
-static NSString *ownerOfVideoKey = @"owner";
-static NSString *coordinateOfVideoKey = @"coordinate";
+static NSString *videoAnnotationKey = @"Annotation";
+static NSString *videoLocationKey = @"location";
+static NSString *videoFileKey = @"videoFile";
+static NSString *nameOfVideoKey = @"name";
+static NSString *ownerOfVideoKey = @"user";
+static NSString *videoId = @"objectId";
 
-@interface Video : PFObject <MKAnnotation>
+@interface Video : PFObject
 
-@property (nonatomic, strong) NSString *titleOfVideo;
+@property (nonatomic, strong) NSString *nameOfVideo;
 @property (nonatomic, strong) User *ownerOfVideo;
-@property (nonatomic) CLLocationCoordinate2D coordinate;
-@property (nonatomic, strong) MKAnnotationView *annotationView;
-
-- (id)initWithCoordinate:(CLLocationCoordinate2D)coordinate andTitle:(NSString *)title;
-- (void)setTitleOfVideo:(NSString *)titleOfVideo;
-- (void)ownerOfVideo:(User *)ownerOfVideo;
-- (MKAnnotationView *)annotation;
+@property (nonatomic, strong) NSString *videoId;
+@property (nonatomic, assign) CLLocationCoordinate2D location;
 
 @end

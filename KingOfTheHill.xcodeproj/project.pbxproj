@@ -7,6 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		499F2CC31AB241D700B3FDDF /* VideoPin.m in Sources */ = {isa = PBXBuildFile; fileRef = 499F2CC21AB241D700B3FDDF /* VideoPin.m */; };
+		499F2CC91AB2596400B3FDDF /* SwipePageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 499F2CC81AB2596400B3FDDF /* SwipePageViewController.m */; };
+		499F2CCC1AB2598B00B3FDDF /* VideoFeedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 499F2CCB1AB2598B00B3FDDF /* VideoFeedViewController.m */; };
+		499F2CCF1AB259A800B3FDDF /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 499F2CCE1AB259A800B3FDDF /* ProfileViewController.m */; };
+		499F2D041AB2852600B3FDDF /* AnnotationVideoPlayerViewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 499F2D031AB2852600B3FDDF /* AnnotationVideoPlayerViewViewController.m */; };
+		499F2D0A1AB3375600B3FDDF /* AVPlayerDemoPlaybackView.m in Sources */ = {isa = PBXBuildFile; fileRef = 499F2D091AB3375600B3FDDF /* AVPlayerDemoPlaybackView.m */; };
+		499F2D0D1AB3423D00B3FDDF /* UserController.m in Sources */ = {isa = PBXBuildFile; fileRef = 499F2D0C1AB3423D00B3FDDF /* UserController.m */; };
+		49CC3CA31AB368C300672138 /* CameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 49CC3CA21AB368C300672138 /* CameraViewController.m */; };
 		49F462C51AA9356E00E56599 /* VideoController.m in Sources */ = {isa = PBXBuildFile; fileRef = 49F462C41AA9356E00E56599 /* VideoController.m */; };
 		49F462CB1AA93A5400E56599 /* Location.m in Sources */ = {isa = PBXBuildFile; fileRef = 49F462CA1AA93A5400E56599 /* Location.m */; };
 		705183BE1AAE574500A365FF /* Vote.m in Sources */ = {isa = PBXBuildFile; fileRef = 705183BD1AAE574500A365FF /* Vote.m */; };
@@ -48,6 +56,22 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		499F2CC11AB241D700B3FDDF /* VideoPin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoPin.h; sourceTree = "<group>"; };
+		499F2CC21AB241D700B3FDDF /* VideoPin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VideoPin.m; sourceTree = "<group>"; };
+		499F2CC71AB2596400B3FDDF /* SwipePageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwipePageViewController.h; sourceTree = "<group>"; };
+		499F2CC81AB2596400B3FDDF /* SwipePageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SwipePageViewController.m; sourceTree = "<group>"; };
+		499F2CCA1AB2598B00B3FDDF /* VideoFeedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoFeedViewController.h; sourceTree = "<group>"; };
+		499F2CCB1AB2598B00B3FDDF /* VideoFeedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VideoFeedViewController.m; sourceTree = "<group>"; };
+		499F2CCD1AB259A800B3FDDF /* ProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileViewController.h; sourceTree = "<group>"; };
+		499F2CCE1AB259A800B3FDDF /* ProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileViewController.m; sourceTree = "<group>"; };
+		499F2D021AB2852600B3FDDF /* AnnotationVideoPlayerViewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnnotationVideoPlayerViewViewController.h; sourceTree = "<group>"; };
+		499F2D031AB2852600B3FDDF /* AnnotationVideoPlayerViewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnnotationVideoPlayerViewViewController.m; sourceTree = "<group>"; };
+		499F2D081AB3375600B3FDDF /* AVPlayerDemoPlaybackView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AVPlayerDemoPlaybackView.h; sourceTree = "<group>"; };
+		499F2D091AB3375600B3FDDF /* AVPlayerDemoPlaybackView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AVPlayerDemoPlaybackView.m; sourceTree = "<group>"; };
+		499F2D0B1AB3423D00B3FDDF /* UserController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserController.h; sourceTree = "<group>"; };
+		499F2D0C1AB3423D00B3FDDF /* UserController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserController.m; sourceTree = "<group>"; };
+		49CC3CA11AB368C300672138 /* CameraViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraViewController.h; sourceTree = "<group>"; };
+		49CC3CA21AB368C300672138 /* CameraViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CameraViewController.m; sourceTree = "<group>"; };
 		49F462C31AA9356E00E56599 /* VideoController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoController.h; sourceTree = "<group>"; };
 		49F462C41AA9356E00E56599 /* VideoController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VideoController.m; sourceTree = "<group>"; };
 		49F462C91AA93A5400E56599 /* Location.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Location.h; sourceTree = "<group>"; };
@@ -128,10 +152,14 @@
 			children = (
 				77D6FB4D1AA930E000E97862 /* User.h */,
 				77D6FB4E1AA930E000E97862 /* User.m */,
-				49F462C31AA9356E00E56599 /* VideoController.h */,
-				49F462C41AA9356E00E56599 /* VideoController.m */,
+				499F2D0B1AB3423D00B3FDDF /* UserController.h */,
+				499F2D0C1AB3423D00B3FDDF /* UserController.m */,
 				70A189371AAF923E0044F98D /* Video.h */,
 				70A189381AAF923E0044F98D /* Video.m */,
+				49F462C31AA9356E00E56599 /* VideoController.h */,
+				49F462C41AA9356E00E56599 /* VideoController.m */,
+				499F2CC11AB241D700B3FDDF /* VideoPin.h */,
+				499F2CC21AB241D700B3FDDF /* VideoPin.m */,
 				705183BC1AAE574500A365FF /* Vote.h */,
 				705183BD1AAE574500A365FF /* Vote.m */,
 			);
@@ -141,8 +169,12 @@
 		49F462D01AA93BC300E56599 /* Location */ = {
 			isa = PBXGroup;
 			children = (
+				499F2D081AB3375600B3FDDF /* AVPlayerDemoPlaybackView.h */,
+				499F2D091AB3375600B3FDDF /* AVPlayerDemoPlaybackView.m */,
 				49F462C91AA93A5400E56599 /* Location.h */,
 				49F462CA1AA93A5400E56599 /* Location.m */,
+				499F2D021AB2852600B3FDDF /* AnnotationVideoPlayerViewViewController.h */,
+				499F2D031AB2852600B3FDDF /* AnnotationVideoPlayerViewViewController.m */,
 				708554B81AAE6BA8006DEB38 /* LocationViewController.h */,
 				708554B91AAE6BA8006DEB38 /* LocationViewController.m */,
 			);
@@ -192,6 +224,14 @@
 		77D6FB261AA92CAC00E97862 /* KingOfTheHill */ = {
 			isa = PBXGroup;
 			children = (
+				499F2CCD1AB259A800B3FDDF /* ProfileViewController.h */,
+				499F2CCE1AB259A800B3FDDF /* ProfileViewController.m */,
+				499F2CCA1AB2598B00B3FDDF /* VideoFeedViewController.h */,
+				499F2CCB1AB2598B00B3FDDF /* VideoFeedViewController.m */,
+				499F2CC71AB2596400B3FDDF /* SwipePageViewController.h */,
+				499F2CC81AB2596400B3FDDF /* SwipePageViewController.m */,
+				49CC3CA11AB368C300672138 /* CameraViewController.h */,
+				49CC3CA21AB368C300672138 /* CameraViewController.m */,
 				77D6FB2B1AA92CAC00E97862 /* AppDelegate.h */,
 				77D6FB2C1AA92CAC00E97862 /* AppDelegate.m */,
 				77D6FB2E1AA92CAC00E97862 /* ViewController.h */,
@@ -282,7 +322,7 @@
 				TargetAttributes = {
 					77D6FB231AA92CAC00E97862 = {
 						CreatedOnToolsVersion = 6.1.1;
-						DevelopmentTeam = VBJ3B2RNGL;
+						DevelopmentTeam = K75493KQVP;
 						SystemCapabilities = {
 							com.apple.Maps.iOS = {
 								enabled = 1;
@@ -294,6 +334,7 @@
 					};
 					77D6FB3C1AA92CAC00E97862 = {
 						CreatedOnToolsVersion = 6.1.1;
+						DevelopmentTeam = K75493KQVP;
 						TestTargetID = 77D6FB231AA92CAC00E97862;
 					};
 				};
@@ -342,9 +383,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				499F2CC91AB2596400B3FDDF /* SwipePageViewController.m in Sources */,
 				705183BE1AAE574500A365FF /* Vote.m in Sources */,
+				499F2CCC1AB2598B00B3FDDF /* VideoFeedViewController.m in Sources */,
 				77D6FB4F1AA930E000E97862 /* User.m in Sources */,
+				499F2D0A1AB3375600B3FDDF /* AVPlayerDemoPlaybackView.m in Sources */,
+				499F2CCF1AB259A800B3FDDF /* ProfileViewController.m in Sources */,
+				499F2D041AB2852600B3FDDF /* AnnotationVideoPlayerViewViewController.m in Sources */,
+				499F2CC31AB241D700B3FDDF /* VideoPin.m in Sources */,
 				49F462CB1AA93A5400E56599 /* Location.m in Sources */,
+				499F2D0D1AB3423D00B3FDDF /* UserController.m in Sources */,
+				49CC3CA31AB368C300672138 /* CameraViewController.m in Sources */,
 				70A189391AAF923E0044F98D /* Video.m in Sources */,
 				77D6FB301AA92CAC00E97862 /* ViewController.m in Sources */,
 				49F462C51AA9356E00E56599 /* VideoController.m in Sources */,

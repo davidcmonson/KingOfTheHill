@@ -8,7 +8,10 @@
 
 #import <Parse/Parse.h>
 #import "LocationViewController.h"
+
 #import "AppDelegate.h"
+#import "SwipePageViewController.h"
+#import "Video.h"
 
 @interface AppDelegate ()
 
@@ -20,19 +23,21 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     
-    [Parse enableLocalDatastore];
+    //[Video registerSubclass]; // This is object is connected to [Entry object] in ViewController.m
+    
+    //[Parse enableLocalDatastore];
     
     // Initialize Parse.
-    [Parse setApplicationId:@"vj7GwT9vLALBJxbfC8XpXDBT0MaEQU2IxoKUATwj"
-                  clientKey:@"PafompYCKXgr7DuqariZL1rguCNuaG8VrQOYqEVU"];
+    [Parse setApplicationId:@"031Fu6MXK8wj6Ntaxi9Z9GLsZILifm8JoMNRzA01"
+                  clientKey:@"EPLWlxSsjGDbv7reE1E22smS02PxQbnSJSyrUoC2"];
     
     // [Optional] Track statistics around application opens.
     [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
-    self.window.rootViewController = [LocationViewController new];
-
+    self.window.rootViewController = [SwipePageViewController new];
+    
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     

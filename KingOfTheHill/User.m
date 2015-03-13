@@ -10,7 +10,9 @@
 
 @implementation User
 
-@dynamic votes;
-@dynamic video;
+@dynamic objectID;
+@dynamic username;
+@dynamic password;
+@dynamic email;
 
 @end

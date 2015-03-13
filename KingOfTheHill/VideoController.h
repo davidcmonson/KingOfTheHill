@@ -16,8 +16,6 @@
 @property (nonatomic, strong) NSArray *arrayOfVideos;
 
 + (VideoController *)sharedInstance;
-//- (void)relationshipBetweenVideoAndUser;
-//- (void)relationshipBetweenVoteAndVideo;
 - (void)videoToParse;
 - (void)userToParse;
 - (void)userToVoteToVideo;

@@ -10,13 +10,6 @@
 #import "LocationViewController.h"
 #import "VideoController.h"
 
-
-// Test Purposes
-#import "AnnotationVideoPlayerViewViewController.h"
-#import <MediaPlayer/MediaPlayer.h>
-#import <MobileCoreServices/MobileCoreServices.h>
-#import "AVPlayerDemoPlaybackView.h"
-
 #import <AVKit/AVKit.h>
 #import <UIKit/UIKit.h>
 #import <AVFoundation/AVFoundation.h>
@@ -44,7 +37,10 @@
 
 @implementation LocationViewController
 
+
+
 ////////////// TEST VIDEO ///////////////
+
 - (void)viewDidAppear:(BOOL)animated {
     
     PFFile *videoFile = self.arrayOfVideos[1][videoFileKey];
@@ -59,7 +55,10 @@
     [self.view addSubview: playerView];
     [player play];
 }
+// This will be put in the DetailViewController
 //////////////////////////////////////////
+
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -85,6 +84,7 @@
     /////////////// TEMP CODE for Simulator purposes
     //    CLLocation *tempLocation = [[CLLocation alloc] initWithLatitude:40.1 longitude:-111.1];
     //    self.myCoordinates = tempLocation.coordinate;
+    // This hard codes a coordinate for tests on iOS Simulator
     ////////////////
     
     [self queryForAllVideosNearLocation:self.myCoordinates withinDistance:20000];
@@ -94,8 +94,6 @@
     [self.map setRegion:adjustedRegionForInitialZoomLevel animated:YES];
     
 }
-
-
 
 
 - (void)dropPinAtCoordinatesForVideosInVideosArray:(NSArray *)array {

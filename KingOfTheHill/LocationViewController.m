@@ -20,9 +20,10 @@
 
 @interface LocationViewController () <MKMapViewDelegate, CLLocationManagerDelegate, MKAnnotation>
 
+@property (nonatomic, strong) NSArray *thumbnails;
+@property (nonatomic, strong) MKMapView *allAnnotationsMapView;
 
-
-@property (nonatomic, strong) MKMapView *map;
+@property (nonatomic, strong) MKMapView *mainMapView;
 @property (nonatomic, strong) CLLocationManager *locationManager;
 @property (nonatomic, strong) Video *video;
 @property (nonatomic) CLLocationCoordinate2D myCoordinates;
@@ -86,10 +87,10 @@
     ////////////////
     
     [self queryForAllVideosNearLocation:self.myCoordinates withinDistance:20000];
-    [self.map setCenterCoordinate:self.map.userLocation.location.coordinate animated:YES];
+    [self.mainMapView setCenterCoordinate:self.mainMapView.userLocation.location.coordinate animated:YES];
     
-    MKCoordinateRegion adjustedRegionForInitialZoomLevel = [self.map regionThatFits:MKCoordinateRegionMakeWithDistance(self.myCoordinates, 3000, 3000)];
-    [self.map setRegion:adjustedRegionForInitialZoomLevel animated:YES];
+    MKCoordinateRegion adjustedRegionForInitialZoomLevel = [self.mainMapView regionThatFits:MKCoordinateRegionMakeWithDistance(self.myCoordinates, 3000, 3000)];
+    [self.mainMapView setRegion:adjustedRegionForInitialZoomLevel animated:YES];
     
 }
 
@@ -109,7 +110,7 @@
         //            [self.map removeAnnotation:annotation];
         //        }
         //    Drop pin on map
-        [self.map addAnnotation:point];
+        [self.mainMapView addAnnotation:point];
     }
 }
 
@@ -123,12 +124,12 @@
 
 - (void)mapView
 {
-    self.map = [[MKMapView alloc] initWithFrame:self.view.bounds];
-    self.map.mapType = MKMapTypeStandard;
-    [self.view addSubview:self.map];
+    self.mainMapView = [[MKMapView alloc] initWithFrame:self.view.bounds];
+    self.mainMapView.mapType = MKMapTypeStandard;
+    [self.view addSubview:self.mainMapView];
     
-    self.map.delegate = self;
-    self.map.showsUserLocation = YES; // Must be YES in order for the MKMapView protocol to fire.
+    self.mainMapView.delegate = self;
+    self.mainMapView.showsUserLocation = YES; // Must be YES in order for the MKMapView protocol to fire.
 }
 
 - (CLLocationManager *)locationManager
@@ -144,8 +145,8 @@
 #pragma mark MKMapView delegate
 - (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation
 {
-    self.myCoordinates = self.map.userLocation.location.coordinate;
-    [self.map setCenterCoordinate:self.map.userLocation.location.coordinate animated:YES];
+    self.myCoordinates = self.mainMapView.userLocation.location.coordinate;
+    [self.mainMapView setCenterCoordinate:self.mainMapView.userLocation.location.coordinate animated:YES];
 }
 
 
@@ -177,39 +178,106 @@
     
 }
 
+
+
+//- (void)mapView:(MKMapView *)aMapView regionDidChangeAnimated:(BOOL)animated {
+//    
+//    [self updateVisibleAnnotations];
+//}
+
+
+
+- (void)mapView:(MKMapView *)aMapView didAddAnnotationViews:(NSArray *)views {
+    
+    for (MKAnnotationView *annotationView in views) {
+        if (![annotationView.annotation isKindOfClass:[VideoPin class]]) {
+            continue;
+        }
+        
+        VideoPin *annotation = (VideoPin *)annotationView.annotation;
+        
+        if (annotation.clusterAnnotation != nil) {
+            // animate the annotation from it's old container's coordinate, to its actual coordinate
+            CLLocationCoordinate2D actualCoordinate = annotation.coordinate;
+            CLLocationCoordinate2D containerCoordinate = annotation.clusterAnnotation.coordinate;
+            
+            // since it's displayed on the map, it is no longer contained by another annotation,
+            // (We couldn't reset this in -updateVisibleAnnotations because we needed the reference to it here
+            // to get the containerCoordinate)
+            annotation.clusterAnnotation = nil;
+            
+            annotation.coordinate = containerCoordinate;
+            
+            [UIView animateWithDuration:0.3 animations:^{
+                annotation.coordinate = actualCoordinate;
+            }];
+        }
+    }
+}
+
+
+
+
 #pragma mark Annotations section
-- (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation
+- (MKAnnotationView *)mapView:(MKMapView *)aMapView viewForAnnotation:(id<MKAnnotation>)annotation
 {
-    MKPinAnnotationView *pin = (MKPinAnnotationView *) [mapView dequeueReusableAnnotationViewWithIdentifier:videoAnnotationKey];
-    if ([annotation isKindOfClass:[MKUserLocation class]]) {
+    
+    static NSString *annotationIdentifier = @"VideoPin";
+    
+    if (aMapView != self.mainMapView)
         return nil;
+    
+    if ([annotation isKindOfClass:[VideoPin class]]) {
+        MKPinAnnotationView *annotationView = (MKPinAnnotationView *)[self.mainMapView dequeueReusableAnnotationViewWithIdentifier:annotationIdentifier];
+        if (annotationView == nil)
+            annotationView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:annotationIdentifier];
+        
+        annotationView.canShowCallout = YES;
+        
+        UIButton *disclosureButton = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
+        annotationView.rightCalloutAccessoryView = disclosureButton;
+        
+        return annotationView;
     }
-    if (pin == nil) {
-        pin = [[MKPinAnnotationView alloc] initWithAnnotation: annotation
-                                              reuseIdentifier: videoAnnotationKey];
-    } else {
-        annotation = [VideoPin new];
-        pin.annotation = annotation;
-    }
-    pin.image = [UIImage imageNamed:@"Skateboarding-50"];
-    pin.enabled = YES;
-    pin.canShowCallout = YES;
     
-    pin.pinColor = MKPinAnnotationColorGreen;    // We can pick the color of the Pin!! Woohoo!
-    pin.animatesDrop = YES;
-    
-    // We can add a target/action by separating UIButton as a separate instance.
-    UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
-    [rightButton addTarget:nil action:nil forControlEvents:UIControlEventTouchUpInside];
-    pin.rightCalloutAccessoryView = rightButton;
+    return nil;
+
     
     
-    // Add a custom image to the left side of the callout.
-    UIImageView *myCustomImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Skateboarding-50"]];
-    pin.leftCalloutAccessoryView = myCustomImage;
+    
+//    MKPinAnnotationView *pin = (MKPinAnnotationView *) [mapView dequeueReusableAnnotationViewWithIdentifier:videoAnnotationKey];
+//    if ([annotation isKindOfClass:[MKUserLocation class]]) {
+//        return nil;
+//    }
+//    if (pin == nil) {
+//        pin = [[MKPinAnnotationView alloc] initWithAnnotation: annotation
+//                                              reuseIdentifier: videoAnnotationKey];
+//    } else {
+//        annotation = [VideoPin new];
+//        pin.annotation = annotation;
+//    }
+//    pin.image = [UIImage imageNamed:@"Skateboarding-50"];
+//    pin.enabled = YES;
+//    pin.canShowCallout = YES;
+//    
+//    pin.pinColor = MKPinAnnotationColorGreen;    // We can pick the color of the Pin!! Woohoo!
+//    pin.animatesDrop = YES;
+//    
+//    // We can add a target/action by separating UIButton as a separate instance.
+//    UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
+//    [rightButton addTarget:nil action:nil forControlEvents:UIControlEventTouchUpInside];
+//    pin.rightCalloutAccessoryView = rightButton;
+//    
+//    
+//    // Add a custom image to the left side of the callout.
+//    UIImageView *myCustomImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Skateboarding-50"]];
+//    pin.leftCalloutAccessoryView = myCustomImage;
+//    
+//    
+//    return pin;
     
     
-    return pin;
+    
     
 //
 //        if ([annotation isKindOfClass:[MKUserLocation class]]) {
@@ -236,13 +304,34 @@
 //            }
 //        }
 //        return nil;
+    
+    
 }
 
-- (void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control
-{
-    //    InfoView *infoView = [[InfoView alloc]initWithNibName:@"InfoView" bundle:nil];
-    //    [self.navigationController pushViewController:infoView animated:YES];
-    NSLog(@"Pin was tapped");
+// user tapped the call out accessory or the "bubble" that pops up
+- (void)mapView:(MKMapView *)aMapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control {
+    
+    VideoPin *annotation = (VideoPin *)view.annotation;
+    
+    NSMutableArray *photosToShow = [NSMutableArray arrayWithObject:annotation];
+    [photosToShow addObjectsFromArray:annotation.containedAnnotations];
+    
+    // This sets up the
+//    PhotosViewController *viewController = [[PhotosViewController alloc] init];
+//    viewController.edgesForExtendedLayout = UIRectEdgeNone;
+//    viewController.photosToShow = photosToShow;
+
+//  [self.navigationController pushViewController:viewController animated:YES];
+}
+
+
+- (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view {
+    
+    if ([view.annotation isKindOfClass:[VideoPin class]])
+    {
+        VideoPin *annotation = (VideoPin *)view.annotation;
+        [annotation updateSubtitleIfNeeded];
+    }
 }
 
 

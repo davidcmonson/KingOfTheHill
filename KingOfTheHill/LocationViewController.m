@@ -62,7 +62,7 @@
     mapSwipeBarLabel.textAlignment = NSTextAlignmentCenter;
     mapSwipeBarLabel.textColor = [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:1.0];
     [self.view addSubview:mapSwipeBarLabel];
-
+    
 }
 
 - (void)centerAndZoomToLocation:(CLLocationCoordinate2D)coordinate {
@@ -101,7 +101,7 @@
     PFQuery *queryForVideos = [PFQuery queryWithClassName:@"Video"];
     PFGeoPoint *geoPoint = [PFGeoPoint geoPointWithLatitude:coordinates.latitude
                                                   longitude:coordinates.longitude];
-    [queryForVideos whereKey:videoLocationKey
+    [queryForVideos whereKey:locationKeyOfVideo
                 nearGeoPoint:geoPoint
             withinKilometers:radiusFromLocationInMeters];
     
@@ -112,7 +112,6 @@
         else {
             NSMutableArray *arrayOfVideos = [[NSMutableArray alloc] initWithArray:objects];
             //[self dropPinAtCoordinatesForVideosInVideosArray:arrayOfVideos];
-            
             [VideoController sharedInstance].arrayOfVideos = arrayOfVideos;
             [self dropPinAtCoordinatesForVideosInVideosArray:[VideoController sharedInstance].arrayOfVideos];
             NSLog(@"%ld",[VideoController sharedInstance].arrayOfVideos.count);
@@ -125,16 +124,17 @@
 - (void)dropPinAtCoordinatesForVideosInVideosArray:(NSArray *)array {
     
     for (NSInteger index = 0; index < array.count; index++) {
+        
         // Create video instance to make it easier to read when getting coordinates from it.
-        PFObject *videoDictionaryAtIndex = array[index];
-        PFGeoPoint *geoPointOfVideo = videoDictionaryAtIndex[videoLocationKey];
+        Video *videoPFObjectAtIndex = array[index];
+        PFGeoPoint *geoPointOfVideo = videoPFObjectAtIndex[locationKeyOfVideo];
+        
         // Convert GeoPoint to CLLocaation
-        CLLocationCoordinate2D coordinateOfVideo = [self convertPFGeoPointToLocationCoordinate2D:geoPointOfVideo];
+       CLLocationCoordinate2D coordinateOfVideo = [self convertPFGeoPointToLocationCoordinate2D:geoPointOfVideo];
+        
         // Adding annotations
-        VideoPin *videoPin = [[VideoPin alloc]initWithThumbnailImagePath:nil
-                                                                   title:videoDictionaryAtIndex[nameOfVideoKey]
-                                                                subtitle:@"Name of Location"
-                                                              coordinate:coordinateOfVideo];
+        VideoPin *videoPin = [[VideoPin alloc]initWithVideo:videoPFObjectAtIndex];
+
         
         //    If you want to clear other pins/annotations this is how to do it
         //        for (id annotation in self.map.annotations) {
@@ -147,11 +147,14 @@
 }
 
 -(CLLocationCoordinate2D)convertPFGeoPointToLocationCoordinate2D:(PFGeoPoint *)geoPoint {
+    
     CLLocationCoordinate2D coordinates;
     coordinates.latitude = geoPoint.latitude;
     coordinates.longitude = geoPoint.longitude;
+    
     return coordinates;
 }
+
 
 
 #pragma mark Annotations section
@@ -197,15 +200,49 @@
     //    [photosToShow addObjectsFromArray:annotation.containedAnnotations];
     
     // This sets up the detail view for the user selected pin/annotation and presents the view
-    AnnotationVideoPlayerViewViewController *viewController = [AnnotationVideoPlayerViewViewController new];
-//    viewController.videoAtIndex = 
-    viewController.edgesForExtendedLayout = UIRectEdgeNone;
-    [self presentViewController:viewController animated:YES completion:nil];
+    //    AnnotationVideoPlayerViewViewController *viewController = [AnnotationVideoPlayerViewViewController new];
+    //    //    viewController.videoAtIndex =
+    //    viewController.edgesForExtendedLayout = UIRectEdgeNone;
+    [self bringUpPlayer];
+    //[self presentViewController:viewController animated:YES completion:nil];
 }
+
+- (void)bringUpPlayer {
+    
+    AnnotationVideoPlayerViewViewController *videoVC = [AnnotationVideoPlayerViewViewController new];
+    videoVC.edgesForExtendedLayout = UIRectEdgeNone;
+    videoVC.modalPresentationStyle = UIModalPresentationOverCurrentContext;
+    videoVC.modalTransitionStyle = UIModalTransitionStyleCoverVertical;;
+    [self presentViewController:videoVC animated:YES completion:nil];
+    
+    if (!UIAccessibilityIsReduceTransparencyEnabled) {
+        UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleExtraLight];
+        UIVisualEffectView *viewWithBlurredBackground = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
+        viewWithBlurredBackground.frame = self.view.bounds;
+        [self.view addSubview:viewWithBlurredBackground];
+        
+        //only apply the blur if the user hasn't disabled transparency effects
+        
+        //if you have more UIViews on screen, use insertSubview:belowSubview: to place it underneath the lowest view
+        
+        //add auto layout constraints so that the blur fills the screen upon rotating device
+        //viewWithBlurredBackground.setTranslatesAutoresizingMaskIntoConstraints(false);
+        //        self.view.addConstraint(NSLayoutConstraint(item: blurEffectView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: view, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 0));
+        //        self.view.addConstraint(NSLayoutConstraint(item: blurEffectView, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: view, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: 0));
+        //        self.view.addConstraint(NSLayoutConstraint(item: blurEffectView, attribute: NSLayoutAttribute.Leading, relatedBy: NSLayoutRelation.Equal, toItem: view, attribute: NSLayoutAttribute.Leading, multiplier: 1, constant: 0));
+        //        self.view.addConstraint(NSLayoutConstraint(item: blurEffectView, attribute: NSLayoutAttribute.Trailing, relatedBy: NSLayoutRelation.Equal, toItem: view, attribute: NSLayoutAttribute.Trailing, multiplier: 1, constant: 0));
+    } else {
+        self.view.backgroundColor = [UIColor blackColor];
+    }
+}
+
+
+
+
 
 // When the user taps/selects the Pin, updates if there's mutiple pins inside
 - (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view {
-
+    
     if ([view.annotation isKindOfClass:[VideoPin class]])
     {
         VideoPin *annotation = (VideoPin *)view.annotation;
@@ -457,9 +494,6 @@
  
  
  }
- 
- 
- 
  
  
  - (void)mapView:(MKMapView *)aMapView regionDidChangeAnimated:(BOOL)animated {

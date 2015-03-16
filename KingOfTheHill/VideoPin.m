@@ -30,6 +30,27 @@
     return self;
 }
 
+- (id)initWithVideo:(Video *)video {
+    self = [super init];
+    if (self) {
+        self.currentVideo = video;
+        self.thumbnailImagePath = @"Blank";
+        self.title = video[titleOfVideoKey];
+        self.subtitle = @"Name of Location (Placeholder)";
+        self.coordinate = [self convertPFGeoPointToLocationCoordinate2D:video[locationKeyOfVideo]];
+    }
+    return self;
+}
+
+-(CLLocationCoordinate2D)convertPFGeoPointToLocationCoordinate2D:(PFGeoPoint *)geoPoint {
+    
+    CLLocationCoordinate2D coordinates;
+    coordinates.latitude = geoPoint.latitude;
+    coordinates.longitude = geoPoint.longitude;
+    
+    return coordinates;
+}
+
 - (NSString *)title {
     
     if (self.containedAnnotations.count > 0) {

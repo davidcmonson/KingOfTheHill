@@ -35,7 +35,7 @@
     // loads the video and player asynchronously
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
 #warning the index should be passed into this ViewController to show the appropriate video
-        PFFile *videoFile = [VideoController sharedInstance].arrayOfVideos[1][videoFileKey];
+        PFFile *videoFile = [VideoController sharedInstance].arrayOfVideos[1][urlOfVideo];
         self.videoURL = [NSURL URLWithString:videoFile.url];
         AVAsset *video = [AVAsset assetWithURL:self.videoURL];
         AVPlayerItem *item = [[AVPlayerItem alloc] initWithAsset:video];
@@ -57,7 +57,7 @@
 
 
 -(void)dismissView {
-
+    
     [self dismissViewControllerAnimated:YES completion:^{
         [self.player pause];
         [self.view removeFromSuperview];
@@ -66,7 +66,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.view.backgroundColor = [UIColor blackColor];
+    [self.view setBackgroundColor:[UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:.6]];
 }
 
 - (void)didReceiveMemoryWarning {

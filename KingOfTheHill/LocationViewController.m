@@ -172,8 +172,15 @@
         annotationView.canShowCallout = YES;
         annotationView.animatesDrop = YES;
         
+        // Disabled: Pins show up too fast for custom image to be initialized.
+        //annotationView.image = [UIImage imageNamed:@"Skateboarding-50"];
+        
         UIButton *disclosureButton = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
         annotationView.rightCalloutAccessoryView = disclosureButton;
+        
+        // Add a custom image to the left side of the callout.
+        UIImageView *myCustomImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Skateboarding-50"]];
+        annotationView.leftCalloutAccessoryView = myCustomImage;
         
         return annotationView;
     }

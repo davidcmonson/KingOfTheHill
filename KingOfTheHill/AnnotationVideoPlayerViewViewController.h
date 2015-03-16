@@ -7,7 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <AVFoundation/AVFoundation.h>
 
-@interface AnnotationVideoPlayerViewViewController : UIImagePickerController
+
+@interface AnnotationVideoPlayerViewViewController : UIViewController
+
+@property (nonatomic) NSInteger videoAtIndex;
 
 @end

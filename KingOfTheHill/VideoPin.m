@@ -7,47 +7,113 @@
 //
 
 #import "VideoPin.h"
-
-@interface VideoPin ()
-@property (nonatomic, copy) NSString *name;
-@property (nonatomic, copy) NSString *description;
-@property (nonatomic, assign) CLLocationCoordinate2D theCoordinate;
-@end
+#import <CoreLocation/CoreLocation.h>
 
 @implementation VideoPin
 
-//@synthesize title = _title;
-//@synthesize coordinate = _coordinate;
+@synthesize title = _title;
+@synthesize coordinate = _coordinate;
+@synthesize subtitle = _subtitle;
 
 
-
-- (id)initWithName:(NSString *)name
-       description:(NSString *)descrption
-        coordinate:(CLLocationCoordinate2D)coordinate {
+- (id)initWithThumbnailImagePath:(NSString*)thumbnailImagePath
+                           title:(NSString *)title
+                     subtitle:(NSString *)subtitle
+                      coordinate:(CLLocationCoordinate2D)coordinate {
     self = [super init];
     if (self) {
-        self.name = name;
-        self.description = descrption;
-        self.coordinate = coordinate;
-    
+    self.thumbnailImagePath = thumbnailImagePath;
+    self.title = title;
+    self.subtitle = subtitle;
+    self.coordinate = coordinate;
     }
     return self;
 }
 
+- (id)initWithVideo:(Video *)video {
+    self = [super init];
+    if (self) {
+        self.currentVideo = video;
+        self.thumbnailImagePath = @"Blank";
+        self.title = video[titleOfVideoKey];
+        self.subtitle = @"Name of Location (Placeholder)";
+        self.coordinate = [self convertPFGeoPointToLocationCoordinate2D:video[locationKeyOfVideo]];
+    }
+    return self;
+}
+
+-(CLLocationCoordinate2D)convertPFGeoPointToLocationCoordinate2D:(PFGeoPoint *)geoPoint {
+    
+    CLLocationCoordinate2D coordinates;
+    coordinates.latitude = geoPoint.latitude;
+    coordinates.longitude = geoPoint.longitude;
+    
+    return coordinates;
+}
+
 - (NSString *)title {
-    return _name;
+    
+    if (self.containedAnnotations.count > 0) {
+        return [NSString stringWithFormat:@"%zd Photos", self.containedAnnotations.count + 1];
+    }
+    
+    return _title;
 }
 
 - (NSString *)subtitle {
-    return nil;
-    //return _address;
+    return _subtitle;
 }
+
 
 - (CLLocationCoordinate2D)coordinate {
-    return _theCoordinate;
+    return _coordinate;
 }
 
-- (MKMapItem*)mapItem {
+- (UIImage *)thumbnail {
+    
+    if (!_image && self.thumbnailImagePath) {
+        _image = [UIImage imageWithContentsOfFile:self.thumbnailImagePath];
+    }
+    return _image;
+}
+
+- (NSString *)stringForPlacemark:(CLPlacemark *)placemark {
+    
+    NSMutableString *string = [[NSMutableString alloc] init];
+    if (placemark.locality) {
+        [string appendString:placemark.locality];
+    }
+    
+    if (placemark.administrativeArea) {
+        if (string.length > 0)
+            [string appendString:@", "];
+        [string appendString:placemark.administrativeArea];
+    }
+    
+    if (string.length == 0 && placemark.name)
+        [string appendString:placemark.name];
+    
+    return string;
+}
+
+// Changes the subtitle to make approximation location name. Ex: "Near Salt Lake Convention Center"
+- (void)updateSubtitleIfNeeded {
+    
+    if (self.subtitle == nil) {
+        // for the subtitle, we reverse geocode the lat/long for a proper location string name
+        CLLocation *location = [[CLLocation alloc] initWithLatitude:self.coordinate.latitude longitude:self.coordinate.longitude];
+        CLGeocoder *geocoder = [[CLGeocoder alloc] init];
+        [geocoder reverseGeocodeLocation:location completionHandler:^(NSArray *placemarks, NSError *error) {
+            if (placemarks.count > 0) {
+                CLPlacemark *placemark = placemarks[0];
+                self.subtitle = [NSString stringWithFormat:@"Near %@", [self stringForPlacemark:placemark]];
+            }
+        }];
+    }
+}
+
+
+//- (MKMapItem*)mapItem {
 ////    NSDictionary *addressDict = @{(NSString*)kABPersonAddressStreetKey : _address};
 //    
 //    MKPlacemark *placemark = [[MKPlacemark alloc]
@@ -58,8 +124,8 @@
 //    mapItem.name = self.title;
 //    
 //    return mapItem;
-    return nil;
-}
+//    return nil;
+//}
 
 
 //- (void)setCoordinate:(CLLocationCoordinate2D)newCoordinate

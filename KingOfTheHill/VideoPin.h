@@ -14,15 +14,30 @@ static NSString *videoPinKey = @"videoPin";
 
 @interface VideoPin : NSObject <MKAnnotation>
 
-@property (nonatomic, strong) Video *video;
 
-- (id)initWithName:(NSString*)name
-       description:(NSString *)descrption
-        coordinate:(CLLocationCoordinate2D)coordinate;
 
-- (CLLocationCoordinate2D)coordinate;
-- (MKMapItem*)mapItem;
+@property (nonatomic, strong) UIImage *image;
+@property (nonatomic, strong) NSString *thumbnailImagePath;
+@property (nonatomic, strong) VideoPin *clusterAnnotation;
+@property (nonatomic, strong) NSArray *containedAnnotations;
 
-//- (MKAnnotationView *)annotation;
+// Required properties when using MKAnnotation
+@property (nonatomic, copy) NSString *title;
+@property (nonatomic, copy) NSString *subtitle;
+@property (nonatomic) CLLocationCoordinate2D coordinate;
+
+@property (nonatomic, strong) Video *currentVideo;
+
+- (id)initWithThumbnailImagePath:(NSString*)thumbnailImagePath
+                           title:(NSString *)title
+                        subtitle:(NSString *)subtitle
+                      coordinate:(CLLocationCoordinate2D)coordinate;
+
+- (id)initWithVideo:(Video *)video;
+
+- (void)updateSubtitleIfNeeded;
+//- (CLLocationCoordinate2D)coordinate;
+//- (MKMapItem*)mapItem;
+
 
 @end

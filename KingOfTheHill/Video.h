@@ -12,11 +12,11 @@
 
 static NSString *videoKey = @"Video";
 
-static NSString *videoAnnotationKey = @"Annotation";
-static NSString *videoLocationKey = @"location";
-static NSString *videoFileKey = @"videoFile";
-static NSString *nameOfVideoKey = @"name";
-static NSString *ownerOfVideoKey = @"user";
+static NSString *annotationKeyOfVideo = @"annotation";
+static NSString *locationKeyOfVideo = @"location";
+static NSString *urlOfVideo = @"videoFile";
+static NSString *titleOfVideoKey = @"name";
+static NSString *userOfVideoKey = @"user";
 static NSString *videoId = @"objectId";
 
 @interface Video : PFObject
@@ -25,5 +25,6 @@ static NSString *videoId = @"objectId";
 @property (nonatomic, strong) User *ownerOfVideo;
 @property (nonatomic, strong) NSString *videoId;
 @property (nonatomic, assign) CLLocationCoordinate2D location;
+@property (nonatomic) NSInteger videoAtIndex;
 
 @end

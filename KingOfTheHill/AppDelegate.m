@@ -23,9 +23,11 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     
-    //[Video registerSubclass]; // This is object is connected to [Entry object] in ViewController.m
+    // This is object is connected to [Entry object] in ViewController.m
     
     //[Parse enableLocalDatastore];
+    
+    [Video registerSubclass];
     
     // Initialize Parse.
     [Parse setApplicationId:@"031Fu6MXK8wj6Ntaxi9Z9GLsZILifm8JoMNRzA01"

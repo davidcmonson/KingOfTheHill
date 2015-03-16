@@ -10,9 +10,14 @@
 
 @implementation Video
 
-@dynamic nameOfVideo;
-@dynamic ownerOfVideo;
-@dynamic videoId;
+@dynamic name;
+@dynamic videoFile;
+@dynamic user;
 @dynamic location;
+
++ (NSString *)parseClassName
+{
+    return @"Video";
+}
 
 @end

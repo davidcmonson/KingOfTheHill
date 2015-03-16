@@ -7,20 +7,17 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "User.h"
 
 @interface UserController : NSObject
 
-//@property currentUser
-//
-//+ sharedInstance
-//
-//- getProfileForCurrentUser
-//
-//- getProfileForUser:(User *)
-//
-//- getAllVotesByUser
-//
-//-
-//
+@property (nonatomic, strong) User *currentUser;
+
++ (UserController *)sharedInstance;
+- (void)getProfileForCurrentUser:(User *)user;
+- (void)getProfileForUser:(User *)user;
+- (NSUInteger)getAllVotesByUser;
+- (void)userToVoteToVideo;
 
 @end
+

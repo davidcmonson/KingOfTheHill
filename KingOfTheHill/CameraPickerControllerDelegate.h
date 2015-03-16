@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface CameraPickerControllerDelegate : UIView
+@interface CameraPickerControllerDelegate : NSObject <UIImagePickerControllerDelegate, UINavigationControllerDelegate>
+
+@property (nonatomic,strong) NSURL *videoURL;
 
 @end

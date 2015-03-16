@@ -13,17 +13,19 @@
 static NSString *videoKey = @"Video";
 
 static NSString *videoAnnotationKey = @"Annotation";
+
 static NSString *videoLocationKey = @"location";
 static NSString *videoFileKey = @"videoFile";
 static NSString *nameOfVideoKey = @"name";
 static NSString *ownerOfVideoKey = @"user";
-static NSString *videoId = @"objectId";
 
-@interface Video : PFObject
+@interface Video : PFObject <PFSubclassing>
 
-@property (nonatomic, strong) NSString *nameOfVideo;
-@property (nonatomic, strong) User *ownerOfVideo;
-@property (nonatomic, strong) NSString *videoId;
-@property (nonatomic, assign) CLLocationCoordinate2D location;
+@property (nonatomic, strong) NSString *name;
+@property (nonatomic, strong) NSURL *videoFile;
+@property (nonatomic, strong) User *user;
+@property (nonatomic, assign) id location;
+
++ (NSString *)parseClassName;
 
 @end

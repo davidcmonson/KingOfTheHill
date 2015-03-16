@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface MediaPlayerViewController : UIViewController
+@interface MediaPlayerViewController : MPMoviePlayerController
 
 @end

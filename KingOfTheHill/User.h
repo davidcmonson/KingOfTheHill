@@ -9,10 +9,11 @@
 #import <Parse/Parse.h>
 #import <Foundation/Foundation.h>
 #import "Video.h"
+#import "Vote.h"
 
 static NSString *userKey = @"User";
 
-static NSString *objectIDKey = @"objectId";
+static NSString *objectIdKey = @"objectId";
 static NSString *usernameKey = @"username";
 static NSString *passwordKey = @"password";
 static NSString *emailKey = @"email";
@@ -23,6 +24,7 @@ static NSString *emailKey = @"email";
 @property (nonatomic, strong) NSString *username;
 @property (nonatomic, strong) NSString *password;
 @property (nonatomic, strong) NSString *email;
+@property (nonatomic, assign) NSUInteger userVote;
 
 
 @end

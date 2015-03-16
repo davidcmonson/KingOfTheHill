@@ -12,6 +12,7 @@
 #import "CameraViewController.h"
 #import <ParseUI/ParseUI.h>
 #import "User.h"
+#import "CameraPickerControllerDelegate.h"
 
 @interface SwipePageViewController () <UIPageViewControllerDataSource,PFLogInViewControllerDelegate,PFSignUpViewControllerDelegate>
 
@@ -20,6 +21,8 @@
 @property (nonatomic, strong) VideoFeedViewController *videoVC;
 @property (nonatomic, strong) ProfileViewController *profileVC;
 @property (nonatomic, strong) LocationViewController *mapVC;
+
+@property (strong, nonatomic) CameraPickerControllerDelegate *pickerDelegate;
 
 @end
 
@@ -43,6 +46,9 @@
         
         // Present the log in view controller
         [self presentViewController:logInViewController animated:YES completion:NULL];
+        
+        
+        
     }
 }
 
@@ -56,18 +62,19 @@
     self.profileVC = [ProfileViewController new];
     self.mapVC = [LocationViewController new];
     
+    self.pickerDelegate = [CameraPickerControllerDelegate new];
+    self.cameraVC.delegate = self.pickerDelegate;
+    
     self.pageViewController = [[UIPageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStyleScroll navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal options:nil];
     
     self.pageViewController.dataSource = self;
     
     [self.pageViewController setViewControllers:@[self.cameraVC] direction:UIPageViewControllerNavigationDirectionForward animated:YES completion:nil];
     
-    
     [self addChildViewController:self.pageViewController];
     [self.pageViewController didMoveToParentViewController:self];
     [self.view addSubview:self.pageViewController.view];
-    
-    
+
 }
 
 // Sent to the delegate to determine whether the log in request should be submitted to the server.
@@ -127,7 +134,7 @@
 
 // Sent to the delegate when a PFUser is signed up.
 - (void)signUpViewController:(PFSignUpViewController *)signUpController didSignUpUser:(PFUser *)user {
-    [self dismissModalViewControllerAnimated:YES]; // Dismiss the PFSignUpViewController
+    [self dismissViewControllerAnimated:YES completion:nil]; // Dismiss the PFSignUpViewController
 }
 
 // Sent to the delegate when the sign up attempt fails.

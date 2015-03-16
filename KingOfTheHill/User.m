@@ -14,5 +14,6 @@
 @dynamic username;
 @dynamic password;
 @dynamic email;
+@dynamic userVote;
 
 @end

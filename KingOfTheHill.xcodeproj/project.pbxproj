@@ -22,6 +22,8 @@
 		705183BE1AAE574500A365FF /* Vote.m in Sources */ = {isa = PBXBuildFile; fileRef = 705183BD1AAE574500A365FF /* Vote.m */; };
 		708554B71AAE6B47006DEB38 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 708554B61AAE6B47006DEB38 /* MapKit.framework */; };
 		708554BA1AAE6BA8006DEB38 /* LocationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 708554B91AAE6BA8006DEB38 /* LocationViewController.m */; };
+		709CBDA91AB77DCE00532FFA /* CameraPickerControllerDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 709CBDA81AB77DCE00532FFA /* CameraPickerControllerDelegate.m */; };
+		709CBDAC1AB791B700532FFA /* MediaPlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 709CBDAB1AB791B700532FFA /* MediaPlayerViewController.m */; };
 		70A189161AAF8D080044F98D /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70A189141AAF8D080044F98D /* Bolts.framework */; };
 		70A189171AAF8D080044F98D /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70A189151AAF8D080044F98D /* Parse.framework */; };
 		70A189191AAF8D200044F98D /* ParseUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70A189181AAF8D200044F98D /* ParseUI.framework */; };
@@ -85,6 +87,10 @@
 		708554B61AAE6B47006DEB38 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		708554B81AAE6BA8006DEB38 /* LocationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationViewController.h; sourceTree = "<group>"; };
 		708554B91AAE6BA8006DEB38 /* LocationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationViewController.m; sourceTree = "<group>"; };
+		709CBDA71AB77DCE00532FFA /* CameraPickerControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraPickerControllerDelegate.h; sourceTree = "<group>"; };
+		709CBDA81AB77DCE00532FFA /* CameraPickerControllerDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CameraPickerControllerDelegate.m; sourceTree = "<group>"; };
+		709CBDAA1AB791B700532FFA /* MediaPlayerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MediaPlayerViewController.h; sourceTree = "<group>"; };
+		709CBDAB1AB791B700532FFA /* MediaPlayerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MediaPlayerViewController.m; sourceTree = "<group>"; };
 		70A189141AAF8D080044F98D /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
 		70A189151AAF8D080044F98D /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
 		70A189181AAF8D200044F98D /* ParseUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ParseUI.framework; sourceTree = "<group>"; };
@@ -101,6 +107,8 @@
 		70A1892F1AAF8E250044F98D /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		70A189371AAF923E0044F98D /* Video.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Video.h; sourceTree = "<group>"; };
 		70A189381AAF923E0044F98D /* Video.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Video.m; sourceTree = "<group>"; };
+		70AC3E5C1AB61BEE00735454 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		70AC3E5E1AB61D0300735454 /* AVKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVKit.framework; path = System/Library/Frameworks/AVKit.framework; sourceTree = SDKROOT; };
 		77D6FB241AA92CAC00E97862 /* KingOfTheHill.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KingOfTheHill.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		77D6FB281AA92CAC00E97862 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		77D6FB291AA92CAC00E97862 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -190,6 +198,10 @@
 		70A1891A1AAF8D450044F98D /* FrameWorks */ = {
 			isa = PBXGroup;
 			children = (
+				70AC3E5E1AB61D0300735454 /* AVKit.framework */,
+				70AC3E5C1AB61BEE00735454 /* AVFoundation.framework */,
+				49CC3CA61AB3872500672138 /* Accounts.framework */,
+				49CC3CA41AB3871B00672138 /* Social.framework */,
 				70A1892F1AAF8E250044F98D /* libsqlite3.dylib */,
 				70A1892D1AAF8E1C0044F98D /* libz.dylib */,
 				70A1892B1AAF8E130044F98D /* SystemConfiguration.framework */,
@@ -212,8 +224,6 @@
 		77D6FB1B1AA92CAC00E97862 = {
 			isa = PBXGroup;
 			children = (
-				49CC3CA61AB3872500672138 /* Accounts.framework */,
-				49CC3CA41AB3871B00672138 /* Social.framework */,
 				77D6FB261AA92CAC00E97862 /* KingOfTheHill */,
 				77D6FB401AA92CAC00E97862 /* KingOfTheHillTests */,
 				77D6FB251AA92CAC00E97862 /* Products */,
@@ -240,6 +250,10 @@
 				499F2CC81AB2596400B3FDDF /* SwipePageViewController.m */,
 				49CC3CA11AB368C300672138 /* CameraViewController.h */,
 				49CC3CA21AB368C300672138 /* CameraViewController.m */,
+				709CBDAA1AB791B700532FFA /* MediaPlayerViewController.h */,
+				709CBDAB1AB791B700532FFA /* MediaPlayerViewController.m */,
+				709CBDA71AB77DCE00532FFA /* CameraPickerControllerDelegate.h */,
+				709CBDA81AB77DCE00532FFA /* CameraPickerControllerDelegate.m */,
 				77D6FB2B1AA92CAC00E97862 /* AppDelegate.h */,
 				77D6FB2C1AA92CAC00E97862 /* AppDelegate.m */,
 				77D6FB2E1AA92CAC00E97862 /* ViewController.h */,
@@ -330,7 +344,7 @@
 				TargetAttributes = {
 					77D6FB231AA92CAC00E97862 = {
 						CreatedOnToolsVersion = 6.1.1;
-						DevelopmentTeam = K75493KQVP;
+						DevelopmentTeam = VBJ3B2RNGL;
 						SystemCapabilities = {
 							com.apple.Maps.iOS = {
 								enabled = 1;
@@ -342,7 +356,7 @@
 					};
 					77D6FB3C1AA92CAC00E97862 = {
 						CreatedOnToolsVersion = 6.1.1;
-						DevelopmentTeam = K75493KQVP;
+						DevelopmentTeam = VBJ3B2RNGL;
 						TestTargetID = 77D6FB231AA92CAC00E97862;
 					};
 				};
@@ -398,9 +412,11 @@
 				499F2D0A1AB3375600B3FDDF /* AVPlayerDemoPlaybackView.m in Sources */,
 				499F2CCF1AB259A800B3FDDF /* ProfileViewController.m in Sources */,
 				499F2D041AB2852600B3FDDF /* AnnotationVideoPlayerViewViewController.m in Sources */,
+				709CBDAC1AB791B700532FFA /* MediaPlayerViewController.m in Sources */,
 				499F2CC31AB241D700B3FDDF /* VideoPin.m in Sources */,
 				49F462CB1AA93A5400E56599 /* Location.m in Sources */,
 				499F2D0D1AB3423D00B3FDDF /* UserController.m in Sources */,
+				709CBDA91AB77DCE00532FFA /* CameraPickerControllerDelegate.m in Sources */,
 				49CC3CA31AB368C300672138 /* CameraViewController.m in Sources */,
 				70A189391AAF923E0044F98D /* Video.m in Sources */,
 				77D6FB301AA92CAC00E97862 /* ViewController.m in Sources */,

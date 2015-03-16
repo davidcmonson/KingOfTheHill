@@ -10,7 +10,8 @@
 
 @implementation Vote
 
-@dynamic likeVote;
+@dynamic video;
+@dynamic user;
 @dynamic uniqueId;
 
 @end

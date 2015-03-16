@@ -135,6 +135,7 @@
                                                                    title:videoDictionaryAtIndex[nameOfVideoKey]
                                                                 subtitle:@"Name of Location"
                                                               coordinate:coordinateOfVideo];
+        
         //    If you want to clear other pins/annotations this is how to do it
         //        for (id annotation in self.map.annotations) {
         //            [self.map removeAnnotation:annotation];
@@ -152,8 +153,9 @@
     return coordinates;
 }
 
-// This checks whether annotation is a VideoPin class, if it is, creates a "i" button/ "more info" button
+
 #pragma mark Annotations section
+// This checks whether annotation is a VideoPin class, if it is, creates a "i" button/ "more info" button
 - (MKAnnotationView *)mapView:(MKMapView *)aMapView viewForAnnotation:(id<MKAnnotation>)annotation
 {
     
@@ -168,6 +170,7 @@
             annotationView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:annotationIdentifier];
         
         annotationView.canShowCallout = YES;
+        annotationView.animatesDrop = YES;
         
         UIButton *disclosureButton = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
         annotationView.rightCalloutAccessoryView = disclosureButton;
@@ -457,6 +460,8 @@
  [self updateVisibleAnnotations];
  }
  
+ 
+ 
  - (void)mapView:(MKMapView *)aMapView didAddAnnotationViews:(NSArray *)views {
  
  for (MKAnnotationView *annotationView in views) {
@@ -484,45 +489,6 @@
  }
  }
  }
- 
- 
- 
- 
- 
- 
- 
- 
- //    MKPinAnnotationView *pin = (MKPinAnnotationView *) [mapView dequeueReusableAnnotationViewWithIdentifier:videoAnnotationKey];
- //    if ([annotation isKindOfClass:[MKUserLocation class]]) {
- //        return nil;
- //    }
- //    if (pin == nil) {
- //        pin = [[MKPinAnnotationView alloc] initWithAnnotation: annotation
- //                                              reuseIdentifier: videoAnnotationKey];
- //    } else {
- //        annotation = [VideoPin new];
- //        pin.annotation = annotation;
- //    }
- //    pin.image = [UIImage imageNamed:@"Skateboarding-50"];
- //    pin.enabled = YES;
- //    pin.canShowCallout = YES;
- //
- //    pin.pinColor = MKPinAnnotationColorGreen;    // We can pick the color of the Pin!! Woohoo!
- //    pin.animatesDrop = YES;
- //
- //    // We can add a target/action by separating UIButton as a separate instance.
- //    UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
- //    [rightButton addTarget:nil action:nil forControlEvents:UIControlEventTouchUpInside];
- //    pin.rightCalloutAccessoryView = rightButton;
- //
- //
- //    // Add a custom image to the left side of the callout.
- //    UIImageView *myCustomImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Skateboarding-50"]];
- //    pin.leftCalloutAccessoryView = myCustomImage;
- //
- //
- //    return pin;
- 
  
  
  

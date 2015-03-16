@@ -178,16 +178,16 @@
 		49F462D01AA93BC300E56599 /* Location */ = {
 			isa = PBXGroup;
 			children = (
-				49CC3CAB1AB550B000672138 /* LoadingStatus.h */,
-				49CC3CAC1AB550B000672138 /* LoadingStatus.m */,
-				499F2D081AB3375600B3FDDF /* AVPlayerDemoPlaybackView.h */,
-				499F2D091AB3375600B3FDDF /* AVPlayerDemoPlaybackView.m */,
 				49F462C91AA93A5400E56599 /* Location.h */,
 				49F462CA1AA93A5400E56599 /* Location.m */,
-				499F2D021AB2852600B3FDDF /* AnnotationVideoPlayerViewViewController.h */,
-				499F2D031AB2852600B3FDDF /* AnnotationVideoPlayerViewViewController.m */,
 				708554B81AAE6BA8006DEB38 /* LocationViewController.h */,
 				708554B91AAE6BA8006DEB38 /* LocationViewController.m */,
+				49CC3CAB1AB550B000672138 /* LoadingStatus.h */,
+				49CC3CAC1AB550B000672138 /* LoadingStatus.m */,
+				499F2D021AB2852600B3FDDF /* AnnotationVideoPlayerViewViewController.h */,
+				499F2D031AB2852600B3FDDF /* AnnotationVideoPlayerViewViewController.m */,
+				499F2D081AB3375600B3FDDF /* AVPlayerDemoPlaybackView.h */,
+				499F2D091AB3375600B3FDDF /* AVPlayerDemoPlaybackView.m */,
 			);
 			name = Location;
 			sourceTree = "<group>";

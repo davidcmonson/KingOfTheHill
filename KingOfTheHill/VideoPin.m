@@ -75,6 +75,7 @@
     return string;
 }
 
+// Changes the subtitle to make approximation location name. Ex: "Near Salt Lake Convention Center"
 - (void)updateSubtitleIfNeeded {
     
     if (self.subtitle == nil) {

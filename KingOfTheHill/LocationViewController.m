@@ -149,6 +149,30 @@
     return coordinates;
 }
 
+#pragma mark Annotations section
+- (MKAnnotationView *)mapView:(MKMapView *)aMapView viewForAnnotation:(id<MKAnnotation>)annotation
+{
+    
+    static NSString *annotationIdentifier = @"VideoPin";
+    
+    if (aMapView != self.mainMapView)
+        return nil;
+    
+    if ([annotation isKindOfClass:[VideoPin class]]) {
+        MKPinAnnotationView *annotationView = (MKPinAnnotationView *)[self.mainMapView dequeueReusableAnnotationViewWithIdentifier:annotationIdentifier];
+        if (annotationView == nil)
+            annotationView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:annotationIdentifier];
+        
+        annotationView.canShowCallout = YES;
+        
+        UIButton *disclosureButton = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
+        annotationView.rightCalloutAccessoryView = disclosureButton;
+        
+        return annotationView;
+    }
+    
+    return nil;
+}
 
 
 
@@ -167,31 +191,7 @@
 
 /*
  
- #pragma mark Annotations section
- - (MKAnnotationView *)mapView:(MKMapView *)aMapView viewForAnnotation:(id<MKAnnotation>)annotation
- {
  
- static NSString *annotationIdentifier = @"VideoPin";
- 
- if (aMapView != self.mainMapView)
- return nil;
- 
- if ([annotation isKindOfClass:[VideoPin class]]) {
- MKPinAnnotationView *annotationView = (MKPinAnnotationView *)[self.mainMapView dequeueReusableAnnotationViewWithIdentifier:annotationIdentifier];
- if (annotationView == nil)
- annotationView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:annotationIdentifier];
- 
- annotationView.canShowCallout = YES;
- 
- UIButton *disclosureButton = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
- annotationView.rightCalloutAccessoryView = disclosureButton;
- 
- return annotationView;
- }
- 
- return nil;
- }
-
  - (NSArray *)thumbnailSetFromPath:(NSString *)path {
  
  NSMutableArray *thumbnails = [[NSMutableArray alloc] init];

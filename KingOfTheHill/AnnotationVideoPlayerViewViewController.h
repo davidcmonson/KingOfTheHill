@@ -7,7 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <AVFoundation/AVFoundation.h>
+
+#import <MediaPlayer/MediaPlayer.h>
+#import <MobileCoreServices/MobileCoreServices.h>
 
 @interface AnnotationVideoPlayerViewViewController : UIImagePickerController
+
+@property (nonatomic, strong) AVPlayer *player;
 
 @end

@@ -11,8 +11,9 @@
 
 @implementation VideoPin
 
-//@synthesize title = _title;
-//@synthesize coordinate = _coordinate;
+@synthesize title = _title;
+@synthesize coordinate = _coordinate;
+@synthesize subtitle = _subtitle;
 
 
 - (id)initWithThumbnailImagePath:(NSString*)thumbnailImagePath

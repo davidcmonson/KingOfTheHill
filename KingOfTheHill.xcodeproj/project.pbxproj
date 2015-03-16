@@ -17,6 +17,7 @@
 		49CC3CA31AB368C300672138 /* CameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 49CC3CA21AB368C300672138 /* CameraViewController.m */; };
 		49CC3CA51AB3871B00672138 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49CC3CA41AB3871B00672138 /* Social.framework */; };
 		49CC3CA71AB3872500672138 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49CC3CA61AB3872500672138 /* Accounts.framework */; };
+		49CC3CAD1AB550B000672138 /* LoadingStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = 49CC3CAC1AB550B000672138 /* LoadingStatus.m */; };
 		49F462C51AA9356E00E56599 /* VideoController.m in Sources */ = {isa = PBXBuildFile; fileRef = 49F462C41AA9356E00E56599 /* VideoController.m */; };
 		49F462CB1AA93A5400E56599 /* Location.m in Sources */ = {isa = PBXBuildFile; fileRef = 49F462CA1AA93A5400E56599 /* Location.m */; };
 		705183BE1AAE574500A365FF /* Vote.m in Sources */ = {isa = PBXBuildFile; fileRef = 705183BD1AAE574500A365FF /* Vote.m */; };
@@ -76,6 +77,8 @@
 		49CC3CA21AB368C300672138 /* CameraViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CameraViewController.m; sourceTree = "<group>"; };
 		49CC3CA41AB3871B00672138 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		49CC3CA61AB3872500672138 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
+		49CC3CAB1AB550B000672138 /* LoadingStatus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadingStatus.h; sourceTree = "<group>"; };
+		49CC3CAC1AB550B000672138 /* LoadingStatus.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoadingStatus.m; sourceTree = "<group>"; };
 		49F462C31AA9356E00E56599 /* VideoController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoController.h; sourceTree = "<group>"; };
 		49F462C41AA9356E00E56599 /* VideoController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VideoController.m; sourceTree = "<group>"; };
 		49F462C91AA93A5400E56599 /* Location.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Location.h; sourceTree = "<group>"; };
@@ -175,6 +178,8 @@
 		49F462D01AA93BC300E56599 /* Location */ = {
 			isa = PBXGroup;
 			children = (
+				49CC3CAB1AB550B000672138 /* LoadingStatus.h */,
+				49CC3CAC1AB550B000672138 /* LoadingStatus.m */,
 				499F2D081AB3375600B3FDDF /* AVPlayerDemoPlaybackView.h */,
 				499F2D091AB3375600B3FDDF /* AVPlayerDemoPlaybackView.m */,
 				49F462C91AA93A5400E56599 /* Location.h */,
@@ -395,6 +400,7 @@
 				705183BE1AAE574500A365FF /* Vote.m in Sources */,
 				499F2CCC1AB2598B00B3FDDF /* VideoFeedViewController.m in Sources */,
 				77D6FB4F1AA930E000E97862 /* User.m in Sources */,
+				49CC3CAD1AB550B000672138 /* LoadingStatus.m in Sources */,
 				499F2D0A1AB3375600B3FDDF /* AVPlayerDemoPlaybackView.m in Sources */,
 				499F2CCF1AB259A800B3FDDF /* ProfileViewController.m in Sources */,
 				499F2D041AB2852600B3FDDF /* AnnotationVideoPlayerViewViewController.m in Sources */,

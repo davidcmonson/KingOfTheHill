@@ -7,8 +7,7 @@
 //
 
 #import "AnnotationVideoPlayerViewViewController.h"
-#import <MediaPlayer/MediaPlayer.h>
-#import <MobileCoreServices/MobileCoreServices.h>
+
 
 @interface AnnotationVideoPlayerViewViewController () <UIImagePickerControllerDelegate>
 
@@ -17,6 +16,9 @@
 @end
 
 @implementation AnnotationVideoPlayerViewViewController
+
+
+
 
 -(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
     self.videoURL = info[UIImagePickerControllerMediaURL];
@@ -31,6 +33,27 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    //////////////// TEST VIDEO ///////////////
+    //
+    //- (void)viewDidAppear:(BOOL)animated {
+    //
+    //    PFFile *videoFile = self.arrayOfVideos[1][videoFileKey];
+    //    NSURL *videoURL = [NSURL URLWithString:videoFile.url];
+    //    AVAsset *video = [AVAsset assetWithURL:videoURL];
+    //    AVPlayerItem *item = [[AVPlayerItem alloc] initWithAsset:video];
+    //    AVPlayer *player = [AVPlayer playerWithPlayerItem:item];
+    //    AVPlayerLayer *layer = [AVPlayerLayer playerLayerWithPlayer:player];
+    //    UIView *playerView = [[UIView alloc]initWithFrame:self.view.bounds];
+    //    layer.frame = self.view.frame;
+    //    [playerView.layer addSublayer:layer];
+    //    [self.view addSubview: playerView];
+    //    [player play];
+    //}
+    //// This will be put in AnnotationVideoPlayerViewController
+    ////////////////////////////////////////////
+
+    
     
     self.allowsEditing = YES;
     self.mediaTypes = [[NSArray alloc] initWithObjects:(NSString *) kUTTypeMovie, nil];

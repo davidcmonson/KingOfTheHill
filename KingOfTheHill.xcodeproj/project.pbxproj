@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		12215DBF1AB78DC500D4E8A2 /* VideoFeedDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 12215DBE1AB78DC500D4E8A2 /* VideoFeedDataSource.m */; };
+		12A5C0551AB7771C00DB4ACB /* VideoFeedTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 12A5C0541AB7771C00DB4ACB /* VideoFeedTableViewCell.m */; };
 		499F2CC31AB241D700B3FDDF /* VideoPin.m in Sources */ = {isa = PBXBuildFile; fileRef = 499F2CC21AB241D700B3FDDF /* VideoPin.m */; };
 		499F2CC91AB2596400B3FDDF /* SwipePageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 499F2CC81AB2596400B3FDDF /* SwipePageViewController.m */; };
 		499F2CCC1AB2598B00B3FDDF /* VideoFeedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 499F2CCB1AB2598B00B3FDDF /* VideoFeedViewController.m */; };
@@ -58,6 +60,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		12215DBD1AB78DC500D4E8A2 /* VideoFeedDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoFeedDataSource.h; sourceTree = "<group>"; };
+		12215DBE1AB78DC500D4E8A2 /* VideoFeedDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VideoFeedDataSource.m; sourceTree = "<group>"; };
+		12A5C0531AB7771C00DB4ACB /* VideoFeedTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoFeedTableViewCell.h; sourceTree = "<group>"; };
+		12A5C0541AB7771C00DB4ACB /* VideoFeedTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VideoFeedTableViewCell.m; sourceTree = "<group>"; };
 		499F2CC11AB241D700B3FDDF /* VideoPin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoPin.h; sourceTree = "<group>"; };
 		499F2CC21AB241D700B3FDDF /* VideoPin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VideoPin.m; sourceTree = "<group>"; };
 		499F2CC71AB2596400B3FDDF /* SwipePageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwipePageViewController.h; sourceTree = "<group>"; };
@@ -236,6 +242,10 @@
 				499F2CCE1AB259A800B3FDDF /* ProfileViewController.m */,
 				499F2CCA1AB2598B00B3FDDF /* VideoFeedViewController.h */,
 				499F2CCB1AB2598B00B3FDDF /* VideoFeedViewController.m */,
+				12A5C0531AB7771C00DB4ACB /* VideoFeedTableViewCell.h */,
+				12A5C0541AB7771C00DB4ACB /* VideoFeedTableViewCell.m */,
+				12215DBD1AB78DC500D4E8A2 /* VideoFeedDataSource.h */,
+				12215DBE1AB78DC500D4E8A2 /* VideoFeedDataSource.m */,
 				499F2CC71AB2596400B3FDDF /* SwipePageViewController.h */,
 				499F2CC81AB2596400B3FDDF /* SwipePageViewController.m */,
 				49CC3CA11AB368C300672138 /* CameraViewController.h */,
@@ -330,7 +340,7 @@
 				TargetAttributes = {
 					77D6FB231AA92CAC00E97862 = {
 						CreatedOnToolsVersion = 6.1.1;
-						DevelopmentTeam = K75493KQVP;
+						DevelopmentTeam = U5K4WANHCY;
 						SystemCapabilities = {
 							com.apple.Maps.iOS = {
 								enabled = 1;
@@ -342,7 +352,7 @@
 					};
 					77D6FB3C1AA92CAC00E97862 = {
 						CreatedOnToolsVersion = 6.1.1;
-						DevelopmentTeam = K75493KQVP;
+						DevelopmentTeam = U5K4WANHCY;
 						TestTargetID = 77D6FB231AA92CAC00E97862;
 					};
 				};
@@ -398,6 +408,8 @@
 				499F2D0A1AB3375600B3FDDF /* AVPlayerDemoPlaybackView.m in Sources */,
 				499F2CCF1AB259A800B3FDDF /* ProfileViewController.m in Sources */,
 				499F2D041AB2852600B3FDDF /* AnnotationVideoPlayerViewViewController.m in Sources */,
+				12215DBF1AB78DC500D4E8A2 /* VideoFeedDataSource.m in Sources */,
+				12A5C0551AB7771C00DB4ACB /* VideoFeedTableViewCell.m in Sources */,
 				499F2CC31AB241D700B3FDDF /* VideoPin.m in Sources */,
 				49F462CB1AA93A5400E56599 /* Location.m in Sources */,
 				499F2D0D1AB3423D00B3FDDF /* UserController.m in Sources */,
@@ -536,7 +548,7 @@
 					"$(PROJECT_DIR)/KingOfTheHill",
 				);
 				INFOPLIST_FILE = KingOfTheHill/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -554,7 +566,7 @@
 					"$(PROJECT_DIR)/KingOfTheHill",
 				);
 				INFOPLIST_FILE = KingOfTheHill/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";

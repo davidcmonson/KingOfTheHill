@@ -57,19 +57,9 @@
     mapSwipeBarLabel.textAlignment = NSTextAlignmentCenter;
     mapSwipeBarLabel.textColor = [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:1.0];
     [self.view addSubview:mapSwipeBarLabel];
-    ///////////////////
+    /////////////////////
     
-    
-    // Adding annotations
-    VideoPin *videoPin = [[VideoPin alloc]initWithThumbnailImagePath:nil
-                                                               title:@"Poop"
-                                                            subtitle:@"Poopy"
-                                                          coordinate:self.myCoordinates];
-    videoPin.coordinate = self.myCoordinates;
-    
-    [self.mainMapView addAnnotation:videoPin];
-}
-
+    }
 
 - (void)centerAndZoomToLocation:(CLLocationCoordinate2D)coordinate {
     MKCoordinateRegion adjustedRegionForInitialZoomLevel = [self.mainMapView regionThatFits:MKCoordinateRegionMakeWithDistance(coordinate, 3000 , 3000)];
@@ -93,29 +83,64 @@
     self.myCoordinates = self.mainMapView.userLocation.location.coordinate;
     if (self.zoomedOnce == NO) {
         [self centerAndZoomToLocation:self.mainMapView.userLocation.location.coordinate];
+        [self queryForAllVideosNearLocation:self.myCoordinates withinDistance:20000];
+       // [self dropPinAtCoordinatesForVideosInVideosArray:[VideoController sharedInstance].arrayOfVideos];
         self.zoomedOnce = YES;
     }
+}
+
+- (void)queryForAllVideosNearLocation:(CLLocationCoordinate2D)coordinates
+                       withinDistance:(double)radiusFromLocationInMeters
+{
+    // Parse query calls.
+    
+    PFQuery *queryForVideos = [PFQuery queryWithClassName:@"Video"];
+    PFGeoPoint *geoPoint = [PFGeoPoint geoPointWithLatitude:coordinates.latitude
+                                                  longitude:coordinates.longitude];
+    [queryForVideos whereKey:videoLocationKey
+                nearGeoPoint:geoPoint
+            withinKilometers:radiusFromLocationInMeters];
+    
+    [queryForVideos findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if (error) {
+            NSLog(@"%@", error);
+        }
+        else {
+            NSMutableArray *arrayOfVideos = [[NSMutableArray alloc] initWithArray:objects];
+            //[self dropPinAtCoordinatesForVideosInVideosArray:arrayOfVideos];
+            
+            [VideoController sharedInstance].arrayOfVideos = arrayOfVideos;
+             [self dropPinAtCoordinatesForVideosInVideosArray:[VideoController sharedInstance].arrayOfVideos];
+            NSLog(@"%ld",[VideoController sharedInstance].arrayOfVideos.count);
+        }
+    }];
     
 }
 
-//- (void)dropPinAtCoordinatesForVideosInVideosArray:(NSArray *)array {
-//
-//    for (NSInteger index = 0; index < array.count; index++) {
-//        // Create video instance to make it easier to read when getting coordinates from it.
-//        PFObject *videoDictionaryAtIndex = array[index];
-//        PFGeoPoint *geoPointOfVideo = videoDictionaryAtIndex[videoLocationKey];
-//        //Create your annotation
-//        MKPointAnnotation *point = [[MKPointAnnotation alloc] init];
-//        // Set your annotation to point at your coordinate
-//        point.coordinate = [self convertPFGeoPointToLocationCoordinate2D:geoPointOfVideo];
-//        //    If you want to clear other pins/annotations this is how to do it
-//        //        for (id annotation in self.map.annotations) {
-//        //            [self.map removeAnnotation:annotation];
-//        //        }
-//        //    Drop pin on map
-//        [self.mainMapView addAnnotation:point];
-//    }
-//}
+
+- (void)dropPinAtCoordinatesForVideosInVideosArray:(NSArray *)array {
+
+    for (NSInteger index = 0; index < array.count; index++) {
+        // Create video instance to make it easier to read when getting coordinates from it.
+        PFObject *videoDictionaryAtIndex = array[index];
+        PFGeoPoint *geoPointOfVideo = videoDictionaryAtIndex[videoLocationKey];
+        // Convert GeoPoint to CLLocaation
+        CLLocationCoordinate2D coordinateOfVideo = [self convertPFGeoPointToLocationCoordinate2D:geoPointOfVideo];
+        // Adding annotations
+        VideoPin *videoPin = [[VideoPin alloc]initWithThumbnailImagePath:nil
+                                                                   title:videoDictionaryAtIndex[nameOfVideoKey]
+                                                                subtitle:@"Name of Location"
+                                                              coordinate:coordinateOfVideo];
+        
+        //    If you want to clear other pins/annotations this is how to do it
+        //        for (id annotation in self.map.annotations) {
+        //            [self.map removeAnnotation:annotation];
+        //        }
+        
+        //    Drop pin on map
+        [self.mainMapView addAnnotation:videoPin];
+    }
+}
 
 -(CLLocationCoordinate2D)convertPFGeoPointToLocationCoordinate2D:(PFGeoPoint *)geoPoint {
     CLLocationCoordinate2D coordinates;
@@ -140,37 +165,33 @@
 
 
 
-- (void)queryForAllVideosNearLocation:(CLLocationCoordinate2D)coordinates
-                       withinDistance:(double)radiusFromLocationInMeters
-{
-    // Parse query calls.
-    
-    PFQuery *queryForVideos = [PFQuery queryWithClassName:@"Video"];
-    PFGeoPoint *geoPoint = [PFGeoPoint geoPointWithLatitude:coordinates.latitude
-                                                  longitude:coordinates.longitude];
-    [queryForVideos whereKey:videoLocationKey
-                nearGeoPoint:geoPoint
-            withinKilometers:radiusFromLocationInMeters];
-    
-    [queryForVideos findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-        if (error) {
-            NSLog(@"%@", error);
-        }
-        else {
-            NSMutableArray *arrayOfVideos = [[NSMutableArray alloc] initWithArray:objects];
-            //[self dropPinAtCoordinatesForVideosInVideosArray:arrayOfVideos];
-            
-            [VideoController sharedInstance].arrayOfVideos = arrayOfVideos;
-            NSLog(@"%ld",self.arrayOfVideos.count);
-            
-        }
-    }];
-    
-}
-
 /*
  
+ #pragma mark Annotations section
+ - (MKAnnotationView *)mapView:(MKMapView *)aMapView viewForAnnotation:(id<MKAnnotation>)annotation
+ {
  
+ static NSString *annotationIdentifier = @"VideoPin";
+ 
+ if (aMapView != self.mainMapView)
+ return nil;
+ 
+ if ([annotation isKindOfClass:[VideoPin class]]) {
+ MKPinAnnotationView *annotationView = (MKPinAnnotationView *)[self.mainMapView dequeueReusableAnnotationViewWithIdentifier:annotationIdentifier];
+ if (annotationView == nil)
+ annotationView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:annotationIdentifier];
+ 
+ annotationView.canShowCallout = YES;
+ 
+ UIButton *disclosureButton = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
+ annotationView.rightCalloutAccessoryView = disclosureButton;
+ 
+ return annotationView;
+ }
+ 
+ return nil;
+ }
+
  - (NSArray *)thumbnailSetFromPath:(NSString *)path {
  
  NSMutableArray *thumbnails = [[NSMutableArray alloc] init];
@@ -442,29 +463,6 @@
  
  
  
- #pragma mark Annotations section
- - (MKAnnotationView *)mapView:(MKMapView *)aMapView viewForAnnotation:(id<MKAnnotation>)annotation
- {
- 
- static NSString *annotationIdentifier = @"VideoPin";
- 
- if (aMapView != self.mainMapView)
- return nil;
- 
- if ([annotation isKindOfClass:[VideoPin class]]) {
- MKPinAnnotationView *annotationView = (MKPinAnnotationView *)[self.mainMapView dequeueReusableAnnotationViewWithIdentifier:annotationIdentifier];
- if (annotationView == nil)
- annotationView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:annotationIdentifier];
- 
- annotationView.canShowCallout = YES;
- 
- UIButton *disclosureButton = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
- annotationView.rightCalloutAccessoryView = disclosureButton;
- 
- return annotationView;
- }
- 
- return nil;
  
  
  

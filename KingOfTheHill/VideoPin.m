@@ -39,6 +39,15 @@
     return _title;
 }
 
+- (NSString *)subtitle {
+    return _subtitle;
+}
+
+
+- (CLLocationCoordinate2D)coordinate {
+    return _coordinate;
+}
+
 - (UIImage *)thumbnail {
     
     if (!_image && self.thumbnailImagePath) {
@@ -81,10 +90,7 @@
     }
 }
 
-//- (CLLocationCoordinate2D)coordinate {
-//    return _theCoordinate;
-//}
-//
+
 //- (MKMapItem*)mapItem {
 ////    NSDictionary *addressDict = @{(NSString*)kABPersonAddressStreetKey : _address};
 //    

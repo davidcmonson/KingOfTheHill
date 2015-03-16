@@ -9,11 +9,9 @@
 #import <UIKit/UIKit.h>
 #import <AVFoundation/AVFoundation.h>
 
-#import <MediaPlayer/MediaPlayer.h>
-#import <MobileCoreServices/MobileCoreServices.h>
 
-@interface AnnotationVideoPlayerViewViewController : UIImagePickerController
+@interface AnnotationVideoPlayerViewViewController : UIViewController
 
-@property (nonatomic, strong) AVPlayer *player;
+@property (nonatomic) NSInteger videoAtIndex;
 
 @end

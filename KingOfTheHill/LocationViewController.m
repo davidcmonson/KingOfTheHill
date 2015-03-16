@@ -3,6 +3,7 @@
 //  KingOfTheHill
 //
 //  Created by Trace Pomplun on 3/9/15.
+//  Rewritten by Gabriel Guerrero 3/15/15.
 //  Copyright (c) 2015 David Monson. All rights reserved.
 //
 
@@ -45,9 +46,12 @@
     [super viewDidLoad];
     self.zoomedOnce = NO;
     [self showMainMapView];
+    [self setUpSwipeBar];
     
-    
-    //////////////////// Sets up Swipe bar
+}
+
+// Sets up bar at the bottom of the screen for users to swipe back to the main screen (camera)
+- (void)setUpSwipeBar {
     UIView *mapSwipeBarView = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - 50, self.view.frame.size.width, 50)];
     mapSwipeBarView.backgroundColor = [UIColor colorWithRed:0.5 green:0.5 blue:0.5 alpha:0.5];
     [self.view addSubview:mapSwipeBarView];
@@ -58,8 +62,7 @@
     mapSwipeBarLabel.textAlignment = NSTextAlignmentCenter;
     mapSwipeBarLabel.textColor = [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:1.0];
     [self.view addSubview:mapSwipeBarLabel];
-    /////////////////////
-    
+
 }
 
 - (void)centerAndZoomToLocation:(CLLocationCoordinate2D)coordinate {
@@ -132,7 +135,6 @@
                                                                    title:videoDictionaryAtIndex[nameOfVideoKey]
                                                                 subtitle:@"Name of Location"
                                                               coordinate:coordinateOfVideo];
-        
         //    If you want to clear other pins/annotations this is how to do it
         //        for (id annotation in self.map.annotations) {
         //            [self.map removeAnnotation:annotation];
@@ -179,19 +181,21 @@
 // user tapped the call out accessory or the "i"/the "bubble" in the annotation
 - (void)mapView:(MKMapView *)aMapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control {
     
+    // Commented out for when we pass the actual Video info to the annotation.
     //    VideoPin *annotation = (VideoPin *)view.annotation;
     //    NSMutableArray *photosToShow = [NSMutableArray arrayWithObject:annotation];
     //    [photosToShow addObjectsFromArray:annotation.containedAnnotations];
     
     // This sets up the detail view for the user selected pin/annotation and presents the view
     AnnotationVideoPlayerViewViewController *viewController = [AnnotationVideoPlayerViewViewController new];
+//    viewController.videoAtIndex = 
     viewController.edgesForExtendedLayout = UIRectEdgeNone;
     [self presentViewController:viewController animated:YES completion:nil];
 }
 
 // When the user taps/selects the Pin, updates if there's mutiple pins inside
 - (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view {
-    
+
     if ([view.annotation isKindOfClass:[VideoPin class]])
     {
         VideoPin *annotation = (VideoPin *)view.annotation;
@@ -212,11 +216,7 @@
 //}
 
 
-
-
 /*
- 
- 
  - (NSArray *)thumbnailSetFromPath:(NSString *)path {
  
  NSMutableArray *thumbnails = [[NSMutableArray alloc] init];

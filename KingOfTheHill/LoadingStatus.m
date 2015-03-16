@@ -59,44 +59,43 @@
 
 @implementation LoadingStatus
 
-+ (id)defaultLoadingStatusWithWidth:(CGFloat)width {
++ (id)defaultLoadingStatusWithWidth:(CGFloat)width Height:(CGFloat)height {
     
-    return [[LoadingStatus alloc] initWithFrame:CGRectMake(0.0, 0.0, width, 40.0)];
+    return [[LoadingStatus alloc] initWithFrame:CGRectMake(0.0, 0.0, width, height)];
 }
 
+        // Commented out are for adding a label along with the progress bar.
 - (id)initWithFrame:(CGRect)frame {
-    
     if ((self = [super initWithFrame:frame])) {
-        self.backgroundColor = [UIColor colorWithRed:0.0f green:0.0f blue:0.0f alpha:0.4f];
-        
-        NSString *loadingString = @"Loading Photos…";
+        self.backgroundColor = [UIColor colorWithRed:0.0f green:0.0f blue:0.0f alpha:1.0f];
 
-        UIFont *loadingFont = [UIFont boldSystemFontOfSize:17.0f];
-    
-        NSDictionary *attrs = @{NSFontAttributeName:loadingFont};
+//        NSString *loadingString = @"Loading Video…"
+//        UIFont *loadingFont = [UIFont boldSystemFontOfSize:17.0f];
+//        NSDictionary *attrs = @{NSFontAttributeName:loadingFont};
+//        CGRect rect = [loadingString boundingRectWithSize:CGSizeMake(CGRectGetWidth(frame), CGRectGetHeight(frame))
+//                                         options:(NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading)
+//                                      attributes:attrs
+//                                         context:nil];
+//        CGSize labelSize = rect.size;
+//        
+        CGFloat centerX = floor(CGRectGetWidth(frame) / 2.0f); //- (labelSize.width / 2.0f));
+        CGFloat centerY = floor(CGRectGetHeight(frame) / 2.0f); //- (labelSize.height / 2.0f));
+//        _loadingLabel = [[UILabel alloc] initWithFrame: CGRectMake(centerX, centerY, labelSize.width, labelSize.height)];
+//        self.loadingLabel.backgroundColor = [UIColor clearColor];
+//        self.loadingLabel.textColor = [UIColor whiteColor];
+//        self.loadingLabel.text = loadingString;
+//        self.loadingLabel.font = loadingFont;
         
-        CGRect rect = [loadingString boundingRectWithSize:CGSizeMake(CGRectGetWidth(frame), CGRectGetHeight(frame))
-                                         options:(NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading)
-                                      attributes:attrs
-                                         context:nil];
-        CGSize labelSize = rect.size;
-        
-        CGFloat centerX = floor((CGRectGetWidth(frame) / 2.0f) - (labelSize.width / 2.0f));
-        CGFloat centerY = floor((CGRectGetHeight(frame) / 2.0f) - (labelSize.height / 2.0f));
-        _loadingLabel = [[UILabel alloc] initWithFrame: CGRectMake(centerX, centerY, labelSize.width, labelSize.height)];
-        self.loadingLabel.backgroundColor = [UIColor clearColor];
-        self.loadingLabel.textColor = [UIColor whiteColor];
-        self.loadingLabel.text = loadingString;
-        self.loadingLabel.font = loadingFont;
-        
-        _progress = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+        _progress = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
         CGRect progressFrame = self.progress.frame;
-        progressFrame.origin.x = centerX - CGRectGetWidth(progressFrame) - 8.0f;
+#warning progress bar needs to be "auto laidout" (it's off center)
+        progressFrame.origin.x = centerX; //- CGRectGetWidth(progressFrame) - 8.0f;
         progressFrame.origin.y = centerY;
+
         self.progress.frame = progressFrame;
         
         [self addSubview:self.progress];
-        [self addSubview:self.loadingLabel];
+        // [self addSubview:self.loadingLabel];
         
     }
     return self;

@@ -49,7 +49,7 @@
 
 @interface LoadingStatus : UIView
 
-+ (id)defaultLoadingStatusWithWidth:(CGFloat)width;
++ (id)defaultLoadingStatusWithWidth:(CGFloat)width Height:(CGFloat)height ;
 - (void)removeFromSuperviewWithFade;
 
 @end

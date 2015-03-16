@@ -7,8 +7,13 @@
 //
 
 #import "VideoFeedViewController.h"
+#import "VideoFeedTableViewCell.h"
+#import "VideoFeedDataSource.h"
 
-@interface VideoFeedViewController ()
+@interface VideoFeedViewController () <UITableViewDelegate>
+
+@property (nonatomic, strong) UITableView *tableView;
+@property (nonatomic, strong) VideoFeedDataSource *dataSource;
 
 @end
 
@@ -16,22 +21,34 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    self.dataSource = [VideoFeedDataSource new];
+    self.tableView = [[UITableView alloc] initWithFrame:self.view.bounds];
+    self.tableView.translatesAutoresizingMaskIntoConstraints = NO;
+    self.tableView.delegate = self;
+    
+    
+    [self.dataSource registerTableView:self.tableView];
+    self.tableView.dataSource = _dataSource;
+    
+//    UITapGestureRecognizer *snowboardTapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(goToSnowboardFeed:)];
+//    [snowboardTapGesture setNumberOfTouchesRequired:1];
+//    [snowboarderView addGestureRecognizer:snowboardTapGesture];
+    [self.view addSubview:self.tableView];
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return [VideoFeedTableViewCell cellHeight];
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+
 }
 
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

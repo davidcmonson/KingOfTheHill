@@ -13,9 +13,11 @@
 
 @implementation AAPLPreviewView
 
+
+
 + (Class)layerClass
 {
-	return [AVCaptureVideoPreviewLayer class];
+    return [AVCaptureVideoPreviewLayer class];
 }
 
 - (AVCaptureSession *)session

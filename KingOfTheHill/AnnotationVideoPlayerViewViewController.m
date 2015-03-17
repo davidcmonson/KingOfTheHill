@@ -40,10 +40,13 @@
         AVAsset *video = [AVAsset assetWithURL:self.videoURL];
         AVPlayerItem *item = [[AVPlayerItem alloc] initWithAsset:video];
         self.player = [AVPlayer playerWithPlayerItem:item];
+        
         AVPlayerLayer *layer = [AVPlayerLayer playerLayerWithPlayer:self.player];
-        UIView *playerView = [[UIView alloc]initWithFrame:self.view.bounds];
         layer.frame = self.view.frame;
+        
+        UIView *playerView = [[UIView alloc]initWithFrame:self.view.bounds];
         [playerView.layer addSublayer:layer];
+        
         [self.view addSubview: playerView];
         
         dispatch_async(dispatch_get_main_queue(), ^{

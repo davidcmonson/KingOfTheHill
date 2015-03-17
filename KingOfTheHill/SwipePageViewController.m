@@ -13,13 +13,18 @@
 #import <ParseUI/ParseUI.h>
 #import "User.h"
 
+#import "AAPLCameraViewController.h"
+#import "AAPLPreviewView.h"
+
 @interface SwipePageViewController () <UIPageViewControllerDataSource,PFLogInViewControllerDelegate,PFSignUpViewControllerDelegate>
 
 @property (nonatomic, strong) UIPageViewController *pageViewController;
-@property (nonatomic, strong) CameraViewController *cameraVC;
+//@property (nonatomic, strong) CameraViewController *cameraVC;
 @property (nonatomic, strong) VideoFeedViewController *videoVC;
 @property (nonatomic, strong) ProfileViewController *profileVC;
 @property (nonatomic, strong) LocationViewController *mapVC;
+
+@property (nonatomic, strong) AAPLCameraViewController *cameraVC;
 
 @end
 
@@ -50,18 +55,19 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"backgroundBlues"]]];
+    self.pageViewController.dataSource = self;
     
-    self.cameraVC = [CameraViewController new];
+    
+    self.cameraVC = [AAPLCameraViewController new];
+    
+    //self.cameraVC = [CameraViewController new];
     self.videoVC = [VideoFeedViewController new];
     self.profileVC = [ProfileViewController new];
     self.mapVC = [LocationViewController new];
     
     self.pageViewController = [[UIPageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStyleScroll navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal options:nil];
     
-    self.pageViewController.dataSource = self;
-    
     [self.pageViewController setViewControllers:@[self.cameraVC] direction:UIPageViewControllerNavigationDirectionForward animated:YES completion:nil];
-    
     
     [self addChildViewController:self.pageViewController];
     [self.pageViewController didMoveToParentViewController:self];

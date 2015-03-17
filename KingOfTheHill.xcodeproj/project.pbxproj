@@ -16,6 +16,8 @@
 		499F2D041AB2852600B3FDDF /* AnnotationVideoPlayerViewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 499F2D031AB2852600B3FDDF /* AnnotationVideoPlayerViewViewController.m */; };
 		499F2D0A1AB3375600B3FDDF /* AVPlayerDemoPlaybackView.m in Sources */ = {isa = PBXBuildFile; fileRef = 499F2D091AB3375600B3FDDF /* AVPlayerDemoPlaybackView.m */; };
 		499F2D0D1AB3423D00B3FDDF /* UserController.m in Sources */ = {isa = PBXBuildFile; fileRef = 499F2D0C1AB3423D00B3FDDF /* UserController.m */; };
+		49AF60BD1AB8CB06003C123D /* AAPLCameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 49AF60B91AB8CB06003C123D /* AAPLCameraViewController.m */; };
+		49AF60BE1AB8CB06003C123D /* AAPLPreviewView.m in Sources */ = {isa = PBXBuildFile; fileRef = 49AF60BC1AB8CB06003C123D /* AAPLPreviewView.m */; };
 		49CC3CA31AB368C300672138 /* CameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 49CC3CA21AB368C300672138 /* CameraViewController.m */; };
 		49CC3CA51AB3871B00672138 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49CC3CA41AB3871B00672138 /* Social.framework */; };
 		49CC3CA71AB3872500672138 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49CC3CA61AB3872500672138 /* Accounts.framework */; };
@@ -79,6 +81,10 @@
 		499F2D091AB3375600B3FDDF /* AVPlayerDemoPlaybackView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AVPlayerDemoPlaybackView.m; sourceTree = "<group>"; };
 		499F2D0B1AB3423D00B3FDDF /* UserController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserController.h; sourceTree = "<group>"; };
 		499F2D0C1AB3423D00B3FDDF /* UserController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserController.m; sourceTree = "<group>"; };
+		49AF60B91AB8CB06003C123D /* AAPLCameraViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AAPLCameraViewController.m; sourceTree = "<group>"; };
+		49AF60BA1AB8CB06003C123D /* AAPLCameraViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AAPLCameraViewController.h; sourceTree = "<group>"; };
+		49AF60BB1AB8CB06003C123D /* AAPLPreviewView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AAPLPreviewView.h; sourceTree = "<group>"; };
+		49AF60BC1AB8CB06003C123D /* AAPLPreviewView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AAPLPreviewView.m; sourceTree = "<group>"; };
 		49CC3CA11AB368C300672138 /* CameraViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraViewController.h; sourceTree = "<group>"; };
 		49CC3CA21AB368C300672138 /* CameraViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CameraViewController.m; sourceTree = "<group>"; };
 		49CC3CA41AB3871B00672138 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
@@ -162,6 +168,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		49AF60BF1AB8CB0C003C123D /* Camera */ = {
+			isa = PBXGroup;
+			children = (
+				49AF60BA1AB8CB06003C123D /* AAPLCameraViewController.h */,
+				49AF60B91AB8CB06003C123D /* AAPLCameraViewController.m */,
+				49AF60BB1AB8CB06003C123D /* AAPLPreviewView.h */,
+				49AF60BC1AB8CB06003C123D /* AAPLPreviewView.m */,
+			);
+			name = Camera;
+			sourceTree = "<group>";
+		};
 		49F462CF1AA93BB800E56599 /* Users&Video */ = {
 			isa = PBXGroup;
 			children = (
@@ -243,6 +260,7 @@
 		77D6FB261AA92CAC00E97862 /* KingOfTheHill */ = {
 			isa = PBXGroup;
 			children = (
+				49AF60BF1AB8CB0C003C123D /* Camera */,
 				499F2CCD1AB259A800B3FDDF /* ProfileViewController.h */,
 				499F2CCE1AB259A800B3FDDF /* ProfileViewController.m */,
 				499F2CCA1AB2598B00B3FDDF /* VideoFeedViewController.h */,
@@ -419,6 +437,7 @@
 				499F2CC31AB241D700B3FDDF /* VideoPin.m in Sources */,
 				49F462CB1AA93A5400E56599 /* Location.m in Sources */,
 				499F2D0D1AB3423D00B3FDDF /* UserController.m in Sources */,
+				49AF60BE1AB8CB06003C123D /* AAPLPreviewView.m in Sources */,
 				49CC3CA31AB368C300672138 /* CameraViewController.m in Sources */,
 				70A189391AAF923E0044F98D /* Video.m in Sources */,
 				77D6FB301AA92CAC00E97862 /* ViewController.m in Sources */,
@@ -426,6 +445,7 @@
 				77D6FB2D1AA92CAC00E97862 /* AppDelegate.m in Sources */,
 				77D6FB2A1AA92CAC00E97862 /* main.m in Sources */,
 				708554BA1AAE6BA8006DEB38 /* LocationViewController.m in Sources */,
+				49AF60BD1AB8CB06003C123D /* AAPLCameraViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

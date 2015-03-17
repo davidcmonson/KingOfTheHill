@@ -7,6 +7,9 @@
 //
 
 #import "VideoFeedDataSource.h"
+#import "VideoController.h"
+#import "Video.h"
+
 
 @implementation VideoFeedDataSource
 
@@ -22,11 +25,18 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 10;
+    
+    return [VideoController sharedInstance].arrayOfVideos.count;;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     VideoFeedTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([VideoFeedTableViewCell class])];
+    Video *video = [VideoController sharedInstance].arrayOfVideos[indexPath.row];
+    PFFile *thumbnailImage = video[urlOfThumbnail];
+    NSURL *urlOfThumbnail = [NSURL URLWithString:thumbnailImage.url];
+    NSData *dataOfThumbnail = [NSData dataWithContentsOfURL:urlOfThumbnail];
+    cell.imageView.image = [UIImage imageWithData:dataOfThumbnail];
+    cell.imageView.contentMode = UIViewContentModeScaleAspectFit;
     return cell;
 }
 

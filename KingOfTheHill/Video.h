@@ -15,11 +15,13 @@ static NSString *videoKey = @"Video";
 static NSString *annotationKeyOfVideo = @"annotation";
 static NSString *locationKeyOfVideo = @"location";
 static NSString *urlOfVideo = @"videoFile";
+static NSString *urlOfThumbnail = @"thumbnail";
 static NSString *titleOfVideoKey = @"name";
 static NSString *userOfVideoKey = @"user";
 static NSString *videoId = @"objectId";
 
 @interface Video : PFObject
+
 
 @property (nonatomic, strong) NSString *nameOfVideo;
 @property (nonatomic, strong) User *ownerOfVideo;

@@ -15,6 +15,7 @@
 
 @property (nonatomic,strong) NSURL *videoURL;
 @property (nonatomic,strong) MPMoviePlayerController *playerController;
+@property (nonatomic,strong) UISwipeGestureRecognizer *swipeGesture;
 
 @end
 
@@ -47,23 +48,27 @@
 }
 - (void)theSteezyProfile {
     
-    UISwipeGestureRecognizer *gestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(bringUpProfile:)];
+    self.swipeGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(bringUpProfile:)];
     
-    [gestureRecognizer setDirection:(UISwipeGestureRecognizerDirectionUp)];
+    [self.swipeGesture setDirection:(UISwipeGestureRecognizerDirectionUp)];
     
-    [self.view addGestureRecognizer:gestureRecognizer];
+    [self.view addGestureRecognizer:self.swipeGesture];
+
     
+}
+
+-(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+    NSLog(@"YOU TOUCHED THE CAMERA FOOL!");
 }
 
 - (void)bringUpProfile: (UISwipeGestureRecognizer *)recognizer {
     
     ProfileViewController *profileVC = [ProfileViewController new];
-    
     profileVC.modalPresentationStyle = UIModalPresentationOverCurrentContext;
     
     profileVC.modalTransitionStyle = UIModalTransitionStyleCoverVertical;;
     
-    [self presentViewController:profileVC animated:YES completion:nil];
+    [self.parentViewController presentViewController:profileVC animated:YES completion:nil];
     
     //    UIBlurEffect *effect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleExtraLight];
     
@@ -71,7 +76,7 @@
     
     //    [self.view addSubview:viewWithBlurredBackground];
     
-    
+
     
     
     

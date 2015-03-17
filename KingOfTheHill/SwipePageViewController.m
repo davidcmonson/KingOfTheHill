@@ -13,7 +13,7 @@
 #import <ParseUI/ParseUI.h>
 #import "User.h"
 
-@interface SwipePageViewController () <UIPageViewControllerDataSource,PFLogInViewControllerDelegate,PFSignUpViewControllerDelegate>
+@interface SwipePageViewController () <UIPageViewControllerDataSource,UIPageViewControllerDelegate,PFLogInViewControllerDelegate,PFSignUpViewControllerDelegate>
 
 @property (nonatomic, strong) UIPageViewController *pageViewController;
 @property (nonatomic, strong) CameraViewController *cameraVC;
@@ -28,6 +28,7 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
+    
     
     if (![PFUser currentUser]) { // No user logged in
         // Create the log in view controller
@@ -53,11 +54,11 @@
     
     self.cameraVC = [CameraViewController new];
     self.videoVC = [VideoFeedViewController new];
-    self.profileVC = [ProfileViewController new];
+
     self.mapVC = [LocationViewController new];
     
     self.pageViewController = [[UIPageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStyleScroll navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal options:nil];
-    
+    self.pageViewController.delegate = self;
     self.pageViewController.dataSource = self;
     
     [self.pageViewController setViewControllers:@[self.cameraVC] direction:UIPageViewControllerNavigationDirectionForward animated:YES completion:nil];
@@ -67,6 +68,12 @@
     [self.pageViewController didMoveToParentViewController:self];
     [self.view addSubview:self.pageViewController.view];
     
+    
+}
+
+-(void)pageViewController:(UIPageViewController *)pageViewController willTransitionToViewControllers:(NSArray *)pendingViewControllers {
+    
+    NSLog(@"YOU ARE UGLY");
     
 }
 

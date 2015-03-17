@@ -42,11 +42,11 @@
 //    [vote setObject:video forKeyedSubscript:@"voteSetOnVideo"];
 //}
 
-- (void)videoToParse
+- (void)videoToParseWithFile:(PFFile *)file
 {
     Video *video = (Video *)[PFObject objectWithClassName:videoKey];
-    video[@"name"] = video.nameOfVideo;
-    video[@"user"] = video.ownerOfVideo;
+    //video[@"name"] = video.nameOfVideo;
+    video[@"videoFile"] = file;
 #warning come back here
     //    video[coordinateOfVideoKey] = video.coordinate;
     // [video pin];

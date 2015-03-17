@@ -11,6 +11,9 @@
 #import <MediaPlayer/MediaPlayer.h>
 #import <MobileCoreServices/MobileCoreServices.h>
 
+#import <Parse/Parse.h>
+#import "VideoController.h"
+
 @interface CameraViewController () <UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
 @property (nonatomic,strong) NSURL *videoURL;
@@ -23,23 +26,34 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.allowsEditing = YES;
-    self.sourceType = UIImagePickerControllerSourceTypeCamera;
-    self.mediaTypes = [[NSArray alloc]initWithObjects:(NSString *) kUTTypeMovie, nil];
-    [self setHidesBottomBarWhenPushed:YES];
-    [self setVideoQuality:UIImagePickerControllerQualityTypeMedium];
+    [self loadCamera];
+    self.delegate = self;
 
-    //self.view.backgroundColor = [UIColor blueColor];
     [self theSteezyProfile];
 }
 
 -(void) imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
     self.videoURL = info[UIImagePickerControllerMediaURL];
-    [picker dismissViewControllerAnimated:YES completion:nil];
-    self.playerController = [[MPMoviePlayerController alloc]initWithContentURL:self.videoURL];
-    [self.playerController.view setFrame:self.view.bounds];
-    [self.view addSubview:self.playerController.view];
-    [self.playerController play];
+// [picker dismissViewControllerAnimated:YES completion:nil];
+//    self.playerController = [[MPMoviePlayerController alloc]initWithContentURL:self.videoURL];
+//    [self.playerController.view setFrame:self.view.bounds];
+//    [self.view addSubview:self.playerController.view];
+//    [self.playerController play];
+    NSData *videoData = [NSData dataWithContentsOfURL:self.videoURL];
+    PFFile *file = [PFFile fileWithName:@"video.mov" data:videoData contentType:@"mov"];
+    //[[VideoController sharedInstance] videoToParseWithFile:file];
+    NSLog(@"Saved the video!");
+    
 }
+
+-(void)loadCamera {
+    self.sourceType = UIImagePickerControllerSourceTypeCamera;
+    self.mediaTypes = [[NSArray alloc]initWithObjects:(NSString *) kUTTypeMovie, nil];
+    [self setHidesBottomBarWhenPushed:YES];
+    [self setVideoQuality:UIImagePickerControllerQualityTypeMedium];
+}
+
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

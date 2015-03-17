@@ -16,7 +16,7 @@
 @property (nonatomic, strong) NSArray *arrayOfVideos;
 
 + (VideoController *)sharedInstance;
-- (void)videoToParse;
+- (void)videoToParseWithFile:(PFFile *)file;
 - (void)userToParse;
 - (void)userToVoteToVideo;
 - (NSInteger)totalVotesOnVideoWithIdentifier:(NSString *)identifier;

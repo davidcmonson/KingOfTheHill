@@ -9,6 +9,8 @@
 #import "VideoFeedViewController.h"
 #import "VideoFeedTableViewCell.h"
 #import "VideoFeedDataSource.h"
+#import "Video.h"
+#import "VideoController.h"
 
 @interface VideoFeedViewController () <UITableViewDelegate>
 
@@ -22,8 +24,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.dataSource = [VideoFeedDataSource new];
-    self.tableView = [[UITableView alloc] initWithFrame:self.view.bounds];
-    self.tableView.translatesAutoresizingMaskIntoConstraints = NO;
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(-15, 0, self.view.frame.size.width + 15, self.view.frame.size.height) style:UITableViewStylePlain];
+//    self.tableView.translatesAutoresizingMaskIntoConstraints = NO;
     self.tableView.delegate = self;
     
     
@@ -37,7 +39,13 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return [VideoFeedTableViewCell cellHeight];
+    Video *video = [VideoController sharedInstance].arrayOfVideos[indexPath.row];
+    PFFile *thumbnailImage = video[urlOfThumbnail];
+    NSURL *urlOfThumbnail = [NSURL URLWithString:thumbnailImage.url];
+    NSData *dataOfThumbnail = [NSData dataWithContentsOfURL:urlOfThumbnail];
+    UIImage *image = [UIImage imageWithData:dataOfThumbnail];
+    UIImageView *thumbnailView = [[UIImageView alloc] initWithImage:image];
+    return thumbnailView.frame.size.height;
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {

@@ -48,6 +48,12 @@
     [self showMainMapView];
     [self setUpSwipeBar];
     
+    // Required method to notify user if it can use your current location
+    // NOTE: Put notification later telling users why it will need to use their location
+    if ([self.locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)]) {
+        [self.locationManager requestWhenInUseAuthorization];
+    }
+    
 }
 
 // Sets up bar at the bottom of the screen for users to swipe back to the main screen (camera)
@@ -130,11 +136,11 @@
         PFGeoPoint *geoPointOfVideo = videoPFObjectAtIndex[locationKeyOfVideo];
         
         // Convert GeoPoint to CLLocaation
-       CLLocationCoordinate2D coordinateOfVideo = [self convertPFGeoPointToLocationCoordinate2D:geoPointOfVideo];
+        CLLocationCoordinate2D coordinateOfVideo = [self convertPFGeoPointToLocationCoordinate2D:geoPointOfVideo];
         
         // Adding annotations
         VideoPin *videoPin = [[VideoPin alloc]initWithVideo:videoPFObjectAtIndex];
-
+        
         
         //    If you want to clear other pins/annotations this is how to do it
         //        for (id annotation in self.map.annotations) {
@@ -252,15 +258,15 @@
 
 
 
-//- (CLLocationManager *)locationManager
-//{
-//    if (_locationManager == nil) {
-//        _locationManager = [[CLLocationManager alloc] init];
-//        _locationManager.delegate = self;
-//        _locationManager.desiredAccuracy = kCLLocationAccuracyBest;
-//    }
-//    return _locationManager;
-//}
+- (CLLocationManager *)locationManager
+{
+    if (_locationManager == nil) {
+        _locationManager = [[CLLocationManager alloc] init];
+        _locationManager.delegate = self;
+        _locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+    }
+    return _locationManager;
+}
 
 
 /*
@@ -478,9 +484,6 @@
  [self mainMapView];
  
  
- //    if ([self.locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)]) {
- //        [self.locationManager requestWhenInUseAuthorization];
- //    }
  //
  //    /////////////// TEMP CODE for Simulator purposes
  //    //    CLLocation *tempLocation = [[CLLocation alloc] initWithLatitude:40.1 longitude:-111.1];

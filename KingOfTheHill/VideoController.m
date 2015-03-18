@@ -21,27 +21,6 @@
     return sharedInstance;
 }
 
-//- (void)relationshipBetweenVideoAndUser
-//{
-//    // create user object
-//    PFObject *user = [PFObject objectWithClassName:@"User"];
-//
-//    // user video
-//    PFObject *video = [PFObject objectWithClassName:@"Video"];
-//
-//    // set who the video is creatd by
-//    [video setObject:user forKeyedSubscript:@"ownerOfVideo"];
-//}
-//
-//- (void)relationshipBetweenVoteAndVideo
-//{
-//    PFObject *video = [PFObject objectWithClassName:@"video"];
-//
-//    PFObject *vote = [PFObject objectWithClassName:@"vote"];
-//
-//    [vote setObject:video forKeyedSubscript:@"voteSetOnVideo"];
-//}
-
 - (void)videoToParseWithFile:(PFFile *)file
 {
     Video *video = (Video *)[PFObject objectWithClassName:videoKey];
@@ -66,24 +45,6 @@
 //
 //
 //
-
-
-- (void)userToParse//:(User *)user video:(Video *)video
-{
-#warning if (user) & if (video) stuff
-    User *user = (User *)[PFObject objectWithClassName:userKey];
-    user[usernameKey] = user.username;
-    user[passwordKey] = user.password;
-    user[emailKey] = user.email;
-    [user saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-        if (succeeded) {
-            NSLog(@"userKey saved");
-        }
-        else {
-            NSLog(@"%@", error);
-        }
-    }];
-}
 
 - (void)userToVoteToVideo:(Video *)video
 {

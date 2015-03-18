@@ -19,8 +19,8 @@
 		49AF60BD1AB8CB06003C123D /* AAPLCameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 49AF60B91AB8CB06003C123D /* AAPLCameraViewController.m */; };
 		49AF60BE1AB8CB06003C123D /* AAPLPreviewView.m in Sources */ = {isa = PBXBuildFile; fileRef = 49AF60BC1AB8CB06003C123D /* AAPLPreviewView.m */; };
 		49CC3CA31AB368C300672138 /* CameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 49CC3CA21AB368C300672138 /* CameraViewController.m */; };
-		49CC3CA51AB3871B00672138 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49CC3CA41AB3871B00672138 /* Social.framework */; };
-		49CC3CA71AB3872500672138 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49CC3CA61AB3872500672138 /* Accounts.framework */; };
+		49CC3CA51AB3871B00672138 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49CC3CA41AB3871B00672138 /* Social.framework */; settings = {ATTRIBUTES = (Required, ); }; };
+		49CC3CA71AB3872500672138 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49CC3CA61AB3872500672138 /* Accounts.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		49CC3CAD1AB550B000672138 /* LoadingStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = 49CC3CAC1AB550B000672138 /* LoadingStatus.m */; };
 		49F462C51AA9356E00E56599 /* VideoController.m in Sources */ = {isa = PBXBuildFile; fileRef = 49F462C41AA9356E00E56599 /* VideoController.m */; };
 		49F462CB1AA93A5400E56599 /* Location.m in Sources */ = {isa = PBXBuildFile; fileRef = 49F462CA1AA93A5400E56599 /* Location.m */; };
@@ -220,6 +220,8 @@
 			children = (
 				70A1892F1AAF8E250044F98D /* libsqlite3.dylib */,
 				70A1892D1AAF8E1C0044F98D /* libz.dylib */,
+				49CC3CA61AB3872500672138 /* Accounts.framework */,
+				49CC3CA41AB3871B00672138 /* Social.framework */,
 				70A1892B1AAF8E130044F98D /* SystemConfiguration.framework */,
 				70A189291AAF8E090044F98D /* StoreKit.framework */,
 				70A189271AAF8E000044F98D /* Security.framework */,
@@ -240,8 +242,6 @@
 		77D6FB1B1AA92CAC00E97862 = {
 			isa = PBXGroup;
 			children = (
-				49CC3CA61AB3872500672138 /* Accounts.framework */,
-				49CC3CA41AB3871B00672138 /* Social.framework */,
 				77D6FB261AA92CAC00E97862 /* KingOfTheHill */,
 				77D6FB401AA92CAC00E97862 /* KingOfTheHillTests */,
 				77D6FB251AA92CAC00E97862 /* Products */,

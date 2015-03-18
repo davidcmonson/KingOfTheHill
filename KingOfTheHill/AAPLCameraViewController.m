@@ -117,7 +117,6 @@ static float EXPOSURE_MINIMUM_DURATION = 1.0/1000; // Limit exposure duration to
     
     // Set up record button
     self.recordButton = [[UIButton alloc]initWithFrame:CGRectMake(90, 500, 150, 50)];
-    [self.recordButton setTitle:@"Record!" forState:UIControlStateNormal];
     // NOTE: Addsubview is at the bottom because it needs to be added AFTER the previewLayer is added
     // Instantiating it here, will make the button hide behind the preview.
     self.recordButton.backgroundColor = [UIColor redColor];
@@ -168,14 +167,14 @@ static float EXPOSURE_MINIMUM_DURATION = 1.0/1000; // Limit exposure duration to
                 // Why are we dispatching this to the main queue?
                 // Because AVCaptureVideoPreviewLayer is the backing layer for our preview view and UIView can only be manipulated on main thread.
                 // Note: As an exception to the above rule, it is not necessary to serialize video orientation changes on the AVCaptureVideoPreviewLayer’s connection with other session manipulation.
-                
+
                 AVCaptureVideoPreviewLayer *newCaptureVideoPreviewLayer = [[AVCaptureVideoPreviewLayer alloc] initWithSession:session];
                 newCaptureVideoPreviewLayer.frame = self.view.frame;
-                [self.view.layer addSublayer:newCaptureVideoPreviewLayer];
-                
+                UIView *aView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.width)];
+                [aView.layer addSublayer:newCaptureVideoPreviewLayer];
+                [self.view addSubview:aView];
                 // adds subview AFTER the preview layer is added
                 [self.view addSubview:self.recordButton];
-                
                 [self theSteezyProfile];
                 
             });

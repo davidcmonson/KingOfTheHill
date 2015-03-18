@@ -59,7 +59,7 @@
     self.cameraVC = [AAPLCameraViewController new];
 //    self.cameraVC = [CameraViewController new];
     self.videoVC = [VideoFeedViewController new];
-    
+
     self.mapVC = [LocationViewController new];
     
     self.pageViewController = [[UIPageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStyleScroll navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal options:nil];
@@ -78,7 +78,7 @@
 
 -(void)pageViewController:(UIPageViewController *)pageViewController willTransitionToViewControllers:(NSArray *)pendingViewControllers {
     
-    NSLog(@"YOU ARE UGLY");
+//    NSLog(@"YOU ARE UGLY");
     
 }
 

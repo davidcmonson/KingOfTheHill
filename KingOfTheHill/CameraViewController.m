@@ -56,6 +56,7 @@
     [self.swipeGesture setDirection:(UISwipeGestureRecognizerDirectionUp)];
     
     [self.view addGestureRecognizer:self.swipeGesture];
+
     
     
 }
@@ -78,6 +79,10 @@
     //    UIVisualEffectView *viewWithBlurredBackground = [[UIVisualEffectView alloc] initWithEffect:effect];
     
     //    [self.view addSubview:viewWithBlurredBackground];
+    
+
+    
+    
     
 }
 

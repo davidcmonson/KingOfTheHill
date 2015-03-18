@@ -58,16 +58,22 @@
 
 // Sets up bar at the bottom of the screen for users to swipe back to the main screen (camera)
 - (void)setUpSwipeBar {
-    UIView *mapSwipeBarView = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - 50, self.view.frame.size.width, 50)];
-    mapSwipeBarView.backgroundColor = [UIColor colorWithRed:0.5 green:0.5 blue:0.5 alpha:0.5];
-    [self.view addSubview:mapSwipeBarView];
     
-    UILabel *mapSwipeBarLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - 40, self.view.frame.size.width, 30)];
-    mapSwipeBarLabel.text = @">> Swipe Back To Camera >>";
-    mapSwipeBarLabel.font = [UIFont fontWithName:@"Avenir-BlackOblique" size:18];
-    mapSwipeBarLabel.textAlignment = NSTextAlignmentCenter;
-    mapSwipeBarLabel.textColor = [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:1.0];
-    [self.view addSubview:mapSwipeBarLabel];
+    UIView *thumbTabView = [[UIView alloc] initWithFrame:CGRectMake(-20, 581, 103, 55)];
+    thumbTabView.backgroundColor = [UIColor colorWithRed:0.4 green:0.4 blue:0.4 alpha:0.55];
+    thumbTabView.clipsToBounds = YES;
+    thumbTabView.layer.cornerRadius = thumbTabView.bounds.size.width/4.0f;
+    [self.mainMapView addSubview:thumbTabView];
+    [self.mainMapView clipsToBounds];
+    
+    UIButton *cameraButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    cameraButton.frame = CGRectMake(16, 584, 53, 46);
+    cameraButton.clipsToBounds = YES;
+    cameraButton.layer.cornerRadius = cameraButton.bounds.size.width/3.0f;
+    cameraButton.layer.borderWidth = 1.0f;
+    cameraButton.layer.borderColor = [UIColor clearColor].CGColor;
+    [cameraButton setBackgroundImage:[UIImage imageNamed:@"Camera-50"] forState:UIControlStateNormal];
+    [self.view addSubview:cameraButton];
     
 }
 

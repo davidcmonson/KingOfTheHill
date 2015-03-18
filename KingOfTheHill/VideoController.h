@@ -13,7 +13,8 @@
 
 @interface VideoController : NSObject
 
-@property (nonatomic, strong) NSArray *arrayOfVideos;
+@property (nonatomic, strong) NSArray *arrayOfVideoForFeed;
+@property (nonatomic, strong) NSArray *arrayOfVideosNearLocation;
 
 + (VideoController *)sharedInstance;
 - (void)videoToParseWithFile:(PFFile *)file;

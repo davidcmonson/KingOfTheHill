@@ -124,9 +124,9 @@
         else {
             NSMutableArray *arrayOfVideos = [[NSMutableArray alloc] initWithArray:objects];
             //[self dropPinAtCoordinatesForVideosInVideosArray:arrayOfVideos];
-            [VideoController sharedInstance].arrayOfVideos = arrayOfVideos;
-            [self dropPinAtCoordinatesForVideosInVideosArray:[VideoController sharedInstance].arrayOfVideos];
-            NSLog(@"%ld",[VideoController sharedInstance].arrayOfVideos.count);
+            [VideoController sharedInstance].arrayOfVideosNearLocation = arrayOfVideos;
+            [self dropPinAtCoordinatesForVideosInVideosArray:[VideoController sharedInstance].arrayOfVideosNearLocation];
+            NSLog(@"%ld",[VideoController sharedInstance].arrayOfVideosNearLocation.count);
         }
     }];
     

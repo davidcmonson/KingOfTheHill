@@ -26,12 +26,12 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
-    return [VideoController sharedInstance].arrayOfVideos.count;;
+    return [VideoController sharedInstance].arrayOfVideoForFeed.count;;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     VideoFeedTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([VideoFeedTableViewCell class])];
-    Video *video = [VideoController sharedInstance].arrayOfVideos[indexPath.row];
+    Video *video = [VideoController sharedInstance].arrayOfVideoForFeed[indexPath.row];
     PFFile *thumbnailImage = video[urlOfThumbnail];
     NSURL *urlOfThumbnail = [NSURL URLWithString:thumbnailImage.url];
     NSData *dataOfThumbnail = [NSData dataWithContentsOfURL:urlOfThumbnail];

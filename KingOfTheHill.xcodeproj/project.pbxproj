@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		12215DBF1AB78DC500D4E8A2 /* VideoFeedDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 12215DBE1AB78DC500D4E8A2 /* VideoFeedDataSource.m */; };
+		12215DC51AB9076900D4E8A2 /* SectionHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 12215DC41AB9076900D4E8A2 /* SectionHeaderView.m */; };
 		12A5C0551AB7771C00DB4ACB /* VideoFeedTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 12A5C0541AB7771C00DB4ACB /* VideoFeedTableViewCell.m */; };
 		499F2CC31AB241D700B3FDDF /* VideoPin.m in Sources */ = {isa = PBXBuildFile; fileRef = 499F2CC21AB241D700B3FDDF /* VideoPin.m */; };
 		499F2CC91AB2596400B3FDDF /* SwipePageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 499F2CC81AB2596400B3FDDF /* SwipePageViewController.m */; };
@@ -63,6 +64,8 @@
 /* Begin PBXFileReference section */
 		12215DBD1AB78DC500D4E8A2 /* VideoFeedDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoFeedDataSource.h; sourceTree = "<group>"; };
 		12215DBE1AB78DC500D4E8A2 /* VideoFeedDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VideoFeedDataSource.m; sourceTree = "<group>"; };
+		12215DC31AB9076900D4E8A2 /* SectionHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SectionHeaderView.h; sourceTree = "<group>"; };
+		12215DC41AB9076900D4E8A2 /* SectionHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SectionHeaderView.m; sourceTree = "<group>"; };
 		12A5C0531AB7771C00DB4ACB /* VideoFeedTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoFeedTableViewCell.h; sourceTree = "<group>"; };
 		12A5C0541AB7771C00DB4ACB /* VideoFeedTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VideoFeedTableViewCell.m; sourceTree = "<group>"; };
 		499F2CC11AB241D700B3FDDF /* VideoPin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoPin.h; sourceTree = "<group>"; };
@@ -249,6 +252,8 @@
 				499F2CCB1AB2598B00B3FDDF /* VideoFeedViewController.m */,
 				12A5C0531AB7771C00DB4ACB /* VideoFeedTableViewCell.h */,
 				12A5C0541AB7771C00DB4ACB /* VideoFeedTableViewCell.m */,
+				12215DC31AB9076900D4E8A2 /* SectionHeaderView.h */,
+				12215DC41AB9076900D4E8A2 /* SectionHeaderView.m */,
 				12215DBD1AB78DC500D4E8A2 /* VideoFeedDataSource.h */,
 				12215DBE1AB78DC500D4E8A2 /* VideoFeedDataSource.m */,
 				499F2CC71AB2596400B3FDDF /* SwipePageViewController.h */,
@@ -425,6 +430,7 @@
 				49F462C51AA9356E00E56599 /* VideoController.m in Sources */,
 				77D6FB2D1AA92CAC00E97862 /* AppDelegate.m in Sources */,
 				77D6FB2A1AA92CAC00E97862 /* main.m in Sources */,
+				12215DC51AB9076900D4E8A2 /* SectionHeaderView.m in Sources */,
 				708554BA1AAE6BA8006DEB38 /* LocationViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

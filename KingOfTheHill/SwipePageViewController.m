@@ -73,7 +73,7 @@
 
 -(void)pageViewController:(UIPageViewController *)pageViewController willTransitionToViewControllers:(NSArray *)pendingViewControllers {
     
-    NSLog(@"YOU ARE UGLY");
+//    NSLog(@"YOU ARE UGLY");
     
 }
 

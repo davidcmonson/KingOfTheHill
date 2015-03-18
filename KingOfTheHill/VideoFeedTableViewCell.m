@@ -14,7 +14,7 @@
     
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        
+        self.backgroundColor = [UIColor blackColor];
         self.translatesAutoresizingMaskIntoConstraints = NO;
     }
     return self;

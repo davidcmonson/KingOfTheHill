@@ -15,7 +15,7 @@
 
 @interface VideoFeedDataSource () <UIGestureRecognizerDelegate>
 
-@property (nonatomic) NSInteger currentIndex;
+@property (nonatomic) NSIndexPath *currentIndex;
 @property (nonatomic, strong) VideoFeedTableViewCell *cell;
 @property (nonatomic, strong) UILabel *votes;
 @property (nonatomic, strong) NSArray *arrayOfVotes;
@@ -58,7 +58,7 @@
     [newOneTapGesture requireGestureRecognizerToFail:newGesture];
     
     self.votes = [[UILabel alloc] initWithFrame:CGRectMake(20, 20, 55, 55)];
-    self.votes.text = @"";
+    self.votes.text = @"Voterific";
     self.votes.textColor = [UIColor whiteColor];
     [self.cell.imageView addSubview:self.votes];
     return self.cell;
@@ -71,7 +71,8 @@
 
 - (void)putPlayer {
     NSLog(@"ONE TAP");
-    PFFile *videoFile = [VideoController sharedInstance].arrayOfVideoForFeed[self.currentIndex][urlOfVideo];
+    
+    PFFile *videoFile = [VideoController sharedInstance].arrayOfVideoForFeed[self.currentIndex.row][urlOfVideo];
     NSURL *videoURL = [NSURL URLWithString:videoFile.url];
     AVAsset *video = [AVAsset assetWithURL:videoURL];
     AVPlayerItem *item = [[AVPlayerItem alloc] initWithAsset:video];
@@ -82,7 +83,7 @@
     
     UIView *playerView = [[UIView alloc]initWithFrame:self.cell.contentView.bounds];
     [playerView.layer addSublayer:layer];
-    
+
     [self.cell.contentView addSubview: playerView];
     
     dispatch_async(dispatch_get_main_queue(), ^{

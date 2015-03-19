@@ -63,20 +63,20 @@
 }
 
 // add header view
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return [SectionHeaderView headerHeight];
-}
-
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    
-    CGRect frame = CGRectMake(0, 0, tableView.frame.size.width, [SectionHeaderView headerHeight]);
-    
-    SectionHeaderView *sectionHeader = [[SectionHeaderView alloc] initWithFrame:frame];
-    [sectionHeader updateWithUserName:@"Ted" votes:1 andUpVotes:self.headerButton];
-    
-    return sectionHeader;
-    
-}
+//- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+//    return [SectionHeaderView headerHeight];
+//}
+//
+//- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+//    
+//    CGRect frame = CGRectMake(0, 0, tableView.frame.size.width, [SectionHeaderView headerHeight]);
+//    
+//    SectionHeaderView *sectionHeader = [[SectionHeaderView alloc] initWithFrame:frame];
+//    [sectionHeader updateWithUserName:@"Ted" votes:1 andUpVotes:self.headerButton];
+//    
+//    return sectionHeader;
+//    
+//}
 
 //
 

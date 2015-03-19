@@ -64,27 +64,32 @@
 }
 
 + (void)queryVideosForFeed {
-    // Parse query calls.
+                 NSLog(@"Photos Loading!");
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        // Parse query calls.
+        PFQuery *queryForVideos = [PFQuery queryWithClassName:@"Video"];
+        [queryForVideos findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+            if (error) {
+                NSLog(@"%@", error);
+            }
+            else {
+                //NSArray *arrayOfVideos = [[NSArray alloc] initWithArray:objects];
+                [VideoController sharedInstance].arrayOfVideoForFeed = objects;
+                [[VideoController sharedInstance] populateThumbnailArray:objects];
+                NSLog(@"%ld",[VideoController sharedInstance].arrayOfVideoForFeed.count);
+            }
+        }];
+        dispatch_async(dispatch_get_main_queue(), ^{
+             NSLog(@"Photos Loaded!");
+        });
+    });
     
-    PFQuery *queryForVideos = [PFQuery queryWithClassName:@"Video"];
-    
-    [queryForVideos findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-        if (error) {
-            NSLog(@"%@", error);
-        }
-        else {
-            //NSArray *arrayOfVideos = [[NSArray alloc] initWithArray:objects];
-            [VideoController sharedInstance].arrayOfVideoForFeed = objects;
-            [[VideoController sharedInstance] populateThumbnailArray:objects];
-            NSLog(@"%ld",[VideoController sharedInstance].arrayOfVideoForFeed.count);
-        }
-    }];
 }
 
 // takes in the array from Parse, adds an image to each of it and puts it back into the sharedInstance array
 - (void)populateThumbnailArray:(NSArray *)array {
     NSMutableArray *mutableArray = [NSMutableArray new];
-//#warning will need checker if the PFFile has a file or not (crashes when it tries to assign thumbnailOfVideo)
+    //#warning will need checker if the PFFile has a file or not (crashes when it tries to assign thumbnailOfVideo)
     for (NSInteger index = 0; index < array.count; index++) {
         Video *video = array[index];
         PFFile *thumbnailImage = video[urlOfThumbnail];
@@ -97,6 +102,7 @@
     [VideoController sharedInstance].arrayOfThumbnails = mutableArray;
     NSLog(@"%@", [VideoController sharedInstance].arrayOfThumbnails);
 }
+
 
 - (NSInteger)totalVotesOnVideoWithIdentifier:(NSString *)identifier
 {

@@ -200,7 +200,7 @@ static float EXPOSURE_MINIMUM_DURATION = 1.0/1000; // Limit exposure duration to
             AVCaptureConnection *connection = [movieFileOutput connectionWithMediaType:AVMediaTypeVideo];
             if ([connection isVideoStabilizationSupported])
             {
-                [connection setEnablesVideoStabilizationWhenAvailable:YES];
+                [connection setPreferredVideoStabilizationMode:AVCaptureVideoStabilizationModeAuto];
             }
             [self setMovieFileOutput:movieFileOutput];
         }
@@ -891,7 +891,7 @@ static float EXPOSURE_MINIMUM_DURATION = 1.0/1000; // Limit exposure duration to
     {
         AVCaptureFocusMode oldMode = [change[NSKeyValueChangeOldKey] intValue];
         AVCaptureFocusMode newMode = [change[NSKeyValueChangeNewKey] intValue];
-        NSLog(@"focus mode: %@ -> %@", [self stringFromFocusMode:oldMode], [self stringFromFocusMode:newMode]);
+        //NSLog(@"focus mode: %@ -> %@", [self stringFromFocusMode:oldMode], [self stringFromFocusMode:newMode]);
         
         self.focusModeControl.selectedSegmentIndex = [self.focusModes indexOfObject:@(newMode)];
         self.lensPositionSlider.enabled = (newMode == AVCaptureFocusModeLocked);
@@ -910,7 +910,7 @@ static float EXPOSURE_MINIMUM_DURATION = 1.0/1000; // Limit exposure duration to
     {
         AVCaptureExposureMode oldMode = [change[NSKeyValueChangeOldKey] intValue];
         AVCaptureExposureMode newMode = [change[NSKeyValueChangeNewKey] intValue];
-        NSLog(@"exposure mode: %@ -> %@", [self stringFromExposureMode:oldMode], [self stringFromExposureMode:newMode]);
+        //NSLog(@"exposure mode: %@ -> %@", [self stringFromExposureMode:oldMode], [self stringFromExposureMode:newMode]);
         
         self.exposureModeControl.selectedSegmentIndex = [self.exposureModes indexOfObject:@(newMode)];
         self.exposureDurationSlider.enabled = (newMode == AVCaptureExposureModeCustom);
@@ -977,7 +977,7 @@ static float EXPOSURE_MINIMUM_DURATION = 1.0/1000; // Limit exposure duration to
     {
         AVCaptureWhiteBalanceMode oldMode = [change[NSKeyValueChangeOldKey] intValue];
         AVCaptureWhiteBalanceMode newMode = [change[NSKeyValueChangeNewKey] intValue];
-        NSLog(@"white balance mode: %@ -> %@", [self stringFromWhiteBalanceMode:oldMode], [self stringFromWhiteBalanceMode:newMode]);
+        //NSLog(@"white balance mode: %@ -> %@", [self stringFromWhiteBalanceMode:oldMode], [self stringFromWhiteBalanceMode:newMode]);
         
         self.whiteBalanceModeControl.selectedSegmentIndex = [self.whiteBalanceModes indexOfObject:@(newMode)];
         self.temperatureSlider.enabled = (newMode == AVCaptureWhiteBalanceModeLocked);

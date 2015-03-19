@@ -56,6 +56,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"backgroundBlues"]]];
+    
     [VideoController queryVideosForFeed];
     
     self.cameraVC = [AAPLCameraViewController new];

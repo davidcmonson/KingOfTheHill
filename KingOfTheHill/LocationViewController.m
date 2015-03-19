@@ -60,6 +60,7 @@
 - (void)setUpSwipeBar {
     
     UIView *thumbTabView = [[UIView alloc] initWithFrame:CGRectMake(-20, 581, 103, 55)];
+        //UIView *thumbTabView = [[UIView alloc] initWithFrame:CGRectMake(-20, 500, 103, 55)];
     thumbTabView.backgroundColor = [UIColor colorWithRed:0.4 green:0.4 blue:0.4 alpha:0.55];
     thumbTabView.clipsToBounds = YES;
     thumbTabView.layer.cornerRadius = thumbTabView.bounds.size.width/4.0f;
@@ -126,7 +127,7 @@
             //[self dropPinAtCoordinatesForVideosInVideosArray:arrayOfVideos];
             [VideoController sharedInstance].arrayOfVideosNearLocation = arrayOfVideos;
             [self dropPinAtCoordinatesForVideosInVideosArray:[VideoController sharedInstance].arrayOfVideosNearLocation];
-            NSLog(@"%ld",[VideoController sharedInstance].arrayOfVideosNearLocation.count);
+            NSLog(@"Videos Near Location: %ld",[VideoController sharedInstance].arrayOfVideosNearLocation.count);
         }
     }];
     

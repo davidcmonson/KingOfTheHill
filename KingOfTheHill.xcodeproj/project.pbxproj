@@ -138,6 +138,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				70A189221AAF8DE40044F98D /* CoreLocation.framework in Frameworks */,
 				49CC3CA71AB3872500672138 /* Accounts.framework in Frameworks */,
 				49CC3CA51AB3871B00672138 /* Social.framework in Frameworks */,
 				70A189301AAF8E250044F98D /* libsqlite3.dylib in Frameworks */,
@@ -147,7 +148,6 @@
 				70A189281AAF8E000044F98D /* Security.framework in Frameworks */,
 				70A189261AAF8DF80044F98D /* QuartzCore.framework in Frameworks */,
 				70A189241AAF8DED0044F98D /* MobileCoreServices.framework in Frameworks */,
-				70A189221AAF8DE40044F98D /* CoreLocation.framework in Frameworks */,
 				70A189201AAF8DDD0044F98D /* CoreGraphics.framework in Frameworks */,
 				70A1891E1AAF8DD40044F98D /* CFNetwork.framework in Frameworks */,
 				70A1891C1AAF8DCA0044F98D /* AudioToolbox.framework in Frameworks */,
@@ -363,7 +363,7 @@
 				TargetAttributes = {
 					77D6FB231AA92CAC00E97862 = {
 						CreatedOnToolsVersion = 6.1.1;
-						DevelopmentTeam = VBJ3B2RNGL;
+						DevelopmentTeam = N7G76WLU2V;
 						SystemCapabilities = {
 							com.apple.Maps.iOS = {
 								enabled = 1;

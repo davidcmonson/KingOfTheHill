@@ -12,10 +12,12 @@
 
 #import <AVFoundation/AVFoundation.h>
 #import <AssetsLibrary/AssetsLibrary.h>
+#import <CoreLocation/CoreLocation.h>
 
 #import "AAPLPreviewView.h"
 
 #import "ProfileViewController.h"
+#import "VideoController.h"
 
 static void *CapturingStillImageContext = &CapturingStillImageContext;
 static void *RecordingContext = &RecordingContext;
@@ -30,13 +32,17 @@ static void *ISOContext = &ISOContext;
 static void *ExposureTargetOffsetContext = &ExposureTargetOffsetContext;
 static void *DeviceWhiteBalanceGainsContext = &DeviceWhiteBalanceGainsContext;
 
-@interface AAPLCameraViewController () <AVCaptureFileOutputRecordingDelegate>
+@interface AAPLCameraViewController () <AVCaptureFileOutputRecordingDelegate, AVCaptureMetadataOutputObjectsDelegate, CLLocationManagerDelegate> {
+    CLLocationManager *locationManager;
+}
 
 @property (nonatomic, weak) IBOutlet AAPLPreviewView *previewView;
 @property (nonatomic) UIButton *recordButton;
 @property (nonatomic) IBOutlet UIButton *cameraButton;
 @property (nonatomic) IBOutlet UIButton *stillButton;
-
+@property (nonatomic,strong) CLLocation *currentLocation;
+@property (nonatomic, strong) PFGeoPoint *currentLocationGeoPoint;
+@property (nonatomic, strong) NSString *outputFilePath;
 @property (nonatomic, strong) NSArray *focusModes;
 @property (nonatomic, weak) IBOutlet UIView *manualHUDFocusView;
 @property (nonatomic, weak) IBOutlet UISegmentedControl *focusModeControl;
@@ -83,6 +89,7 @@ static void *DeviceWhiteBalanceGainsContext = &DeviceWhiteBalanceGainsContext;
 @property (nonatomic) BOOL lockInterfaceRotation;
 @property (nonatomic) id runtimeErrorHandlingObserver;
 
+
 @end
 
 @implementation AAPLCameraViewController
@@ -96,6 +103,8 @@ static float EXPOSURE_MINIMUM_DURATION = 1.0/1000; // Limit exposure duration to
 {
     CONTROL_NORMAL_COLOR = [UIColor yellowColor];
     CONTROL_HIGHLIGHT_COLOR = [UIColor colorWithRed:0.0 green:122.0/255.0 blue:1.0 alpha:1.0]; // A nice blue
+    
+
 }
 
 + (NSSet *)keyPathsForValuesAffectingSessionRunningAndDeviceAuthorized
@@ -108,9 +117,27 @@ static float EXPOSURE_MINIMUM_DURATION = 1.0/1000; // Limit exposure duration to
     return [[self session] isRunning] && [self isDeviceAuthorized];
 }
 
+- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
+    self.currentLocation = [locations lastObject];
+    NSLog(@"Current Location: %@",self.currentLocation);
+    
+}
+
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    locationManager = [[CLLocationManager alloc] init];
+    locationManager.delegate = self;
+    locationManager.distanceFilter = kCLDistanceFilterNone;
+    locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+    
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0)
+        [locationManager requestWhenInUseAuthorization];
+    
+    [locationManager startUpdatingLocation];
+    
     self.view.backgroundColor = [UIColor blackColor];
     
     self.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
@@ -171,6 +198,7 @@ static float EXPOSURE_MINIMUM_DURATION = 1.0/1000; // Limit exposure duration to
                 // Note: As an exception to the above rule, it is not necessary to serialize video orientation changes on the AVCaptureVideoPreviewLayer’s connection with other session manipulation.
 
                 AVCaptureVideoPreviewLayer *newCaptureVideoPreviewLayer = [[AVCaptureVideoPreviewLayer alloc] initWithSession:session];
+                [newCaptureVideoPreviewLayer setVideoGravity:AVLayerVideoGravityResizeAspectFill];
                 newCaptureVideoPreviewLayer.frame = self.view.frame;
                 UIView *aView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.width)];
                 [aView.layer addSublayer:newCaptureVideoPreviewLayer];
@@ -233,6 +261,7 @@ static float EXPOSURE_MINIMUM_DURATION = 1.0/1000; // Limit exposure duration to
             [session addInput:audioDeviceInput];
         }
         
+        
         AVCaptureMovieFileOutput *movieFileOutput = [[AVCaptureMovieFileOutput alloc] init];
         if ([session canAddOutput:movieFileOutput])
         {
@@ -240,9 +269,10 @@ static float EXPOSURE_MINIMUM_DURATION = 1.0/1000; // Limit exposure duration to
             AVCaptureConnection *connection = [movieFileOutput connectionWithMediaType:AVMediaTypeVideo];
             if ([connection isVideoStabilizationSupported])
             {
-                [connection setEnablesVideoStabilizationWhenAvailable:YES];
+                [connection setPreferredVideoStabilizationMode:AVCaptureVideoStabilizationModeAuto];
             }
             [self setMovieFileOutput:movieFileOutput];
+            
         }
         
         AVCaptureStillImageOutput *stillImageOutput = [[AVCaptureStillImageOutput alloc] init];
@@ -366,12 +396,61 @@ static float EXPOSURE_MINIMUM_DURATION = 1.0/1000; // Limit exposure duration to
             [AAPLCameraViewController setFlashMode:AVCaptureFlashModeOff forDevice:[self videoDevice]];
             
             // Start recording to a temporary file.
-            NSString *outputFilePath = [NSTemporaryDirectory() stringByAppendingPathComponent:[@"movie" stringByAppendingPathExtension:@"mov"]];
-            [[self movieFileOutput] startRecordingToOutputFileURL:[NSURL fileURLWithPath:outputFilePath] recordingDelegate:self];
+            self.outputFilePath = [NSTemporaryDirectory() stringByAppendingPathComponent:[@"movie" stringByAppendingPathExtension:@"mov"]];
+            [[self movieFileOutput] startRecordingToOutputFileURL:[NSURL fileURLWithPath:self.outputFilePath] recordingDelegate:self];
+//            AVMetadataItem *metaData = [AVMetadataItem new];
+            
+
+            
+            
         }
         else
         {
+            /////////////////////////////////////////////////////////////////////
+            ///attaches location to video when recording ends
+            /////////////////////////////////////////////////////////////////////
+            
+            AVCaptureMovieFileOutput *aMovieFileOutput = self.movieFileOutput;
+            NSArray *existingMetadataArray = aMovieFileOutput.metadata;
+            NSMutableArray *newMetadataArray = nil;
+            if (existingMetadataArray) {
+                newMetadataArray = [existingMetadataArray mutableCopy];
+            }
+            else {
+                newMetadataArray = [[NSMutableArray alloc] init];
+            }
+            
+            AVMutableMetadataItem *item = [[AVMutableMetadataItem alloc] init];
+            item.keySpace = AVMetadataKeySpaceCommon;
+            item.key = AVMetadataCommonKeyLocation;
+            
+            CLLocation *location = self.currentLocation;
+            item.value = [NSString stringWithFormat:@"%+08.4lf%+09.4lf/",
+                          location.coordinate.latitude, location.coordinate.longitude];
+            self.currentLocationGeoPoint = [PFGeoPoint geoPointWithLatitude:self.currentLocation.coordinate.latitude
+                                                                  longitude:self.currentLocation.coordinate.longitude];
+            
+            [newMetadataArray addObject:item];
+            
+            aMovieFileOutput.metadata = newMetadataArray;
+            
+//            NSString *filePathString = [NSString stringWithFormat:@"%@", self.movieFileOutput.outputFileURL];
+            
+//            fileURL = [NSURL URLWithString:self.outputFilePath];
+//            NSURL *fileURL2 = [[NSURL alloc] initFileURLWithPath:[NSString stringWithFormat:@"%@", self.movieFileOutput.outputFileURL]];
+//            NSURL *fileURL3 = [[NSURL alloc] initWithString:self.outputFilePath];
+            NSURL *fileURL = [[NSURL alloc] initFileURLWithPath:self.outputFilePath];
+            NSData *data = [NSData dataWithContentsOfURL:fileURL];
+            
+//            NSString *videoName = [NSString stringWithFormat:@"%@", aMovieFileOutput];
+            
+            PFFile *file = [PFFile fileWithName:@"video.mov" data:data contentType:@"mov"];
+            //[[VideoController sharedInstance] videoToParseWithFile:file];
+//            NSLog(@"Saved the video!");
+            
+            /////////////////////////////////////////////////////////////////////
             [[self movieFileOutput] stopRecording];
+            [[VideoController sharedInstance] videoToParseWithFile:file andLocation:self.currentLocationGeoPoint];
         }
     });
 }
@@ -807,6 +886,7 @@ static float EXPOSURE_MINIMUM_DURATION = 1.0/1000; // Limit exposure duration to
         {
             [[UIApplication sharedApplication] endBackgroundTask:backgroundRecordingID];
         }
+
     }];
 }
 
@@ -931,7 +1011,7 @@ static float EXPOSURE_MINIMUM_DURATION = 1.0/1000; // Limit exposure duration to
     {
         AVCaptureFocusMode oldMode = [change[NSKeyValueChangeOldKey] intValue];
         AVCaptureFocusMode newMode = [change[NSKeyValueChangeNewKey] intValue];
-        NSLog(@"focus mode: %@ -> %@", [self stringFromFocusMode:oldMode], [self stringFromFocusMode:newMode]);
+        //NSLog(@"focus mode: %@ -> %@", [self stringFromFocusMode:oldMode], [self stringFromFocusMode:newMode]);
         
         self.focusModeControl.selectedSegmentIndex = [self.focusModes indexOfObject:@(newMode)];
         self.lensPositionSlider.enabled = (newMode == AVCaptureFocusModeLocked);
@@ -950,7 +1030,7 @@ static float EXPOSURE_MINIMUM_DURATION = 1.0/1000; // Limit exposure duration to
     {
         AVCaptureExposureMode oldMode = [change[NSKeyValueChangeOldKey] intValue];
         AVCaptureExposureMode newMode = [change[NSKeyValueChangeNewKey] intValue];
-        NSLog(@"exposure mode: %@ -> %@", [self stringFromExposureMode:oldMode], [self stringFromExposureMode:newMode]);
+        //NSLog(@"exposure mode: %@ -> %@", [self stringFromExposureMode:oldMode], [self stringFromExposureMode:newMode]);
         
         self.exposureModeControl.selectedSegmentIndex = [self.exposureModes indexOfObject:@(newMode)];
         self.exposureDurationSlider.enabled = (newMode == AVCaptureExposureModeCustom);
@@ -1017,7 +1097,7 @@ static float EXPOSURE_MINIMUM_DURATION = 1.0/1000; // Limit exposure duration to
     {
         AVCaptureWhiteBalanceMode oldMode = [change[NSKeyValueChangeOldKey] intValue];
         AVCaptureWhiteBalanceMode newMode = [change[NSKeyValueChangeNewKey] intValue];
-        NSLog(@"white balance mode: %@ -> %@", [self stringFromWhiteBalanceMode:oldMode], [self stringFromWhiteBalanceMode:newMode]);
+        //NSLog(@"white balance mode: %@ -> %@", [self stringFromWhiteBalanceMode:oldMode], [self stringFromWhiteBalanceMode:newMode]);
         
         self.whiteBalanceModeControl.selectedSegmentIndex = [self.whiteBalanceModes indexOfObject:@(newMode)];
         self.temperatureSlider.enabled = (newMode == AVCaptureWhiteBalanceModeLocked);

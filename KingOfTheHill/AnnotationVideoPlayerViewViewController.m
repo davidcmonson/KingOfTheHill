@@ -35,8 +35,8 @@
     
     // loads the video and player asynchronously
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-#warning the index should be passed into this ViewController to show the appropriate video
-        PFFile *videoFile = [VideoController sharedInstance].arrayOfVideos[self.videoAtIndex][urlOfVideo];
+
+        PFFile *videoFile = [VideoController sharedInstance].arrayOfVideoForFeed[self.videoAtIndex][urlOfVideo];
         self.videoURL = [NSURL URLWithString:videoFile.url];
         AVAsset *video = [AVAsset assetWithURL:self.videoURL];
         AVPlayerItem *item = [[AVPlayerItem alloc] initWithAsset:video];

@@ -15,17 +15,21 @@
 #import "AnnotationVideoPlayerViewViewController.h"
 
 #import "AAPLCameraViewController.h"
+#import "VideoController.h"
 
-@interface SwipePageViewController () <UIPageViewControllerDataSource,UIPageViewControllerDelegate,PFLogInViewControllerDelegate,PFSignUpViewControllerDelegate>
+
+
+@interface SwipePageViewController () <UIPageViewControllerDataSource,UIPageViewControllerDelegate,PFLogInViewControllerDelegate,PFSignUpViewControllerDelegate,CLLocationManagerDelegate>
 
 @property (nonatomic, strong) UIPageViewController *pageViewController;
 //@property (nonatomic, strong) CameraViewController *cameraVC;
 @property (nonatomic, strong) VideoFeedViewController *videoVC;
 @property (nonatomic, strong) ProfileViewController *profileVC;
 @property (nonatomic, strong) LocationViewController *mapVC;
-@property (nonatomic, strong) AnnotationVideoPlayerViewViewController *ann;
-
 @property (nonatomic, strong) AAPLCameraViewController *cameraVC;
+
+@property (nonatomic, strong) CLLocationManager *locationManager;
+
 
 @end
 
@@ -54,15 +58,38 @@
 }
 
 
+// Gets rough estimate of user location so when user goes to the map, it shouldn't start in the middle of the ocean
+- (void)getLocation
+{
+        if (_locationManager == nil) {
+        self.locationManager = [[CLLocationManager alloc]init]; // initializing locationManager
+        self.locationManager.delegate = self; // we set the delegate of locationManager to self.
+        self.locationManager.desiredAccuracy = kCLLocationAccuracyThreeKilometers; // setting the accuracy
+        
+        // Put location fetcher on background thread.
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            [self.locationManager startUpdatingLocation];  //requesting location updates
+                        NSLog(@"Found Location of User!");
+        });
+    }
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"backgroundBlues"]]];
     
-    self.cameraVC = [AAPLCameraViewController new];
-//    self.cameraVC = [CameraViewController new];
-    self.videoVC = [VideoFeedViewController new];
 
+    [VideoController queryVideosForFeed];
+    self.cameraVC = [AAPLCameraViewController new];
+    
+    [self getLocation];
+
+    //    self.cameraVC = [CameraViewController new]; // OLD CAMERA
+    self.videoVC = [VideoFeedViewController new];
+    
     self.mapVC = [LocationViewController new];
+    self.mapVC.locationManager = self.locationManager;
+    
     
     self.pageViewController = [[UIPageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStyleScroll navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal options:nil];
     self.pageViewController.delegate = self;
@@ -74,13 +101,9 @@
     [self.pageViewController didMoveToParentViewController:self];
     [self.view addSubview:self.pageViewController.view];
     
-    
 }
 
 -(void)pageViewController:(UIPageViewController *)pageViewController willTransitionToViewControllers:(NSArray *)pendingViewControllers {
-    
-//    NSLog(@"YOU ARE UGLY");
-    
 }
 
 // Sent to the delegate to determine whether the log in request should be submitted to the server.
@@ -140,7 +163,7 @@
 
 // Sent to the delegate when a PFUser is signed up.
 - (void)signUpViewController:(PFSignUpViewController *)signUpController didSignUpUser:(PFUser *)user {
-    [self dismissModalViewControllerAnimated:YES]; // Dismiss the PFSignUpViewController
+    [self dismissViewControllerAnimated:YES completion:nil]; // Dismiss the PFSignUpViewController
 }
 
 // Sent to the delegate when the sign up attempt fails.

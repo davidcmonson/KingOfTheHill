@@ -193,6 +193,7 @@ static float EXPOSURE_MINIMUM_DURATION = 1.0/1000; // Limit exposure duration to
             [session addInput:audioDeviceInput];
         }
         
+        
         AVCaptureMovieFileOutput *movieFileOutput = [[AVCaptureMovieFileOutput alloc] init];
         if ([session canAddOutput:movieFileOutput])
         {
@@ -203,6 +204,7 @@ static float EXPOSURE_MINIMUM_DURATION = 1.0/1000; // Limit exposure duration to
                 [connection setPreferredVideoStabilizationMode:AVCaptureVideoStabilizationModeAuto];
             }
             [self setMovieFileOutput:movieFileOutput];
+            
         }
         
         AVCaptureStillImageOutput *stillImageOutput = [[AVCaptureStillImageOutput alloc] init];

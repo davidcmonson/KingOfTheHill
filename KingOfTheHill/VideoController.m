@@ -64,7 +64,7 @@
 }
 
 + (void)queryVideosForFeed {
-                 NSLog(@"Photos Loading!");
+    NSLog(@"Photos Loading!");
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         // Parse query calls.
         PFQuery *queryForVideos = [PFQuery queryWithClassName:@"Video"];
@@ -76,12 +76,10 @@
                 //NSArray *arrayOfVideos = [[NSArray alloc] initWithArray:objects];
                 [VideoController sharedInstance].arrayOfVideoForFeed = objects;
                 [[VideoController sharedInstance] populateThumbnailArray:objects];
-                NSLog(@"%ld",[VideoController sharedInstance].arrayOfVideoForFeed.count);
+                NSLog(@"%ld videos with thumbnails",[VideoController sharedInstance].arrayOfVideoForFeed.count);
+                NSLog(@"Thumbnails Loaded!");
             }
         }];
-        dispatch_async(dispatch_get_main_queue(), ^{
-             NSLog(@"Photos Loaded!");
-        });
     });
     
 }
@@ -100,7 +98,7 @@
         
     }
     [VideoController sharedInstance].arrayOfThumbnails = mutableArray;
-    NSLog(@"%@", [VideoController sharedInstance].arrayOfThumbnails);
+    //NSLog(@"%@", [VideoController sharedInstance].arrayOfThumbnails);
 }
 
 

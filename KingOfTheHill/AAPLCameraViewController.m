@@ -116,11 +116,13 @@ static float EXPOSURE_MINIMUM_DURATION = 1.0/1000; // Limit exposure duration to
     self.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     
     // Set up record button
-    self.recordButton = [[UIButton alloc]initWithFrame:CGRectMake(90, 500, 150, 50)];
+    self.recordButton = [[UIButton alloc]init];
     // NOTE: Addsubview is at the bottom because it needs to be added AFTER the previewLayer is added
     // Instantiating it here, will make the button hide behind the preview.
-    self.recordButton.backgroundColor = [UIColor redColor];
-    self.recordButton.layer.cornerRadius = self.stillButton.layer.cornerRadius = self.cameraButton.layer.cornerRadius = 4;
+//    self.recordButton.backgroundColor = [UIColor cl];
+    self.recordButton.layer.cornerRadius = 15;
+    self.recordButton.layer.borderWidth = 1;
+    self.recordButton.layer.borderColor = [UIColor whiteColor].CGColor;
     // self.recordButton.clipsToBounds = self.stillButton.clipsToBounds = self.cameraButton.clipsToBounds = YES;
     [self.recordButton addTarget:self action:@selector(toggleMovieRecording) forControlEvents:UIControlEventTouchDown];
     
@@ -176,6 +178,44 @@ static float EXPOSURE_MINIMUM_DURATION = 1.0/1000; // Limit exposure duration to
                 // adds subview AFTER the preview layer is added
                 [self.view addSubview:self.recordButton];
                 [self theSteezyProfile];
+                
+                // autoLayout
+                [self.recordButton setTranslatesAutoresizingMaskIntoConstraints:NO];
+                
+                NSDictionary *recordButton = NSDictionaryOfVariableBindings(_recordButton);
+                
+//                NSArray *horizontal = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[_recordButton(50)]" options:NSLayoutFormatAlignAllCenterY metrics:nil views:recordButton];
+//                NSArray *vertical = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[_recordButton(50)]" options:NSLayoutFormatAlignAllCenterX metrics:nil views:recordButton];
+                
+                NSLayoutConstraint *centerRecordX = [NSLayoutConstraint constraintWithItem:_recordButton
+                                                                                attribute:NSLayoutAttributeCenterX
+                                                                                relatedBy:NSLayoutRelationEqual
+                                                                                   toItem:self.view
+                                                                                attribute:NSLayoutAttributeCenterX
+                                                                               multiplier:1.0
+                                                                                 constant:0];
+                [self.view addConstraint:centerRecordX];
+                
+                NSLayoutConstraint *centerRecordY = [NSLayoutConstraint constraintWithItem:_recordButton
+                                                                                attribute:NSLayoutAttributeCenterY
+                                                                                relatedBy:NSLayoutRelationEqual
+                                                                                   toItem:self.view
+                                                                                attribute:NSLayoutAttributeCenterY
+                                                                               multiplier:1.0
+                                                                                 constant:0];
+                [self.view addConstraint:centerRecordY];
+                
+                NSLayoutConstraint *recordWidth = [NSLayoutConstraint constraintWithItem:_recordButton
+                                                                                attribute:NSLayoutAttributeWidth
+                                                                                relatedBy:NSLayoutRelationEqual
+                                                                                   toItem:_recordButton
+                                                                                attribute:NSLayoutAttributeWidth
+                                                                               multiplier:1.0
+                                                                                 constant:0];
+                [self.view addConstraint:recordWidth];
+                
+//                [self.view addConstraints:horizontal];
+//                [self.view addConstraints:vertical];
                 
             });
         }
@@ -1014,13 +1054,15 @@ static float EXPOSURE_MINIMUM_DURATION = 1.0/1000; // Limit exposure duration to
             if (isRecording)
             {
                 [[self cameraButton] setEnabled:NO];
-                [[self recordButton] setTitle:NSLocalizedString(@"Stop", @"Recording button stop title") forState:UIControlStateNormal];
+                [[self recordButton] setTitle:NSLocalizedString(@"-", @"Recording button stop title") forState:UIControlStateNormal];
+//                [self.recordButton setBackgroundColor:[UIColor redColor]];
                 [[self recordButton] setEnabled:YES];
             }
             else
             {
-                [[self cameraButton] setEnabled:YES];
-                [[self recordButton] setTitle:NSLocalizedString(@"Record", @"Recording button record title") forState:UIControlStateNormal];
+//                [[self cameraButton] setEnabled:YES];
+                [[self recordButton] setTitle:NSLocalizedString(@"", @"Recording button record title") forState:UIControlStateNormal];
+                [self.recordButton setBackgroundColor:[UIColor clearColor]];
                 [[self recordButton] setEnabled:YES];
             }
         });

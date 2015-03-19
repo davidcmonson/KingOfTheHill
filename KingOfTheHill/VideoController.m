@@ -84,17 +84,22 @@
     
 }
 
+#warning will need checker if the PFFile has a file or not (crashes when it tries to assign thumbnailOfVideo)
 // takes in the array from Parse, adds an image to each of it and puts it back into the sharedInstance array
 - (void)populateThumbnailArray:(NSArray *)array {
+    
+    
     NSMutableArray *mutableArray = [NSMutableArray new];
-    //#warning will need checker if the PFFile has a file or not (crashes when it tries to assign thumbnailOfVideo)
     for (NSInteger index = 0; index < array.count; index++) {
+        
         Video *video = array[index];
+        if (video[urlOfThumbnail]) {
         PFFile *thumbnailImage = video[urlOfThumbnail];
         NSURL *urlOfThumbnail = [NSURL URLWithString:thumbnailImage.url];
         NSData *dataOfThumbnail = [NSData dataWithContentsOfURL:urlOfThumbnail];
         UIImage *thumbnail = [UIImage imageWithData:dataOfThumbnail];
         [mutableArray addObject:thumbnail];
+        } else NSLog(@"No thumbnail for video %ld", index);
         
     }
     [VideoController sharedInstance].arrayOfThumbnails = mutableArray;

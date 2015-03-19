@@ -60,12 +60,7 @@
 // Gets rough estimate of user location so when user goes to the map, it shouldn't start in the middle of the ocean
 - (void)getLocation
 {
-    // Required method to notify user if it can use your current location
-    // NOTE: Put notification later telling users why it will need to use their location
-    if ([self.locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)]) {
-        [self.locationManager requestWhenInUseAuthorization];
-    }
-    if (_locationManager == nil) {
+        if (_locationManager == nil) {
         self.locationManager = [[CLLocationManager alloc]init]; // initializing locationManager
         self.locationManager.delegate = self; // we set the delegate of locationManager to self.
         self.locationManager.desiredAccuracy = kCLLocationAccuracyThreeKilometers; // setting the accuracy
@@ -73,9 +68,7 @@
         // Put location fetcher on background thread.
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             [self.locationManager startUpdatingLocation];  //requesting location updates
-        });
-        dispatch_async(dispatch_get_main_queue(), ^{
-            NSLog(@"Found Location of User!");
+                        NSLog(@"Found Location of User!");
         });
     }
 }
@@ -84,9 +77,12 @@
     [super viewDidLoad];
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"backgroundBlues"]]];
     
+
     [VideoController queryVideosForFeed];
     self.cameraVC = [AAPLCameraViewController new];
+    
     [self getLocation];
+
     //    self.cameraVC = [CameraViewController new]; // OLD CAMERA
     self.videoVC = [VideoFeedViewController new];
     
@@ -105,12 +101,9 @@
     [self.pageViewController didMoveToParentViewController:self];
     [self.view addSubview:self.pageViewController.view];
     
-    
-    
 }
 
 -(void)pageViewController:(UIPageViewController *)pageViewController willTransitionToViewControllers:(NSArray *)pendingViewControllers {
-    //    NSLog(@"YOU ARE UGLY");
 }
 
 // Sent to the delegate to determine whether the log in request should be submitted to the server.
@@ -170,7 +163,6 @@
 
 // Sent to the delegate when a PFUser is signed up.
 - (void)signUpViewController:(PFSignUpViewController *)signUpController didSignUpUser:(PFUser *)user {
-    //[self dismissModalViewControllerAnimated:YES]; // Dismiss the PFSignUpViewController
     [self dismissViewControllerAnimated:YES completion:nil]; // Dismiss the PFSignUpViewController
 }
 

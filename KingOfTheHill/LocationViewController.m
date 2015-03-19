@@ -145,7 +145,6 @@
         // Adding annotations
         VideoPin *videoPin = [[VideoPin alloc]initWithVideo:videoPFObjectAtIndex];
         
-        
         //    If you want to clear other pins/annotations this is how to do it
         //        for (id annotation in self.map.annotations) {
         //            [self.map removeAnnotation:annotation];

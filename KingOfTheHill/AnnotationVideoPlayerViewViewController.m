@@ -17,6 +17,7 @@
 @property (nonatomic, strong) AVPlayer *player;
 
 
+
 @end
 
 @implementation AnnotationVideoPlayerViewViewController
@@ -34,16 +35,19 @@
     
     // loads the video and player asynchronously
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-#warning the index should be passed into this ViewController to show the appropriate video
-        PFFile *videoFile = [VideoController sharedInstance].arrayOfVideos[0][urlOfVideo];
+
+        PFFile *videoFile = [VideoController sharedInstance].arrayOfVideoForFeed[self.videoAtIndex][urlOfVideo];
         self.videoURL = [NSURL URLWithString:videoFile.url];
         AVAsset *video = [AVAsset assetWithURL:self.videoURL];
         AVPlayerItem *item = [[AVPlayerItem alloc] initWithAsset:video];
         self.player = [AVPlayer playerWithPlayerItem:item];
+        
         AVPlayerLayer *layer = [AVPlayerLayer playerLayerWithPlayer:self.player];
-        UIView *playerView = [[UIView alloc]initWithFrame:self.view.bounds];
         layer.frame = self.view.frame;
+        
+        UIView *playerView = [[UIView alloc]initWithFrame:self.view.bounds];
         [playerView.layer addSublayer:layer];
+        
         [self.view addSubview: playerView];
         
         dispatch_async(dispatch_get_main_queue(), ^{

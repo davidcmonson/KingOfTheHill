@@ -10,6 +10,6 @@
 
 @interface VideoFeedTableViewCell : UITableViewCell
 
-+ (CGFloat)cellHeight;
+@property (nonatomic, strong) UILabel *votes;
 
 @end

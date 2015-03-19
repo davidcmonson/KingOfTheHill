@@ -7,8 +7,9 @@
 //  Copyright (c) 2015 David Monson. All rights reserved.
 //
 
-#import <MapKit/MapKit.h>
 #import "LocationViewController.h"
+
+
 #import "VideoController.h"
 #import "VideoPin.h"
 #import "AnnotationVideoPlayerViewViewController.h"
@@ -27,12 +28,8 @@
 
 @property (nonatomic, strong) NSArray *thumbnails;
 @property (nonatomic, strong) MKMapView *allAnnotationsMapView;
-
 @property (nonatomic, strong) MKMapView *mainMapView;
-@property (nonatomic, strong) CLLocationManager *locationManager;
 @property (nonatomic, strong) Video *video;
-@property (nonatomic) CLLocationCoordinate2D myCoordinates;
-//@property (nonatomic, strong) NSArray *arrayOfVideos;
 @property (nonatomic, strong) UIButton *backButton;
 // Bool to zoom only once on initial launch
 @property (nonatomic) BOOL zoomedOnce;
@@ -48,20 +45,33 @@
     [self showMainMapView];
     [self setUpSwipeBar];
     
+    // Required method to notify user if it can use your current location
+    // NOTE: Put notification later telling users why it will need to use their location
+    if ([self.locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)]) {
+        [self.locationManager requestWhenInUseAuthorization];
+    }
+    
 }
 
 // Sets up bar at the bottom of the screen for users to swipe back to the main screen (camera)
 - (void)setUpSwipeBar {
-    UIView *mapSwipeBarView = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - 50, self.view.frame.size.width, 50)];
-    mapSwipeBarView.backgroundColor = [UIColor colorWithRed:0.5 green:0.5 blue:0.5 alpha:0.5];
-    [self.view addSubview:mapSwipeBarView];
     
-    UILabel *mapSwipeBarLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - 40, self.view.frame.size.width, 30)];
-    mapSwipeBarLabel.text = @">> Swipe Back To Camera >>";
-    mapSwipeBarLabel.font = [UIFont fontWithName:@"Avenir-BlackOblique" size:18];
-    mapSwipeBarLabel.textAlignment = NSTextAlignmentCenter;
-    mapSwipeBarLabel.textColor = [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:1.0];
-    [self.view addSubview:mapSwipeBarLabel];
+    //UIView *thumbTabView = [[UIView alloc] initWithFrame:CGRectMake(-20, 581, 103, 55)];
+    UIView *thumbTabView = [[UIView alloc] initWithFrame:CGRectMake(-20, 500, 103, 55)];
+    thumbTabView.backgroundColor = [UIColor colorWithRed:0.4 green:0.4 blue:0.4 alpha:0.55];
+    thumbTabView.clipsToBounds = YES;
+    thumbTabView.layer.cornerRadius = thumbTabView.bounds.size.width/4.0f;
+    [self.mainMapView addSubview:thumbTabView];
+    [self.mainMapView clipsToBounds];
+    
+    UIButton *cameraButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    cameraButton.frame = CGRectMake(16, 584, 53, 46);
+    cameraButton.clipsToBounds = YES;
+    cameraButton.layer.cornerRadius = cameraButton.bounds.size.width/3.0f;
+    cameraButton.layer.borderWidth = 1.0f;
+    cameraButton.layer.borderColor = [UIColor clearColor].CGColor;
+    [cameraButton setBackgroundImage:[UIImage imageNamed:@"Camera-50"] forState:UIControlStateNormal];
+    [self.view addSubview:cameraButton];
     
 }
 
@@ -112,9 +122,9 @@
         else {
             NSMutableArray *arrayOfVideos = [[NSMutableArray alloc] initWithArray:objects];
             //[self dropPinAtCoordinatesForVideosInVideosArray:arrayOfVideos];
-            [VideoController sharedInstance].arrayOfVideos = arrayOfVideos;
-            [self dropPinAtCoordinatesForVideosInVideosArray:[VideoController sharedInstance].arrayOfVideos];
-            NSLog(@"%ld",[VideoController sharedInstance].arrayOfVideos.count);
+            [VideoController sharedInstance].arrayOfVideosNearLocation = arrayOfVideos;
+            [self dropPinAtCoordinatesForVideosInVideosArray:[VideoController sharedInstance].arrayOfVideosNearLocation];
+            NSLog(@"Videos Near Location: %ld",[VideoController sharedInstance].arrayOfVideosNearLocation.count);
         }
     }];
     
@@ -130,11 +140,10 @@
         PFGeoPoint *geoPointOfVideo = videoPFObjectAtIndex[locationKeyOfVideo];
         
         // Convert GeoPoint to CLLocaation
-       CLLocationCoordinate2D coordinateOfVideo = [self convertPFGeoPointToLocationCoordinate2D:geoPointOfVideo];
+        CLLocationCoordinate2D coordinateOfVideo = [self convertPFGeoPointToLocationCoordinate2D:geoPointOfVideo];
         
         // Adding annotations
         VideoPin *videoPin = [[VideoPin alloc]initWithVideo:videoPFObjectAtIndex];
-
         
         //    If you want to clear other pins/annotations this is how to do it
         //        for (id annotation in self.map.annotations) {
@@ -252,15 +261,15 @@
 
 
 
-//- (CLLocationManager *)locationManager
-//{
-//    if (_locationManager == nil) {
-//        _locationManager = [[CLLocationManager alloc] init];
-//        _locationManager.delegate = self;
-//        _locationManager.desiredAccuracy = kCLLocationAccuracyBest;
-//    }
-//    return _locationManager;
-//}
+- (CLLocationManager *)locationManager
+{
+    if (_locationManager == nil) {
+        _locationManager = [[CLLocationManager alloc] init];
+        _locationManager.delegate = self;
+        _locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+    }
+    return _locationManager;
+}
 
 
 /*
@@ -478,9 +487,6 @@
  [self mainMapView];
  
  
- //    if ([self.locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)]) {
- //        [self.locationManager requestWhenInUseAuthorization];
- //    }
  //
  //    /////////////// TEMP CODE for Simulator purposes
  //    //    CLLocation *tempLocation = [[CLLocation alloc] initWithLatitude:40.1 longitude:-111.1];

@@ -10,9 +10,11 @@
 
 @implementation Video
 
-@dynamic nameOfVideo;
+//@dynamic nameOfVideo;
 @dynamic ownerOfVideo;
-@dynamic videoId;
+@dynamic objectId;
 @dynamic location;
+//@dynamic thumbnail;
+
 
 @end

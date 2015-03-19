@@ -20,7 +20,7 @@
 @property (nonatomic, strong)UILabel *bioLabel;
 @property (nonatomic, strong)UILabel *favoriteSpotLabel;
 @property (nonatomic, strong)UILabel *contactInfoLabel;
-
+@property (nonatomic, assign)BOOL profileRunning;
 @end
 
 @implementation ProfileViewController
@@ -29,11 +29,17 @@
     [super viewDidLoad];
     [self.view setBackgroundColor:[UIColor colorWithRed:0.5 green:0.5 blue:0.5 alpha:0.5]];
     [self profileStructure];
-    [self exitProfile];
+     [self exitProfile];
+   
     //    [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"backgroundBlackWhite"]]];
     self.view.opaque = NO;
 }
 
+- (void)idiotProofing{
+    if (_profileRunning == YES) {
+    
+    }
+}
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
@@ -104,14 +110,17 @@
 }
 
 - (void)exitProfile {
-    
-    UISwipeGestureRecognizer *gestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(dismissProfile:)];
+    UISwipeGestureRecognizer *gestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(dismissProfile)];
     [gestureRecognizer setDirection:(UISwipeGestureRecognizerDirectionDown)];
     [self.view addGestureRecognizer:gestureRecognizer];
     
 }
 
-- (void)dismissProfile: (UISwipeGestureRecognizer *)recognizer {
+-(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+    NSLog(@"YOU TOUCHED THE PROFILE VIEEEEEWWWW");
+}
+
+- (void)dismissProfile {
     
     [self dismissViewControllerAnimated:YES completion:nil];
     

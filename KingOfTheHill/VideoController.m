@@ -93,13 +93,17 @@
     for (NSInteger index = 0; index < array.count; index++) {
         
         Video *video = array[index];
-        if (video[urlOfThumbnail]) {
+        if (!video[urlOfThumbnail]) {
+        [mutableArray addObject:[UIImage imageNamed:@"blank"]];
+            NSLog(@"added blank thumbnail for video %ld", index);
+        } else {
         PFFile *thumbnailImage = video[urlOfThumbnail];
         NSURL *urlOfThumbnail = [NSURL URLWithString:thumbnailImage.url];
         NSData *dataOfThumbnail = [NSData dataWithContentsOfURL:urlOfThumbnail];
         UIImage *thumbnail = [UIImage imageWithData:dataOfThumbnail];
         [mutableArray addObject:thumbnail];
-        } else NSLog(@"No thumbnail for video %ld", index);
+        }
+        
         
     }
     [VideoController sharedInstance].arrayOfThumbnails = mutableArray;

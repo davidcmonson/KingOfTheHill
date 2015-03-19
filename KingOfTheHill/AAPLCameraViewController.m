@@ -144,7 +144,6 @@ static float EXPOSURE_MINIMUM_DURATION = 1.0/1000; // Limit exposure duration to
     
     // Set up record button
     self.recordButton = [[UIButton alloc]initWithFrame:CGRectMake(90, 500, 150, 50)];
-    [self.recordButton setTitle:@"Record!" forState:UIControlStateNormal];
     // NOTE: Addsubview is at the bottom because it needs to be added AFTER the previewLayer is added
     // Instantiating it here, will make the button hide behind the preview.
     self.recordButton.backgroundColor = [UIColor redColor];
@@ -195,15 +194,15 @@ static float EXPOSURE_MINIMUM_DURATION = 1.0/1000; // Limit exposure duration to
                 // Why are we dispatching this to the main queue?
                 // Because AVCaptureVideoPreviewLayer is the backing layer for our preview view and UIView can only be manipulated on main thread.
                 // Note: As an exception to the above rule, it is not necessary to serialize video orientation changes on the AVCaptureVideoPreviewLayer’s connection with other session manipulation.
-                
+
                 AVCaptureVideoPreviewLayer *newCaptureVideoPreviewLayer = [[AVCaptureVideoPreviewLayer alloc] initWithSession:session];
                 [newCaptureVideoPreviewLayer setVideoGravity:AVLayerVideoGravityResizeAspectFill];
                 newCaptureVideoPreviewLayer.frame = self.view.frame;
-                [self.view.layer addSublayer:newCaptureVideoPreviewLayer];
-                
+                UIView *aView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.width)];
+                [aView.layer addSublayer:newCaptureVideoPreviewLayer];
+                [self.view addSubview:aView];
                 // adds subview AFTER the preview layer is added
                 [self.view addSubview:self.recordButton];
-                
                 [self theSteezyProfile];
                 
             });
@@ -222,6 +221,7 @@ static float EXPOSURE_MINIMUM_DURATION = 1.0/1000; // Limit exposure duration to
             [session addInput:audioDeviceInput];
         }
         
+        
         AVCaptureMovieFileOutput *movieFileOutput = [[AVCaptureMovieFileOutput alloc] init];
         if ([session canAddOutput:movieFileOutput])
         {
@@ -229,9 +229,10 @@ static float EXPOSURE_MINIMUM_DURATION = 1.0/1000; // Limit exposure duration to
             AVCaptureConnection *connection = [movieFileOutput connectionWithMediaType:AVMediaTypeVideo];
             if ([connection isVideoStabilizationSupported])
             {
-                [connection setEnablesVideoStabilizationWhenAvailable:YES];
+                [connection setPreferredVideoStabilizationMode:AVCaptureVideoStabilizationModeAuto];
             }
             [self setMovieFileOutput:movieFileOutput];
+            
         }
         
         AVCaptureStillImageOutput *stillImageOutput = [[AVCaptureStillImageOutput alloc] init];
@@ -970,7 +971,7 @@ static float EXPOSURE_MINIMUM_DURATION = 1.0/1000; // Limit exposure duration to
     {
         AVCaptureFocusMode oldMode = [change[NSKeyValueChangeOldKey] intValue];
         AVCaptureFocusMode newMode = [change[NSKeyValueChangeNewKey] intValue];
-        NSLog(@"focus mode: %@ -> %@", [self stringFromFocusMode:oldMode], [self stringFromFocusMode:newMode]);
+        //NSLog(@"focus mode: %@ -> %@", [self stringFromFocusMode:oldMode], [self stringFromFocusMode:newMode]);
         
         self.focusModeControl.selectedSegmentIndex = [self.focusModes indexOfObject:@(newMode)];
         self.lensPositionSlider.enabled = (newMode == AVCaptureFocusModeLocked);
@@ -989,7 +990,7 @@ static float EXPOSURE_MINIMUM_DURATION = 1.0/1000; // Limit exposure duration to
     {
         AVCaptureExposureMode oldMode = [change[NSKeyValueChangeOldKey] intValue];
         AVCaptureExposureMode newMode = [change[NSKeyValueChangeNewKey] intValue];
-        NSLog(@"exposure mode: %@ -> %@", [self stringFromExposureMode:oldMode], [self stringFromExposureMode:newMode]);
+        //NSLog(@"exposure mode: %@ -> %@", [self stringFromExposureMode:oldMode], [self stringFromExposureMode:newMode]);
         
         self.exposureModeControl.selectedSegmentIndex = [self.exposureModes indexOfObject:@(newMode)];
         self.exposureDurationSlider.enabled = (newMode == AVCaptureExposureModeCustom);
@@ -1056,7 +1057,7 @@ static float EXPOSURE_MINIMUM_DURATION = 1.0/1000; // Limit exposure duration to
     {
         AVCaptureWhiteBalanceMode oldMode = [change[NSKeyValueChangeOldKey] intValue];
         AVCaptureWhiteBalanceMode newMode = [change[NSKeyValueChangeNewKey] intValue];
-        NSLog(@"white balance mode: %@ -> %@", [self stringFromWhiteBalanceMode:oldMode], [self stringFromWhiteBalanceMode:newMode]);
+        //NSLog(@"white balance mode: %@ -> %@", [self stringFromWhiteBalanceMode:oldMode], [self stringFromWhiteBalanceMode:newMode]);
         
         self.whiteBalanceModeControl.selectedSegmentIndex = [self.whiteBalanceModes indexOfObject:@(newMode)];
         self.temperatureSlider.enabled = (newMode == AVCaptureWhiteBalanceModeLocked);

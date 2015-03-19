@@ -24,8 +24,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    //LocationViewController *hiddenMapView = [LocationViewController new];
-    //hiddenMapView.view.hidden = YES;
+    LocationViewController *hiddenMapView = [LocationViewController new];
+    hiddenMapView.view.hidden = YES;
     self.allowsEditing = YES;
     self.sourceType = UIImagePickerControllerSourceTypeCamera;
     self.mediaTypes = [[NSArray alloc]initWithObjects:(NSString *) kUTTypeMovie, nil];

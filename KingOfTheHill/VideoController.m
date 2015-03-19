@@ -42,14 +42,13 @@
 //    [vote setObject:video forKeyedSubscript:@"voteSetOnVideo"];
 //}
 
-- (void)videoToParseWithFile:(PFFile *)file
+- (void)videoToParseWithFile:(PFFile *)file andLocation:(PFGeoPoint *)currentLocationGeoPoint
 {
-    Video *video = (Video *)[PFObject objectWithClassName:videoKey];
-    //video[@"name"] = video.nameOfVideo;
+    Video *video = (Video *)[PFObject objectWithClassName:@"Video"];
+
     video[@"videoFile"] = file;
-#warning come back here
-    //    video[coordinateOfVideoKey] = video.coordinate;
-    // [video pin];
+    video[@"location"] = currentLocationGeoPoint;
+//    [video pinInBackground];
     [video saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         if (succeeded) {
             NSLog(@"videoKey saved");

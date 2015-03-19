@@ -899,7 +899,7 @@ static float EXPOSURE_MINIMUM_DURATION = 1.0/1000; // Limit exposure duration to
         dispatch_async([strongSelf sessionQueue], ^{
             // Manually restart the session since it must have been stopped due to an error
             [[strongSelf session] startRunning];
-            [[strongSelf recordButton] setTitle:NSLocalizedString(@"Record", @"Recording button record title") forState:UIControlStateNormal];
+            [[strongSelf recordButton] setTitle:NSLocalizedString(@"", @"Recording button record title") forState:UIControlStateNormal];
         });
     }]];
 }

@@ -59,7 +59,7 @@
 // Sets up bar at the bottom of the screen for users to swipe back to the main screen (camera)
 - (void)setUpSwipeBar {
     
-    UIView *thumbTabView = [[UIView alloc] initWithFrame:CGRectMake(-20, 581, 103, 55)];
+    UIView *thumbTabView = [[UIView alloc] initWithFrame:CGRectMake(-20, 200, 103, 55)];
     thumbTabView.backgroundColor = [UIColor colorWithRed:0.4 green:0.4 blue:0.4 alpha:0.55];
     thumbTabView.clipsToBounds = YES;
     thumbTabView.layer.cornerRadius = thumbTabView.bounds.size.width/4.0f;

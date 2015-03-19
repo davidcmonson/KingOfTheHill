@@ -9,7 +9,7 @@
 #import "ProfileViewController.h"
 #import <UIKit/UIKit.h>
 
-@interface ProfileViewController ()
+@interface ProfileViewController () <UITextFieldDelegate>
 
 @property (nonatomic, strong)UITextField *usernameTextField;
 @property (nonatomic, strong)UITextField *bioTextField;
@@ -29,10 +29,19 @@
     [super viewDidLoad];
     [self.view setBackgroundColor:[UIColor colorWithRed:0.5 green:0.5 blue:0.5 alpha:0.5]];
     [self profileStructure];
-     [self exitProfile];
+    [self exitProfile];
    
-    //    [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"backgroundBlackWhite"]]];
+    self.usernameTextField.delegate = self;
+    self.bioTextField.delegate = self;
+    self.favoriteSpotTextField.delegate = self;
+    self.contactInfoTextField.delegate = self;
     self.view.opaque = NO;
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [textField resignFirstResponder];
+    return YES;
 }
 
 - (void)idiotProofing{
@@ -43,11 +52,6 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    //    UIBlurEffect *effect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleExtraLight];
-    //    UIVisualEffectView *viewWithBlurredBackground = [[UIVisualEffectView alloc] initWithEffect:effect];
-    //    [self.view addSubview:viewWithBlurredBackground];
-    
-    //    [self.view setBackgroundColor:[UIColor colorWithRed:0.5 green:0.5 blue:0.5 alpha:0.5]];
     UIBlurEffect *effect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleExtraLight];
     UIVisualEffectView *viewWithBlurredBackground = [[UIVisualEffectView alloc] initWithEffect:effect];
     [self.view addSubview:viewWithBlurredBackground];

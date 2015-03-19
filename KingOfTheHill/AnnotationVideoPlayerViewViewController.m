@@ -66,6 +66,7 @@
         [self.player pause];
         [self.view removeFromSuperview];
     }];
+  
 }
 
 - (void)viewDidLoad {

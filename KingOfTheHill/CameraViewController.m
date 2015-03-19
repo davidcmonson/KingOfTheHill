@@ -24,15 +24,12 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    //LocationViewController *hiddenMapView = [LocationViewController new];
-    //hiddenMapView.view.hidden = YES;
     self.allowsEditing = YES;
     self.sourceType = UIImagePickerControllerSourceTypeCamera;
     self.mediaTypes = [[NSArray alloc]initWithObjects:(NSString *) kUTTypeMovie, nil];
     [self setHidesBottomBarWhenPushed:YES];
     [self setVideoQuality:UIImagePickerControllerQualityTypeMedium];
     
-    //self.view.backgroundColor = [UIColor blueColor];
     [self theSteezyProfile];
 }
 
@@ -73,17 +70,6 @@
     profileVC.modalTransitionStyle = UIModalTransitionStyleCoverVertical;;
     
     [self.parentViewController presentViewController:profileVC animated:YES completion:nil];
-    
-    //    UIBlurEffect *effect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleExtraLight];
-    
-    //    UIVisualEffectView *viewWithBlurredBackground = [[UIVisualEffectView alloc] initWithEffect:effect];
-    
-    //    [self.view addSubview:viewWithBlurredBackground];
-    
-
-    
-    
-    
 }
 
 

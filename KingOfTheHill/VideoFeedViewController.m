@@ -12,9 +12,8 @@
 #import "Video.h"
 #import "VideoController.h"
 #import "AnnotationVideoPlayerViewViewController.h"
-//#import "LocationViewController.h"
 #import "LoadingStatus.h"
-#import "SectionHeaderView.h"
+
 
 @interface VideoFeedViewController () <UITableViewDelegate>
 
@@ -30,7 +29,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.dataSource = [VideoFeedDataSource new];
-    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height + 10) style:UITableViewStylePlain];
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(-15, 0, self.view.frame.size.width, self.view.frame.size.height + 10) style:UITableViewStylePlain];
     [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     self.tableView.delegate = self;
     
@@ -51,32 +50,15 @@
     NSData *dataOfThumbnail = [NSData dataWithContentsOfURL:urlOfThumbnail];
     UIImage *image = [UIImage imageWithData:dataOfThumbnail];
     UIImageView *thumbnailView = [[UIImageView alloc] initWithImage:image];
-    return thumbnailView.frame.size.height + 50;
+    return thumbnailView.frame.size.height;
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     [self bringUpPlayer:indexPath.row];
+    [self vote];
     
 }
-
-// add header view
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return [SectionHeaderView headerHeight];
-}
-
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    
-    CGRect frame = CGRectMake(0, 0, tableView.frame.size.width, [SectionHeaderView headerHeight]);
-    
-    SectionHeaderView *sectionHeader = [[SectionHeaderView alloc] initWithFrame:frame];
-    [sectionHeader updateWithUserName:@"Ted" votes:1 andUpVotes:self.headerButton];
-    
-    return sectionHeader;
-    
-}
-
-//
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

@@ -12,6 +12,7 @@
 #import "CameraViewController.h"
 #import <ParseUI/ParseUI.h>
 #import "User.h"
+#import "AnnotationVideoPlayerViewViewController.h"
 
 #import "AAPLCameraViewController.h"
 
@@ -22,6 +23,7 @@
 @property (nonatomic, strong) VideoFeedViewController *videoVC;
 @property (nonatomic, strong) ProfileViewController *profileVC;
 @property (nonatomic, strong) LocationViewController *mapVC;
+@property (nonatomic, strong) AnnotationVideoPlayerViewViewController *ann;
 
 @property (nonatomic, strong) AAPLCameraViewController *cameraVC;
 
@@ -67,7 +69,6 @@
     self.pageViewController.dataSource = self;
     
     [self.pageViewController setViewControllers:@[self.cameraVC] direction:UIPageViewControllerNavigationDirectionForward animated:YES completion:nil];
-    
     
     [self addChildViewController:self.pageViewController];
     [self.pageViewController didMoveToParentViewController:self];

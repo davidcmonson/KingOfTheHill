@@ -60,13 +60,11 @@
 // Gets rough estimate of user location so when user goes to the map, it shouldn't start in the middle of the ocean
 - (void)getLocation
 {
-    NSLog(@"CALLED");
     // Required method to notify user if it can use your current location
     // NOTE: Put notification later telling users why it will need to use their location
     if ([self.locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)]) {
         [self.locationManager requestWhenInUseAuthorization];
     }
-    
     if (_locationManager == nil) {
         self.locationManager = [[CLLocationManager alloc]init]; // initializing locationManager
         self.locationManager.delegate = self; // we set the delegate of locationManager to self.
@@ -172,7 +170,8 @@
 
 // Sent to the delegate when a PFUser is signed up.
 - (void)signUpViewController:(PFSignUpViewController *)signUpController didSignUpUser:(PFUser *)user {
-    [self dismissModalViewControllerAnimated:YES]; // Dismiss the PFSignUpViewController
+    //[self dismissModalViewControllerAnimated:YES]; // Dismiss the PFSignUpViewController
+    [self dismissViewControllerAnimated:YES completion:nil]; // Dismiss the PFSignUpViewController
 }
 
 // Sent to the delegate when the sign up attempt fails.

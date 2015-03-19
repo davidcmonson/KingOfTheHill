@@ -6,8 +6,8 @@
 //  Copyright (c) 2015 David Monson. All rights reserved.
 //
 
-#import <CloudKit/CloudKit.h>
 #import "VideoController.h"
+#import <ParseUI/ParseUI.h>
 
 @implementation VideoController
 
@@ -63,11 +63,48 @@
     }];
 }
 
++ (void)queryVideosForFeed {
+    // Parse query calls.
+    
+    PFQuery *queryForVideos = [PFQuery queryWithClassName:@"Video"];
+    
+    [queryForVideos findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if (error) {
+            NSLog(@"%@", error);
+        }
+        else {
+            //NSArray *arrayOfVideos = [[NSArray alloc] initWithArray:objects];
+            [VideoController sharedInstance].arrayOfVideoForFeed = objects;
+            [[VideoController sharedInstance] populateThumbnailArray:objects];
+            NSLog(@"%ld",[VideoController sharedInstance].arrayOfVideoForFeed.count);
+        }
+    }];
+}
+
+// takes in the array from Parse, adds an image to each of it and puts it back into the sharedInstance array
+- (void)populateThumbnailArray:(NSArray *)array {
+    NSMutableArray *mutableArray = [NSMutableArray new];
+//#warning will need checker if the PFFile has a file or not (crashes when it tries to assign thumbnailOfVideo)
+    for (NSInteger index = 0; index < array.count; index++) {
+        Video *video = array[index];
+        PFFile *thumbnailImage = video[urlOfThumbnail];
+        NSURL *urlOfThumbnail = [NSURL URLWithString:thumbnailImage.url];
+        NSData *dataOfThumbnail = [NSData dataWithContentsOfURL:urlOfThumbnail];
+        UIImage *thumbnail = [UIImage imageWithData:dataOfThumbnail];
+        [mutableArray addObject:thumbnail];
+        
+    }
+    [VideoController sharedInstance].arrayOfThumbnails = mutableArray;
+    NSLog(@"%@", [VideoController sharedInstance].arrayOfThumbnails);
+}
+
 - (NSInteger)totalVotesOnVideoWithIdentifier:(NSString *)identifier
 {
     PFQuery *votesOnVideo = [PFQuery queryWithClassName:voteKey];
     [votesOnVideo whereKey:@"toVideo" equalTo:identifier];
     return [votesOnVideo countObjects];
 }
+
+
 
 @end

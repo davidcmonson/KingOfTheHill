@@ -15,11 +15,14 @@
 
 @property (nonatomic, strong) NSArray *arrayOfVideoForFeed;
 @property (nonatomic, strong) NSArray *arrayOfVideosNearLocation;
+@property (nonatomic ,strong) NSArray *arrayOfThumbnails;
 
 + (VideoController *)sharedInstance;
++ (void)queryVideosForFeed;
 - (void)videoToParseWithFile:(PFFile *)file;
-- (void)userToParse;
-- (void)userToVoteToVideo;
+- (void)userToVoteToVideo:(Video *)video;
 - (NSInteger)totalVotesOnVideoWithIdentifier:(NSString *)identifier;
+
+
 
 @end

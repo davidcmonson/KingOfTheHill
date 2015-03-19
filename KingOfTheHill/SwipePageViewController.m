@@ -14,6 +14,7 @@
 #import "User.h"
 
 #import "AAPLCameraViewController.h"
+#import "VideoController.h"
 
 @interface SwipePageViewController () <UIPageViewControllerDataSource,UIPageViewControllerDelegate,PFLogInViewControllerDelegate,PFSignUpViewControllerDelegate>
 
@@ -55,6 +56,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"backgroundBlues"]]];
+    [VideoController queryVideosForFeed];
     
     self.cameraVC = [AAPLCameraViewController new];
 //    self.cameraVC = [CameraViewController new];
@@ -74,12 +76,11 @@
     [self.view addSubview:self.pageViewController.view];
     
     
+    
 }
 
 -(void)pageViewController:(UIPageViewController *)pageViewController willTransitionToViewControllers:(NSArray *)pendingViewControllers {
-    
 //    NSLog(@"YOU ARE UGLY");
-    
 }
 
 // Sent to the delegate to determine whether the log in request should be submitted to the server.

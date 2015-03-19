@@ -32,10 +32,10 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     VideoFeedTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([VideoFeedTableViewCell class])];
     Video *video = [VideoController sharedInstance].arrayOfVideoForFeed[indexPath.row];
-    PFFile *thumbnailImage = video[urlOfThumbnail];
-    NSURL *urlOfThumbnail = [NSURL URLWithString:thumbnailImage.url];
-    NSData *dataOfThumbnail = [NSData dataWithContentsOfURL:urlOfThumbnail];
-    cell.imageView.image = [UIImage imageWithData:dataOfThumbnail];
+//    PFFile *thumbnailImage = video[urlOfThumbnail];
+//    NSURL *urlOfThumbnail = [NSURL URLWithString:thumbnailImage.url];
+//    NSData *dataOfThumbnail = [NSData dataWithContentsOfURL:urlOfThumbnail];
+    cell.imageView.image = [VideoController sharedInstance].arrayOfThumbnails[indexPath.row];
     cell.imageView.contentMode = UIViewContentModeScaleAspectFit;
     return cell;
 }

@@ -10,6 +10,17 @@
 #import "VideoController.h"
 #import "Video.h"
 
+#import <Parse/Parse.h>
+#import <AVFoundation/AVFoundation.h>
+
+@interface VideoFeedDataSource () <UIGestureRecognizerDelegate>
+
+@property (nonatomic) NSInteger currentIndex;
+@property (nonatomic, strong) VideoFeedTableViewCell *cell;
+@property (nonatomic, strong) UILabel *votes;
+@property (nonatomic, strong) NSArray *arrayOfVotes;
+
+@end
 
 @implementation VideoFeedDataSource
 
@@ -30,14 +41,70 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    VideoFeedTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([VideoFeedTableViewCell class])];
-    Video *video = [VideoController sharedInstance].arrayOfVideoForFeed[indexPath.row];
-//    PFFile *thumbnailImage = video[urlOfThumbnail];
-//    NSURL *urlOfThumbnail = [NSURL URLWithString:thumbnailImage.url];
-//    NSData *dataOfThumbnail = [NSData dataWithContentsOfURL:urlOfThumbnail];
-    cell.imageView.image = [VideoController sharedInstance].arrayOfThumbnails[indexPath.row];
-    cell.imageView.contentMode = UIViewContentModeScaleAspectFit;
-    return cell;
+    
+    
+    self.cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([VideoFeedTableViewCell class])];
+    self.cell.imageView.image = [VideoController sharedInstance].arrayOfThumbnails[indexPath.row];
+    self.cell.imageView.contentMode = UIViewContentModeScaleAspectFit;
+    
+    UITapGestureRecognizer *newGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(ifWorks:)];
+    [newGesture setNumberOfTapsRequired:2];
+    [self.cell.contentView addGestureRecognizer:newGesture];
+    
+    UITapGestureRecognizer *newOneTapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(putPlayer)];
+    [newOneTapGesture setNumberOfTapsRequired:1];
+    [self.cell.contentView addGestureRecognizer:newOneTapGesture];
+    
+    [newOneTapGesture requireGestureRecognizerToFail:newGesture];
+    
+    self.votes = [[UILabel alloc] initWithFrame:CGRectMake(20, 20, 55, 55)];
+    self.votes.text = @"";
+    self.votes.textColor = [UIColor whiteColor];
+    [self.cell.imageView addSubview:self.votes];
+    return self.cell;
+}
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
+{
+    return NO;
+}
+
+- (void)putPlayer {
+    NSLog(@"ONE TAP");
+    PFFile *videoFile = [VideoController sharedInstance].arrayOfVideoForFeed[self.currentIndex][urlOfVideo];
+    NSURL *videoURL = [NSURL URLWithString:videoFile.url];
+    AVAsset *video = [AVAsset assetWithURL:videoURL];
+    AVPlayerItem *item = [[AVPlayerItem alloc] initWithAsset:video];
+    AVPlayer *player = [AVPlayer playerWithPlayerItem:item];
+    
+    AVPlayerLayer *layer = [AVPlayerLayer playerLayerWithPlayer:player];
+    layer.frame = self.cell.contentView.frame;
+    
+    UIView *playerView = [[UIView alloc]initWithFrame:self.cell.contentView.bounds];
+    [playerView.layer addSublayer:layer];
+    
+    [self.cell.contentView addSubview: playerView];
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        //[loadingStatus removeFromSuperviewWithFade];
+        [player play];
+        
+    });
+
+}
+
+- (void)ifWorks:(id)sender {
+    
+    NSMutableArray *array = [[NSMutableArray alloc] initWithArray:self.arrayOfVotes];
+    [array addObject:sender];
+//    int number = (int)[array lastObject];
+//    NSNumber *nsender = [NSNumber numberWithInt:number];
+//    nsender = [NSNumber numberWithInt:number + 1];
+    self.arrayOfVotes = array;
+    
+    self.votes.text = [NSString stringWithFormat:@"%ld", self.arrayOfVotes.count];
+    
+    NSLog(@"it works");
 }
 
 @end

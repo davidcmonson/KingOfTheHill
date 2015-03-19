@@ -33,7 +33,7 @@
     self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height + 10) style:UITableViewStylePlain];
     [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     self.tableView.delegate = self;
-    
+    self.tableView.allowsSelection = NO;
     
     [self.dataSource registerTableView:self.tableView];
     self.tableView.dataSource = _dataSource;
@@ -52,11 +52,12 @@
 
     UIImage *image = [VideoController sharedInstance].arrayOfThumbnails[indexPath.row];
     UIImageView *thumbnailView = [[UIImageView alloc] initWithImage:image];
-    return thumbnailView.frame.size.height + 50;
+    return thumbnailView.frame.size.height;
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    NSLog(@"Selected Row %ld", indexPath.row);
     [self bringUpPlayer:indexPath.row];
     
 }

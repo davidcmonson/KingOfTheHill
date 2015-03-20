@@ -8,8 +8,12 @@
 //
 
 #import "ViewController.h"
-
+#import <MapKit/MapKit.h>
 
 @interface LocationViewController : UIViewController
 
+@property (nonatomic) CLLocationCoordinate2D myCoordinates;
+@property (nonatomic, strong) CLLocationManager *locationManager;
+
 @end
+

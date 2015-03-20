@@ -18,6 +18,9 @@
 @property (nonatomic ,strong) NSArray *arrayOfThumbnails;
 
 + (VideoController *)sharedInstance;
+- (void)videoToParseWithFile:(PFFile *)file andLocation:(PFGeoPoint *)currentLocationGeoPoint;
+- (void)userToParse;
+- (void)userToVoteToVideo;
 + (void)queryVideosForFeed;
 - (void)videoToParseWithFile:(PFFile *)file;
 - (void)userToVoteToVideo:(Video *)video;

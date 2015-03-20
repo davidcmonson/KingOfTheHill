@@ -7,8 +7,9 @@
 //  Copyright (c) 2015 David Monson. All rights reserved.
 //
 
-#import <MapKit/MapKit.h>
 #import "LocationViewController.h"
+
+
 #import "VideoController.h"
 #import "VideoPin.h"
 #import "AnnotationVideoPlayerViewViewController.h"
@@ -27,12 +28,8 @@
 
 @property (nonatomic, strong) NSArray *thumbnails;
 @property (nonatomic, strong) MKMapView *allAnnotationsMapView;
-
 @property (nonatomic, strong) MKMapView *mainMapView;
-@property (nonatomic, strong) CLLocationManager *locationManager;
 @property (nonatomic, strong) Video *video;
-@property (nonatomic) CLLocationCoordinate2D myCoordinates;
-//@property (nonatomic, strong) NSArray *arrayOfVideos;
 @property (nonatomic, strong) UIButton *backButton;
 // Bool to zoom only once on initial launch
 @property (nonatomic) BOOL zoomedOnce;
@@ -59,8 +56,8 @@
 // Sets up bar at the bottom of the screen for users to swipe back to the main screen (camera)
 - (void)setUpSwipeBar {
     
-    UIView *thumbTabView = [[UIView alloc] initWithFrame:CGRectMake(-20, 581, 103, 55)];
-        //UIView *thumbTabView = [[UIView alloc] initWithFrame:CGRectMake(-20, 500, 103, 55)];
+    //UIView *thumbTabView = [[UIView alloc] initWithFrame:CGRectMake(-20, 581, 103, 55)];
+    UIView *thumbTabView = [[UIView alloc] initWithFrame:CGRectMake(-20, 500, 103, 55)];
     thumbTabView.backgroundColor = [UIColor colorWithRed:0.4 green:0.4 blue:0.4 alpha:0.55];
     thumbTabView.clipsToBounds = YES;
     thumbTabView.layer.cornerRadius = thumbTabView.bounds.size.width/4.0f;
@@ -147,7 +144,6 @@
         
         // Adding annotations
         VideoPin *videoPin = [[VideoPin alloc]initWithVideo:videoPFObjectAtIndex];
-        
         
         //    If you want to clear other pins/annotations this is how to do it
         //        for (id annotation in self.map.annotations) {

@@ -68,6 +68,7 @@
     [likes addObject:likeGesture];
     [likes indexOfObject:likeGesture];
     [VideoController sharedInstance].arrayOfVotes = likes;
+    [[VideoController sharedInstance] saveVoteToParse:[NSString stringWithFormat:@"%ld", (long)[VideoController sharedInstance].arrayOfVotes.count]];
 }
 
 -(void)dismissView {

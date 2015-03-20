@@ -32,7 +32,6 @@
     self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(-15, 0, self.view.frame.size.width, self.view.frame.size.height + 10) style:UITableViewStylePlain];
     [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     self.tableView.delegate = self;
-//    self.tableView.allowsSelection = NO;
     
     [self.dataSource registerTableView:self.tableView];
     self.tableView.dataSource = _dataSource;
@@ -50,7 +49,6 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     [self bringUpPlayer:indexPath.row];
-//    self.tableView.allowsSelection = NO;
     NSLog(@"Selected Row %ld", (long)indexPath.row);
 }
 
@@ -67,8 +65,6 @@
     videoVC.modalPresentationStyle = UIModalPresentationOverCurrentContext;
     videoVC.modalTransitionStyle = UIModalTransitionStyleCoverVertical;;
     [self presentViewController:videoVC animated:YES completion:nil];
-    self.tableView.allowsSelection = NO;
-
 }
 
 @end

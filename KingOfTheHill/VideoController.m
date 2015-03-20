@@ -101,9 +101,9 @@
 //    return self.indexPathOfThumbnail;
 //}
 
-- (void)voteToUser:(NSString *)vote
+- (void)saveVoteToParse:(NSString *)vote
 {
-    Vote *voteObject = (Vote *)[PFObject objectWithClassName:@"User"];
+    Vote *voteObject = (Vote *)[PFObject objectWithClassName:@"Vote"];
     voteObject[@"Vote"] = vote;
     [voteObject saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         if (succeeded) {

@@ -31,9 +31,14 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     VideoFeedTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([VideoFeedTableViewCell class])];
+    UIImage *thumbnail = [VideoController sharedInstance].arrayOfThumbnails[indexPath.row];
+    
+    UIImageView *imageViewInCell = [[UIImageView alloc]initWithImage:thumbnail];
+    imageViewInCell.frame = CGRectMake(0, 0, thumbnail.size.width, thumbnail.size.height);
+    
     cell.contentView.backgroundColor = [UIColor blackColor];
-    cell.imageView.image = [VideoController sharedInstance].arrayOfThumbnails[indexPath.row];
-    cell.imageView.frame = CGRectMake(0, 0, self.dimensionsOfScreen.size.width, 0);
+    [cell.contentView addSubview:imageViewInCell];
+    cell.imageView.layer.masksToBounds = YES;
     cell.imageView.contentMode = UIViewContentModeScaleAspectFill;
     
     return cell;

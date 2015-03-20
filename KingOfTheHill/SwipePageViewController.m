@@ -21,12 +21,10 @@
 @interface SwipePageViewController () <UIPageViewControllerDataSource,UIPageViewControllerDelegate,PFLogInViewControllerDelegate,PFSignUpViewControllerDelegate>
 
 @property (nonatomic, strong) UIPageViewController *pageViewController;
-//@property (nonatomic, strong) CameraViewController *cameraVC;
 @property (nonatomic, strong) VideoFeedViewController *videoVC;
 @property (nonatomic, strong) ProfileViewController *profileVC;
 @property (nonatomic, strong) LocationViewController *mapVC;
 @property (nonatomic, strong) AAPLCameraViewController *cameraVC;
-
 @property (nonatomic, strong) CLLocationManager *locationManager;
 
 
@@ -79,9 +77,9 @@
     self.pageViewController = [[UIPageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStyleScroll navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal options:nil];
     self.pageViewController.delegate = self;
     self.pageViewController.dataSource = self;
-    
-    [self.pageViewController setViewControllers:@[self.cameraVC] direction:UIPageViewControllerNavigationDirectionForward animated:YES completion:nil];
-    
+
+#warning SET CAMERA TO VIEWCONTROLLER! TURN ON CAMERA HERE!
+  [self.pageViewController setViewControllers:@[self.videoVC] direction:UIPageViewControllerNavigationDirectionForward animated:YES completion:nil];
     
     [self addChildViewController:self.pageViewController];
     [self.pageViewController didMoveToParentViewController:self];

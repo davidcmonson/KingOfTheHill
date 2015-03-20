@@ -7,39 +7,27 @@
 //
 
 #import "ProfileViewController.h"
+#import "LegalStuff.h"
+#import "UILabel+DynamicLabel.h"
+#import "DocsViewController.h"
 #import <UIKit/UIKit.h>
 
 @interface ProfileViewController ()
 
-@property (nonatomic, strong)UITextField *usernameTextField;
-@property (nonatomic, strong)UITextField *bioTextField;
-@property (nonatomic, strong)UITextField *favoriteSpotTextField;
-@property (nonatomic, strong)UITextField *contactInfoTextField;
-@property (nonatomic, strong)UILabel *locationsLabel;
-@property (nonatomic, strong)UILabel *usernameLabel;
-@property (nonatomic, strong)UILabel *bioLabel;
-@property (nonatomic, strong)UILabel *favoriteSpotLabel;
-@property (nonatomic, strong)UILabel *contactInfoLabel;
-@property (nonatomic, assign)BOOL profileRunning;
 @end
 
 @implementation ProfileViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self.view setBackgroundColor:[UIColor colorWithRed:0.5 green:0.5 blue:0.5 alpha:0.5]];
-    [self profileStructure];
-     [self exitProfile];
-   
+    [self.view setBackgroundColor:[UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.9]];
     //    [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"backgroundBlackWhite"]]];
     self.view.opaque = NO;
+    [self alphaLabel];
+    [self goToDocsButton];
+    [self exitProfile];
 }
 
-- (void)idiotProofing{
-    if (_profileRunning == YES) {
-    
-    }
-}
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
@@ -53,59 +41,6 @@
     [self.view addSubview:viewWithBlurredBackground];
     
     self.view.opaque = NO;
-    
-}
-
-- (void)profileStructure {
-    
-    self.usernameLabel = [[UILabel alloc] initWithFrame:CGRectMake(50, 72, 100, 30)];
-    self.usernameLabel.textAlignment = NSTextAlignmentRight;
-    self.usernameLabel.text = @"User Name";
-    self.usernameLabel.textColor = [UIColor blackColor];
-    self.usernameLabel.font = [UIFont fontWithName:@"MarkerFelt-Wide" size:18];
-    [self.view addSubview:self.usernameLabel];
-    
-    self.usernameTextField = [[UITextField alloc] initWithFrame:CGRectMake(160, 75, 200, 30)];
-    self.usernameTextField.placeholder = @"Enter User Name";
-    self.usernameTextField.textAlignment = NSTextAlignmentLeft;
-    [self.view addSubview:self.usernameTextField];
-    
-    self.bioLabel = [[UILabel alloc] initWithFrame:CGRectMake(50, 112, 100, 30)];
-    self.bioLabel.textAlignment = NSTextAlignmentRight;
-    self.bioLabel.text = @"Your Sport";
-    self.bioLabel.textColor = [UIColor blueColor];
-    self.bioLabel.font = [UIFont fontWithName:@"MarkerFelt-Wide" size:18];
-    [self.view addSubview:self.bioLabel];
-    
-    self.bioTextField = [[UITextField alloc] initWithFrame:CGRectMake(160, 115, 200, 30)];
-    self.bioTextField.placeholder = @"Enter Sport";
-    self.bioTextField.textAlignment = NSTextAlignmentLeft;
-    [self.view addSubview:self.bioTextField];
-    
-    self.favoriteSpotLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 152, 150, 30)];
-    self.favoriteSpotLabel.textAlignment = NSTextAlignmentRight;
-    self.favoriteSpotLabel.text = @"Favorite Spot";
-    self.favoriteSpotLabel.textColor = [UIColor blackColor];
-    self.favoriteSpotLabel.font = [UIFont fontWithName:@"MarkerFelt-Wide" size:18];
-    [self.view addSubview:self.favoriteSpotLabel];
-    
-    self.favoriteSpotTextField = [[UITextField alloc] initWithFrame:CGRectMake(160, 155, 200, 30)];
-    self.favoriteSpotTextField.placeholder = @"Enter Name of Location";
-    self.favoriteSpotTextField.textAlignment = NSTextAlignmentLeft;
-    [self.view addSubview:self.favoriteSpotTextField];
-    
-    self.contactInfoLabel = [[UILabel alloc] initWithFrame:CGRectMake(50, 192, 100, 30)];
-    self.contactInfoLabel.textAlignment = NSTextAlignmentRight;
-    self.contactInfoLabel.text = @"Contact Info";
-    self.contactInfoLabel.textColor = [UIColor blueColor];
-    self.contactInfoLabel.font = [UIFont fontWithName:@"MarkerFelt-Wide" size:18];
-    [self.view addSubview:self.contactInfoLabel];
-    
-    self.contactInfoTextField = [[UITextField alloc] initWithFrame:CGRectMake(160, 195, 200, 30)];
-    self.contactInfoTextField.placeholder = @"Enter contact info";
-    self.contactInfoTextField.textAlignment = NSTextAlignmentLeft;
-    [self.view addSubview:self.contactInfoTextField];
-    [self.view setBackgroundColor:[UIColor colorWithRed:0.5 green:0.5 blue:0.5 alpha:0.5]];
     
 }
 
@@ -125,6 +60,41 @@
     [self dismissViewControllerAnimated:YES completion:nil];
     
 }
+
+
+- (void)alphaLabel {
+    UILabel *alphaLabel = [[UILabel alloc] initWithFrame:CGRectMake(25, 100, 325, 250)];
+    alphaLabel.text = @"Alpha";
+    alphaLabel.textColor = [UIColor whiteColor];
+    alphaLabel.font = [UIFont fontWithName:@"Zapfino" size:72];
+    [self.view addSubview:alphaLabel];
+
+}
+
+-(void)goToDocsButton {
+    UIButton *goToDocs = [UIButton buttonWithType:UIButtonTypeCustom];
+    goToDocs.frame = CGRectMake(120, 500, 125, 75);
+    goToDocs.clipsToBounds = YES;
+    goToDocs.layer.cornerRadius = goToDocs.bounds.size.width/3.0f;
+    goToDocs.layer.borderWidth = 3.0f;
+    goToDocs.layer.borderColor = [UIColor blueColor].CGColor;
+    [goToDocs setTitle:@"Legal Docs" forState:UIControlStateNormal];
+    goToDocs.titleLabel.font = [UIFont fontWithName:@"BradleyHandITCTT-Bold" size:24];
+    [goToDocs setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [goToDocs setTitleColor:[UIColor redColor] forState:UIControlEventAllTouchEvents];
+    [goToDocs addTarget:self action:@selector(docsPage:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:goToDocs];
+}
+
+-(void)docsPage:(id)sender {
+    
+    DocsViewController *docsPageViewController = [DocsViewController new];
+    [self presentViewController:docsPageViewController animated:YES completion:nil];
+    
+}
+
+
+
 
 
 @end

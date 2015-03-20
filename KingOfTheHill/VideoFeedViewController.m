@@ -30,7 +30,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.dataSource = [VideoFeedDataSource new];
-    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height + 10) style:UITableViewStylePlain];
+    self.dataSource.dimensionsOfScreen = self.view.frame;
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height) style:UITableViewStylePlain];
     [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     self.tableView.delegate = self;
     

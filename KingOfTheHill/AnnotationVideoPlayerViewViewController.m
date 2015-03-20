@@ -39,6 +39,7 @@
         PFFile *videoFile = [VideoController sharedInstance].arrayOfVideoForFeed[self.videoAtIndex][urlOfVideo];
         self.videoURL = [NSURL URLWithString:videoFile.url];
         AVAsset *video = [AVAsset assetWithURL:self.videoURL];
+
         AVPlayerItem *item = [[AVPlayerItem alloc] initWithAsset:video];
         self.player = [AVPlayer playerWithPlayerItem:item];
         

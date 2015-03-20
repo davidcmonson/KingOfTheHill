@@ -18,7 +18,7 @@
 
 
 
-@interface SwipePageViewController () <UIPageViewControllerDataSource,UIPageViewControllerDelegate,PFLogInViewControllerDelegate,PFSignUpViewControllerDelegate,CLLocationManagerDelegate>
+@interface SwipePageViewController () <UIPageViewControllerDataSource,UIPageViewControllerDelegate,PFLogInViewControllerDelegate,PFSignUpViewControllerDelegate>
 
 @property (nonatomic, strong) UIPageViewController *pageViewController;
 //@property (nonatomic, strong) CameraViewController *cameraVC;
@@ -56,21 +56,8 @@
     }
 }
 
-
-// Gets rough estimate of user location so when user goes to the map, it shouldn't start in the middle of the ocean
-- (void)getLocation
-{
-        if (_locationManager == nil) {
-        self.locationManager = [[CLLocationManager alloc]init]; // initializing locationManager
-        self.locationManager.delegate = self; // we set the delegate of locationManager to self.
-        self.locationManager.desiredAccuracy = kCLLocationAccuracyThreeKilometers; // setting the accuracy
-        
-        // Put location fetcher on background thread.
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            [self.locationManager startUpdatingLocation];  //requesting location updates
-                        NSLog(@"Found Location of User!");
-        });
-    }
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
+    return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
 - (void)viewDidLoad {
@@ -81,13 +68,12 @@
     [VideoController queryVideosForFeed];
     self.cameraVC = [AAPLCameraViewController new];
     
-    [self getLocation];
+    
 
     //    self.cameraVC = [CameraViewController new]; // OLD CAMERA
     self.videoVC = [VideoFeedViewController new];
     
     self.mapVC = [LocationViewController new];
-    self.mapVC.locationManager = self.locationManager;
     
     
     self.pageViewController = [[UIPageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStyleScroll navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal options:nil];

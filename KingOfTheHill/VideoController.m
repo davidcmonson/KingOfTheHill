@@ -42,29 +42,24 @@
 //    [vote setObject:video forKeyedSubscript:@"voteSetOnVideo"];
 //}
 
-- (void)videoToParseWithFile:(PFFile *)file andLocation:(PFGeoPoint *)currentLocationGeoPoint
+- (void)videoToParseWithFile:(PFFile *)file
+                 andLocation:(PFGeoPoint *)currentLocationGeoPoint
+                andThumbnail:(PFFile *)thumbnailFile
 {
     Video *video = (Video *)[PFObject objectWithClassName:@"Video"];
-
+    
     video[@"videoFile"] = file;
     video[@"location"] = currentLocationGeoPoint;
-//    [video pinInBackground];
+    video[@"thumbnail"] = thumbnailFile;
     [video saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         if (succeeded) {
-            NSLog(@"videoKey saved");
+            NSLog(@"Video has been uploaded to Parse");
         }
         else {
             NSLog(@"%@", error);
         }
     }];
 }
-
-// Method to fetch videos
-//
-//
-//
-//
-//
 
 - (void)userToVoteToVideo:(Video *)video
 {
@@ -85,7 +80,7 @@
 
 + (void)queryVideosForFeed {
     NSLog(@"Photos Loading!");
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
         // Parse query calls.
         PFQuery *queryForVideos = [PFQuery queryWithClassName:@"Video"];
         [queryForVideos findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
@@ -104,7 +99,7 @@
     
 }
 
-#warning will need checker if the PFFile has a file or not (crashes when it tries to assign thumbnailOfVideo)
+
 // takes in the array from Parse, adds an image to each of it and puts it back into the sharedInstance array
 - (void)populateThumbnailArray:(NSArray *)array {
     
@@ -114,14 +109,15 @@
         
         Video *video = array[index];
         if (!video[urlOfThumbnail]) {
-        [mutableArray addObject:[UIImage imageNamed:@"blank"]];
+            // add "missing thumbnail" picture if video doesn't have thumbnail
+            [mutableArray addObject:[UIImage imageNamed:@"blank"]];
             NSLog(@"added blank thumbnail for video %ld", index);
         } else {
-        PFFile *thumbnailImage = video[urlOfThumbnail];
-        NSURL *urlOfThumbnail = [NSURL URLWithString:thumbnailImage.url];
-        NSData *dataOfThumbnail = [NSData dataWithContentsOfURL:urlOfThumbnail];
-        UIImage *thumbnail = [UIImage imageWithData:dataOfThumbnail];
-        [mutableArray addObject:thumbnail];
+            PFFile *thumbnailImage = video[urlOfThumbnail];
+            NSURL *urlOfThumbnail = [NSURL URLWithString:thumbnailImage.url];
+            NSData *dataOfThumbnail = [NSData dataWithContentsOfURL:urlOfThumbnail];
+            UIImage *thumbnail = [UIImage imageWithData:dataOfThumbnail];
+            [mutableArray addObject:thumbnail];
         }
         
         

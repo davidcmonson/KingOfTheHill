@@ -24,12 +24,9 @@
 
 + (VideoController *)sharedInstance;
 - (void)videoToParseWithFile:(PFFile *)file andLocation:(PFGeoPoint *)currentLocationGeoPoint;
-- (void)userToParse;
 - (void)saveVoteToParse:(NSString *)vote;
 + (void)queryVideosForFeed;
-- (void)videoToParseWithFile:(PFFile *)file;
-- (void)userToVoteToVideo:(Video *)video;
-- (NSInteger)totalVotesOnVideoWithIdentifier:(NSString *)identifier;
+- (void)queryForVotesOnUser;
 
 @end
 

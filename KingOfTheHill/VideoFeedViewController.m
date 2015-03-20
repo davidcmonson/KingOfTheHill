@@ -26,6 +26,11 @@
 
 @implementation VideoFeedViewController
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    [[VideoController sharedInstance] queryForVotesOnUser];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.dataSource = [VideoFeedDataSource new];

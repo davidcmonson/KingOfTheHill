@@ -92,14 +92,24 @@
     //NSLog(@"%@", [VideoController sharedInstance].arrayOfThumbnails);
 }
 
-//- (NSIndexPath *)indexPathofThumbnail:(UIImage *)imageOfThumbnail
-//{
-//    for (UIImage *image in self.arrayOfThumbnails) {
-//    NSUInteger index = [self.arrayOfThumbnails indexOfObject:image];
-//    self.indexPathOfThumbnail = [NSIndexPath indexPathWithIndex:index];
-//    }
-//    return self.indexPathOfThumbnail;
-//}
+- (void)queryForVotesOnUser
+{
+    PFQuery *queryForVotes = [PFQuery queryWithClassName:@"Vote"];
+    [queryForVotes findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if (error) {
+            NSLog(@"%@", error);
+        }
+        else {
+            NSMutableArray *mutableObjects = [[NSMutableArray alloc] initWithArray:objects];
+            for (Vote *votes in objects) {
+                [mutableObjects addObject:votes];
+                [VideoController sharedInstance].arrayOfVotes = mutableObjects;
+                NSLog(@"%ld", (long)[VideoController sharedInstance].arrayOfVotes.count);
+            }
+            
+        }
+    }];
+}
 
 - (void)saveVoteToParse:(NSString *)vote
 {

@@ -48,14 +48,13 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Video *video = [VideoController sharedInstance].arrayOfVideoForFeed[indexPath.row];
-    //    PFFile *thumbnailImage = video[urlOfThumbnail];
-    //    NSURL *urlOfThumbnail = [NSURL URLWithString:thumbnailImage.url];
-    //    NSData *dataOfThumbnail = [NSData dataWithContentsOfURL:urlOfThumbnail];
 
-    UIImage *image = [VideoController sharedInstance].arrayOfThumbnails[indexPath.row];
-    UIImageView *thumbnailView = [[UIImageView alloc] initWithImage:image];
-    return thumbnailView.frame.size.height + 50;
+    UIImage *image = [VideoController sharedInstance].arrayOfThumbnails[3];
+    UIImageView *imageViewInCell = [[UIImageView alloc]initWithImage:image];
+    imageViewInCell.frame = CGRectMake(0, 0, self.view.frame.size.width, image.size.height);
+    imageViewInCell.contentMode = UIViewContentModeScaleAspectFit;
+    return imageViewInCell.frame.size.height;
+
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -64,7 +63,7 @@
     
 }
 
-// add header view
+ //add header view
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     return [SectionHeaderView headerHeight];
 }

@@ -18,8 +18,11 @@
 }
 */
 
+
+
 - (id)initWithFrame:(CGRect)frame
 {
+
     self = [super initWithFrame:frame];
     if (self) {
         self.votes = [UILabel new];
@@ -53,7 +56,7 @@
 
 + (CGFloat)headerHeight
 {
-    return 30;
+    return 0;
 }
 
 - (void)updateWithUserName:(NSString *)name votes:(CGFloat)votes andUpVotes:(UIButton *)upVotes

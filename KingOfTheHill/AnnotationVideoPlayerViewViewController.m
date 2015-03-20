@@ -16,8 +16,6 @@
 @property (nonatomic, strong) NSURL *videoURL;
 @property (nonatomic, strong) AVPlayer *player;
 
-
-
 @end
 
 @implementation AnnotationVideoPlayerViewViewController
@@ -32,6 +30,10 @@
     UISwipeGestureRecognizer *gestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(dismissView)];
     [gestureRecognizer setDirection:(UISwipeGestureRecognizerDirectionDown)];
     [self.view addGestureRecognizer:gestureRecognizer];
+    
+    UITapGestureRecognizer *likeVideo = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(likeVote:)];
+    likeVideo.numberOfTapsRequired = 2;
+    [self.view addGestureRecognizer:likeVideo];
     
     // loads the video and player asynchronously
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
@@ -59,6 +61,14 @@
     
 }
 
+- (void)likeVote:(id)likeGesture
+{
+    NSLog(@"vote on player");
+    NSMutableArray *likes = [[NSMutableArray alloc] initWithArray:[VideoController sharedInstance].arrayOfVotes];
+    [likes addObject:likeGesture];
+    [likes indexOfObject:likeGesture];
+    [VideoController sharedInstance].arrayOfVotes = likes;
+}
 
 -(void)dismissView {
     
@@ -78,15 +88,5 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-/*
- #pragma mark - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
- }
- */
 
 @end

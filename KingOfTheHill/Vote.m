@@ -10,7 +10,7 @@
 
 @implementation Vote
 
-@dynamic likeVote;
+@dynamic votes;
 @dynamic uniqueId;
 
 @end

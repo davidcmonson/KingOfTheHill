@@ -21,34 +21,13 @@
     return sharedInstance;
 }
 
-//- (void)relationshipBetweenVideoAndUser
-//{
-//    // create user object
-//    PFObject *user = [PFObject objectWithClassName:@"User"];
-//
-//    // user video
-//    PFObject *video = [PFObject objectWithClassName:@"Video"];
-//
-//    // set who the video is creatd by
-//    [video setObject:user forKeyedSubscript:@"ownerOfVideo"];
-//}
-//
-//- (void)relationshipBetweenVoteAndVideo
-//{
-//    PFObject *video = [PFObject objectWithClassName:@"video"];
-//
-//    PFObject *vote = [PFObject objectWithClassName:@"vote"];
-//
-//    [vote setObject:video forKeyedSubscript:@"voteSetOnVideo"];
-//}
-
 - (void)videoToParseWithFile:(PFFile *)file andLocation:(PFGeoPoint *)currentLocationGeoPoint
 {
     Video *video = (Video *)[PFObject objectWithClassName:@"Video"];
 
     video[@"videoFile"] = file;
     video[@"location"] = currentLocationGeoPoint;
-//    [video pinInBackground];
+    
     [video saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         if (succeeded) {
             NSLog(@"videoKey saved");
@@ -66,23 +45,6 @@
 //
 //
 
-- (void)userToVoteToVideo:(Video *)video
-{
-    PFObject *likedVideo = [PFObject objectWithClassName:videoKey];
-    PFObject *vote = [PFObject objectWithClassName:voteKey];
-#warning attach vote to Video
-    [vote setObject:[PFUser currentUser] forKey:@"fromUser"];
-    [vote setValue:likedVideo forKey:@"toVideo"];
-    [vote saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-        if (succeeded) {
-            NSLog(@"two way relation from user to vote to video saved");
-        }
-        else {
-            NSLog(@"%@", error);
-        }
-    }];
-}
-
 + (void)queryVideosForFeed {
     NSLog(@"Photos Loading!");
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
@@ -96,7 +58,7 @@
                 //NSArray *arrayOfVideos = [[NSArray alloc] initWithArray:objects];
                 [VideoController sharedInstance].arrayOfVideoForFeed = objects;
                 [[VideoController sharedInstance] populateThumbnailArray:objects];
-                NSLog(@"%ld videos with thumbnails",[VideoController sharedInstance].arrayOfVideoForFeed.count);
+                NSLog(@"%ld videos with thumbnails",(long)[VideoController sharedInstance].arrayOfVideoForFeed.count);
                 NSLog(@"Thumbnails Loaded!");
             }
         }];
@@ -130,13 +92,24 @@
     //NSLog(@"%@", [VideoController sharedInstance].arrayOfThumbnails);
 }
 
-- (NSIndexPath *)indexPathofThumbnail:(UIImage *)imageOfThumbnail
+//- (NSIndexPath *)indexPathofThumbnail:(UIImage *)imageOfThumbnail
+//{
+//    for (UIImage *image in self.arrayOfThumbnails) {
+//    NSUInteger index = [self.arrayOfThumbnails indexOfObject:image];
+//    self.indexPathOfThumbnail = [NSIndexPath indexPathWithIndex:index];
+//    }
+//    return self.indexPathOfThumbnail;
+//}
+
+- (void)voteToUser:(NSString *)vote
 {
-    for (UIImage *image in self.arrayOfThumbnails) {
-    NSUInteger index = [self.arrayOfThumbnails indexOfObject:image];
-    self.indexPathOfThumbnail = [NSIndexPath indexPathWithIndex:index];
-    }
-    return self.indexPathOfThumbnail;
+    Vote *voteObject = (Vote *)[PFObject objectWithClassName:@"User"];
+    voteObject[@"Vote"] = vote;
+    [voteObject saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        if (succeeded) {
+            NSLog(@"vote saved");
+        }
+    }];
 }
 
 - (NSInteger)totalVotesOnVideoWithIdentifier:(NSString *)identifier

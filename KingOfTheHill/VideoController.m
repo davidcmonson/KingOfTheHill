@@ -115,7 +115,7 @@
         Video *video = array[index];
         if (!video[urlOfThumbnail]) {
         [mutableArray addObject:[UIImage imageNamed:@"blank"]];
-            NSLog(@"added blank thumbnail for video %ld", index);
+            NSLog(@"added blank thumbnail for video %ld", (long)index);
         } else {
         PFFile *thumbnailImage = video[urlOfThumbnail];
         NSURL *urlOfThumbnail = [NSURL URLWithString:thumbnailImage.url];
@@ -130,6 +130,14 @@
     //NSLog(@"%@", [VideoController sharedInstance].arrayOfThumbnails);
 }
 
+- (NSIndexPath *)indexPathofThumbnail:(UIImage *)imageOfThumbnail
+{
+    for (UIImage *image in self.arrayOfThumbnails) {
+    NSUInteger index = [self.arrayOfThumbnails indexOfObject:image];
+    self.indexPathOfThumbnail = [NSIndexPath indexPathWithIndex:index];
+    }
+    return self.indexPathOfThumbnail;
+}
 
 - (NSInteger)totalVotesOnVideoWithIdentifier:(NSString *)identifier
 {

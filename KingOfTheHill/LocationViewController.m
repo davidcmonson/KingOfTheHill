@@ -124,7 +124,7 @@
             //[self dropPinAtCoordinatesForVideosInVideosArray:arrayOfVideos];
             [VideoController sharedInstance].arrayOfVideosNearLocation = arrayOfVideos;
             [self dropPinAtCoordinatesForVideosInVideosArray:[VideoController sharedInstance].arrayOfVideosNearLocation];
-            NSLog(@"Videos Near Location: %ld",[VideoController sharedInstance].arrayOfVideosNearLocation.count);
+            NSLog(@"Videos Near Location: %ld",(unsigned long)[VideoController sharedInstance].arrayOfVideosNearLocation.count);
         }
     }];
     

@@ -10,8 +10,18 @@
 #import <UIKit/UIKit.h>
 #import "VideoFeedTableViewCell.h"
 
+@protocol Player;
+
 @interface VideoFeedDataSource : NSObject <UITableViewDataSource>
 
+@property (nonatomic, strong) id <Player> delegate;
+
 -(void)registerTableView:(UITableView *)tableView;
+
+@end
+
+@protocol Player <NSObject>
+
+- (void)bringUpPlayer:(NSInteger)index;
 
 @end

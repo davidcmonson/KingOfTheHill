@@ -16,6 +16,11 @@
 @property (nonatomic, strong) NSArray *arrayOfVideoForFeed;
 @property (nonatomic, strong) NSArray *arrayOfVideosNearLocation;
 @property (nonatomic ,strong) NSArray *arrayOfThumbnails;
+@property (nonatomic, strong) NSArray *arrayOfVotes;
+
+@property (nonatomic, assign) NSInteger *videoIndex;
+
+@property (nonatomic, assign) NSIndexPath *indexPathOfThumbnail;
 
 + (VideoController *)sharedInstance;
 - (void)videoToParseWithFile:(PFFile *)file andLocation:(PFGeoPoint *)currentLocationGeoPoint;

@@ -15,7 +15,7 @@
 #import "LoadingStatus.h"
 
 
-@interface VideoFeedViewController () <UITableViewDelegate>
+@interface VideoFeedViewController () <UITableViewDelegate, Player>
 
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) VideoFeedDataSource *dataSource;
@@ -26,13 +26,24 @@
 
 @implementation VideoFeedViewController
 
+- (void)viewDidAppear:(BOOL)animated
+{
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(bringUpPlayer:) name:@"presentVideo" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(turnOffSelection:) name:@"turnOffVote" object:nil];
+}
+
+- (void)turnOffSelection:(NSNotification *)notification
+{
+    self.tableView.allowsSelection = YES;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.dataSource = [VideoFeedDataSource new];
     self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(-15, 0, self.view.frame.size.width, self.view.frame.size.height + 10) style:UITableViewStylePlain];
     [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     self.tableView.delegate = self;
-    self.tableView.allowsSelection = NO;
+//    self.tableView.allowsSelection = NO;
     
     [self.dataSource registerTableView:self.tableView];
     self.tableView.dataSource = _dataSource;
@@ -56,11 +67,20 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    NSLog(@"Selected Row %ld", indexPath.row);
     [self bringUpPlayer:indexPath.row];
-    [self vote];
-    
+//    self.tableView.allowsSelection = NO;
+    NSLog(@"Selected Row %ld", (long)indexPath.row);
 }
+
+//- (void)UIImage:(UIImage *)imageOfThumbNail didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    UITapGestureRecognizer *newGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(ifWorks:)];
+//    if (newGesture) {
+//        self.tableView.allowsSelection = NO;
+//    }
+//    [newGesture setNumberOfTapsRequired:2];
+//    [self.tableView addGestureRecognizer:newGesture];
+//}
 
 // add header view
 //- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
@@ -93,7 +113,7 @@
     videoVC.modalPresentationStyle = UIModalPresentationOverCurrentContext;
     videoVC.modalTransitionStyle = UIModalTransitionStyleCoverVertical;;
     [self presentViewController:videoVC animated:YES completion:nil];
-    
+    self.tableView.allowsSelection = NO;
     //    if (!UIAccessibilityIsReduceTransparencyEnabled) {
     //        UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleExtraLight];
     //        UIVisualEffectView *viewWithBlurredBackground = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
@@ -113,6 +133,18 @@
     //    } else {
     //        self.view.backgroundColor = [UIColor blackColor];
     //    }
+}
+
+- (void)deregisterForNotifications
+{
+//    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"presentVideo" object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"turnOffVote" object:nil];
+//    self.tableView.allowsSelection = NO;
+}
+
+- (void)dealloc
+{
+    [self deregisterForNotifications];
 }
 
 

@@ -119,7 +119,7 @@ static float EXPOSURE_MINIMUM_DURATION = 1.0/1000; // Limit exposure duration to
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
     self.currentLocation = [locations lastObject];
-    NSLog(@"Current Location: %@",self.currentLocation);
+//    NSLog(@"Current Location: %@",self.currentLocation);
     
 }
 

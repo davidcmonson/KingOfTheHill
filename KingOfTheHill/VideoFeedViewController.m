@@ -53,7 +53,7 @@
     imageViewInCell.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.width);
     imageViewInCell.contentMode = UIViewContentModeScaleAspectFit;
 
-    return 428;
+    return self.view.frame.size.width;
 
 }
 

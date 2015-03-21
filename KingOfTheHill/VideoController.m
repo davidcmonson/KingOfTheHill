@@ -81,7 +81,6 @@
 
 + (void)queryVideosForFeed {
     NSLog(@"Photos Loading!");
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
         // Parse query calls.
         PFQuery *queryForVideos = [PFQuery queryWithClassName:@"Video"];
         [queryForVideos findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
@@ -96,8 +95,6 @@
                 NSLog(@"Thumbnails Loaded!");
             }
         }];
-    });
-    
 }
 
 

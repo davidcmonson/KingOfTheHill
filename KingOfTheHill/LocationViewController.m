@@ -33,6 +33,7 @@
 @property (nonatomic, strong) UIButton *backButton;
 // Bool to zoom only once on initial launch
 @property (nonatomic) BOOL zoomedOnce;
+@property (nonatomic, strong) AnnotationVideoPlayerViewViewController *videoVC;
 
 
 @end
@@ -203,6 +204,8 @@
 // user tapped the call out accessory or the "i"/the "bubble" in the annotation
 - (void)mapView:(MKMapView *)aMapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control {
     
+
+    
     // Commented out for when we pass the actual Video info to the annotation.
     //    VideoPin *annotation = (VideoPin *)view.annotation;
     //    NSMutableArray *photosToShow = [NSMutableArray arrayWithObject:annotation];
@@ -213,16 +216,16 @@
     //    //    viewController.videoAtIndex =
     //    viewController.edgesForExtendedLayout = UIRectEdgeNone;
     [self bringUpPlayer];
-    //[self presentViewController:viewController animated:YES completion:nil];
+
 }
 
 - (void)bringUpPlayer {
     
-    AnnotationVideoPlayerViewViewController *videoVC = [AnnotationVideoPlayerViewViewController new];
-    videoVC.edgesForExtendedLayout = UIRectEdgeNone;
-    videoVC.modalPresentationStyle = UIModalPresentationOverCurrentContext;
-    videoVC.modalTransitionStyle = UIModalTransitionStyleCoverVertical;;
-    [self presentViewController:videoVC animated:YES completion:nil];
+    self.videoVC = [AnnotationVideoPlayerViewViewController new];
+    self.videoVC.edgesForExtendedLayout = UIRectEdgeNone;
+    self.videoVC.modalPresentationStyle = UIModalPresentationOverCurrentContext;
+    self.videoVC.modalTransitionStyle = UIModalTransitionStyleCoverVertical;;
+    [self presentViewController:self.videoVC animated:YES completion:nil];
     
     if (!UIAccessibilityIsReduceTransparencyEnabled) {
         UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleExtraLight];

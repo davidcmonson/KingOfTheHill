@@ -37,7 +37,7 @@
     self.tableView.delegate = self;
     self.tableView.backgroundColor = [UIColor redColor];
     // This allows each cell to "snap" to the top/bottom edges as user scrolls through the cells
-    self.tableView.pagingEnabled = YES;
+    //self.tableView.pagingEnabled = YES; // DISABLED: snaps weirdly
     
     [self.dataSource registerTableView:self.tableView];
     self.tableView.dataSource = _dataSource;
@@ -58,17 +58,19 @@
 
 }
 
+-(void)refreshFeed {
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        [VideoController queryVideosForFeed];
+        [self.tableView reloadData];
+        [self stopRefresh];
+    });
+}
+
 - (void)stopRefresh
 {
     [self.refreshControl endRefreshing];
 }
 
--(void)refreshFeed {
-
-    [VideoController queryVideosForFeed];
-    [self.tableView reloadData];
-    
-}
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
 

@@ -55,8 +55,7 @@
     [refresh addTarget:self action:@selector(refreshFeed) forControlEvents:UIControlEventValueChanged];
     self.refreshControl = refresh;
     
-    
-    //[self.view addSubview:self.tableView];
+
 }
 
 - (void)stopRefresh
@@ -65,6 +64,9 @@
 }
 
 -(void)refreshFeed {
+
+    [VideoController queryVideosForFeed];
+    [self.tableView reloadData];
     
 }
 

@@ -35,11 +35,9 @@
     //self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height) style:UITableViewStylePlain];
     [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     self.tableView.delegate = self;
-    self.tableView.backgroundColor = [UIColor blackColor];
-    
-
-
-    
+    self.tableView.backgroundColor = [UIColor redColor];
+    // This allows each cell to "snap" to the top/bottom edges as user scrolls through the cells
+    self.tableView.pagingEnabled = YES;
     
     [self.dataSource registerTableView:self.tableView];
     self.tableView.dataSource = _dataSource;
@@ -49,8 +47,11 @@
     //    [snowboarderView addGestureRecognizer:snowboardTapGesture];
 
     // Refresh Table View
+    NSAttributedString *title = [[NSAttributedString alloc] initWithString:@"Pull to Refresh"
+                                                                attributes: @{NSForegroundColorAttributeName:[UIColor whiteColor]}];
     UIRefreshControl *refresh = [UIRefreshControl new];
-    refresh.attributedTitle = [[NSAttributedString alloc] initWithString:@"Pull to Refresh"];
+    refresh.attributedTitle = [[NSAttributedString alloc] initWithAttributedString:title];
+    refresh.tintColor = [UIColor whiteColor];
     [refresh addTarget:self action:@selector(refreshFeed) forControlEvents:UIControlEventValueChanged];
     self.refreshControl = refresh;
     

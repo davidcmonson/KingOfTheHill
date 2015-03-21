@@ -862,12 +862,6 @@ static float EXPOSURE_MINIMUM_DURATION = 1.0/1000; // Limit exposure duration to
     AVMutableComposition *videoComposition = [AVMutableComposition composition];
     AVMutableCompositionTrack *compositionVideoTrack = [videoComposition addMutableTrackWithMediaType:AVMediaTypeVideo preferredTrackID:kCMPersistentTrackID_Invalid];
 
-    self.name = [PFUser currentUser].username;
-    
-    [[VideoController sharedInstance] videoToParseWithFile:file
-                                               andLocation:self.currentLocationGeoPoint
-                                              andThumbnail:thumbnailFile andName:self.name];
-    
     AVAssetTrack *clipVideoTrack = [[asset tracksWithMediaType:AVMediaTypeVideo] objectAtIndex:0];
     
     AVMutableVideoComposition *mutableVideoComposition = [AVMutableVideoComposition videoComposition];
@@ -905,9 +899,12 @@ static float EXPOSURE_MINIMUM_DURATION = 1.0/1000; // Limit exposure duration to
         
         NSData *data = [NSData dataWithContentsOfURL:outputAsset.URL];
         PFFile *file = [PFFile fileWithName:@"Video.mov" data:data contentType:@"mov"];
+        self.name = [PFUser currentUser].username;
         [[VideoController sharedInstance] videoToParseWithFile:file
                                                    andLocation:self.currentLocationGeoPoint
-                                                  andThumbnail:thumbnailFile];
+                                                  andThumbnail:thumbnailFile
+                                                       andName:self.name];
+
     }];
     
     if (error)

@@ -29,6 +29,8 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [[VideoController sharedInstance] queryForVotesOnUser];
+    //    self.dataSource.votes.text = [NSString stringWithFormat:@"%ld", (long)[VideoController sharedInstance].arrayOfThumbnails[self.dataSource.video.videoAtIndex]];
+    [self.tableView reloadData];
 }
 
 - (void)viewDidLoad {

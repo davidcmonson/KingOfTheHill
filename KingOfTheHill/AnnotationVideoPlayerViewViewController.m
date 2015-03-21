@@ -16,6 +16,8 @@
 @property (nonatomic, strong) NSURL *videoURL;
 @property (nonatomic, strong) AVPlayer *player;
 
+@property (nonatomic, strong) Video *video;
+
 @end
 
 @implementation AnnotationVideoPlayerViewViewController
@@ -63,12 +65,15 @@
 
 - (void)likeVote:(id)likeGesture
 {
-    NSLog(@"vote on player");
     NSMutableArray *likes = [[NSMutableArray alloc] initWithArray:[VideoController sharedInstance].arrayOfVotes];
     [likes addObject:likeGesture];
-    [likes indexOfObject:likeGesture];
     [VideoController sharedInstance].arrayOfVotes = likes;
     [[VideoController sharedInstance] saveVoteToParse:[NSString stringWithFormat:@"%ld", (long)[VideoController sharedInstance].arrayOfVotes.count]];
+    self.video = [VideoController sharedInstance].arrayOfVideoForFeed[self.videoAtIndex];
+    self.video.votes = [NSString stringWithFormat:@"%ld", (long)[VideoController sharedInstance].arrayOfVotes.count];
+    [[VideoController sharedInstance] saveVoteToParse:self.video.votes];
+    
+    NSLog(@"%@", self.video.votes);
 }
 
 -(void)dismissView {

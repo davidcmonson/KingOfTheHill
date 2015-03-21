@@ -212,7 +212,6 @@ static float EXPOSURE_MINIMUM_DURATION = 1.0/1000; // Limit exposure duration to
                 
                 NSDictionary *recordButton = NSDictionaryOfVariableBindings(_recordButton);
                 
-//                NSArray *horizontal = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[_recordButton(50)]" options:NSLayoutFormatAlignAllCenterY metrics:nil views:recordButton];
                 NSArray *vertical = [NSLayoutConstraint constraintsWithVisualFormat:@"V:[_recordButton(30)]-(<=35)-|" options:NSLayoutFormatAlignAllCenterX metrics:nil views:recordButton];
                 
                 [self.view addConstraints:vertical];

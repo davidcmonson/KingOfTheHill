@@ -38,6 +38,18 @@
     }];
 }
 
+- (void)relationshipBetweenVote:(Vote *)vote AndVideo:(Video *)video
+{
+    video = (Video *)[PFObject objectWithClassName:@"Video"];
+    vote = (Vote *)[PFObject objectWithClassName:@"Vote"];
+    vote[@"Video"] = video;
+    [vote saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        if (succeeded) {
+            NSLog(@"relation between vote and video saved");
+        }
+    }];
+}
+
 // Method to fetch videos
 //
 //
@@ -111,7 +123,7 @@
     }];
 }
 
-- (void)saveVoteToParse:(NSString *)vote
+- (void)saveVoteToParse:(NSString *)vote;
 {
     Vote *voteObject = (Vote *)[PFObject objectWithClassName:@"Vote"];
     voteObject[@"Vote"] = vote;
@@ -120,15 +132,6 @@
             NSLog(@"vote saved");
         }
     }];
-}
-
-- (NSInteger)totalVotesOnVideoWithIdentifier:(NSString *)identifier
-{
-    PFQuery *votesOnVideo = [PFQuery queryWithClassName:voteKey];
-    [votesOnVideo whereKey:@"toVideo" equalTo:identifier];
-    return [votesOnVideo countObjects];
-}
-
-
+} 
 
 @end

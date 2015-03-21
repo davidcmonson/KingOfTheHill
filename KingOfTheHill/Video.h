@@ -29,6 +29,7 @@ static NSString *videoId = @"objectId";
 @property (nonatomic, strong) User *ownerOfVideo;
 @property (nonatomic) NSInteger videoAtIndex;
 @property (nonatomic) UIImage *thumbnail;
+@property (nonatomic, strong) NSString *votes;
 
 @property (nonatomic, assign) CLLocationCoordinate2D location;
 @property (nonatomic, strong) NSString *objectId;

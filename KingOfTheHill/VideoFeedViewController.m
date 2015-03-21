@@ -35,8 +35,6 @@
     self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height) style:UITableViewStylePlain];
     [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     self.tableView.delegate = self;
-    self.tableView.backgroundColor = [UIColor blackColor];
-    
     
     [self.dataSource registerTableView:self.tableView];
     self.tableView.dataSource = _dataSource;
@@ -49,24 +47,33 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
 
-    UIImage *image = [VideoController sharedInstance].arrayOfThumbnails[3];
-    UIImageView *imageViewInCell = [[UIImageView alloc]initWithImage:image];
-    imageViewInCell.frame = CGRectMake(0, 0, self.view.frame.size.width, image.size.height);
-    imageViewInCell.contentMode = UIViewContentModeScaleAspectFit;
-    return imageViewInCell.frame.size.height;
-
+    UIImage *image = [VideoController sharedInstance].arrayOfThumbnails[indexPath.row];
+    UIImageView *thumbnailView = [[UIImageView alloc] initWithImage:image];
+    return thumbnailView.frame.size.height;
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    NSLog(@"Selected Row %ld", indexPath.row);
     [self bringUpPlayer:indexPath.row];
     
 }
 
- //add header view
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return [SectionHeaderView headerHeight];
-}
+// add header view
+//- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+//    return [SectionHeaderView headerHeight];
+//}
+//
+//- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+//    
+//    CGRect frame = CGRectMake(0, 0, tableView.frame.size.width, [SectionHeaderView headerHeight]);
+//    
+//    SectionHeaderView *sectionHeader = [[SectionHeaderView alloc] initWithFrame:frame];
+//    [sectionHeader updateWithUserName:@"Ted" votes:1 andUpVotes:self.headerButton];
+//    
+//    return sectionHeader;
+//    
+//}
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     

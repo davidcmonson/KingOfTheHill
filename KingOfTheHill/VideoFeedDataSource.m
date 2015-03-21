@@ -10,6 +10,17 @@
 #import "VideoController.h"
 #import "Video.h"
 
+#import <Parse/Parse.h>
+#import <AVFoundation/AVFoundation.h>
+
+@interface VideoFeedDataSource () <UIGestureRecognizerDelegate>
+
+@property (nonatomic) NSIndexPath *currentIndex;
+@property (nonatomic, strong) VideoFeedTableViewCell *cell;
+@property (nonatomic, strong) UILabel *votes;
+@property (nonatomic, strong) NSArray *arrayOfVotes;
+
+@end
 
 @implementation VideoFeedDataSource
 

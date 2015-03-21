@@ -28,6 +28,5 @@
 - (void)userToVoteToVideo:(Video *)video;
 - (NSInteger)totalVotesOnVideoWithIdentifier:(NSString *)identifier;
 
-
-
 @end
+

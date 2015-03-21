@@ -9,19 +9,13 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #import "VideoFeedTableViewCell.h"
-
-@protocol Player;
+@class Video;
 
 @interface VideoFeedDataSource : NSObject <UITableViewDataSource>
 
-@property (nonatomic, strong) id <Player> delegate;
+@property (nonatomic, strong) UILabel *votes;
+@property (nonatomic, strong) Video *video;
 
 -(void)registerTableView:(UITableView *)tableView;
-
-@end
-
-@protocol Player <NSObject>
-
-- (void)bringUpPlayer:(NSInteger)index;
 
 @end

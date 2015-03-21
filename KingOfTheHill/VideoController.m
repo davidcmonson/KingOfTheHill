@@ -61,7 +61,7 @@
     NSLog(@"Photos Loading!");
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         // Parse query calls.
-        PFQuery *queryForVideos = [PFQuery queryWithClassName:@"Video"];
+        PFQuery *queryForVideos = [Video query];
         [queryForVideos findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
             if (error) {
                 NSLog(@"%@", error);
@@ -104,7 +104,7 @@
     //NSLog(@"%@", [VideoController sharedInstance].arrayOfThumbnails);
 }
 
-- (void)queryForVotesOnUser
+- (void)queryForVotes
 {
     PFQuery *queryForVotes = [PFQuery queryWithClassName:@"Vote"];
     [queryForVotes findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
@@ -112,12 +112,13 @@
             NSLog(@"%@", error);
         }
         else {
-            NSMutableArray *mutableObjects = [[NSMutableArray alloc] initWithArray:objects];
-            for (Vote *votes in objects) {
-                [mutableObjects addObject:votes];
-                [VideoController sharedInstance].arrayOfVotes = mutableObjects;
+//            NSMutableArray *mutableObjects = [[NSMutableArray alloc] initWithArray:objects];
+//            for (Vote *votes in objects) {
+//                [mutableObjects addObject:votes];
+            
+                [VideoController sharedInstance].arrayOfVotes = objects;
                 NSLog(@"%ld", (long)[VideoController sharedInstance].arrayOfVotes.count);
-            }
+//            }
             
         }
     }];

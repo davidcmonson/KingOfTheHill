@@ -15,7 +15,7 @@
 #import "LoadingStatus.h"
 
 
-@interface VideoFeedViewController () <UITableViewDelegate, Player>
+@interface VideoFeedViewController () <UITableViewDelegate>
 
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) VideoFeedDataSource *dataSource;
@@ -28,9 +28,8 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
-    [[VideoController sharedInstance] queryForVotesOnUser];
-    //    self.dataSource.votes.text = [NSString stringWithFormat:@"%ld", (long)[VideoController sharedInstance].arrayOfThumbnails[self.dataSource.video.videoAtIndex]];
     [self.tableView reloadData];
+    [[VideoController sharedInstance] queryForVotes];
 }
 
 - (void)viewDidLoad {

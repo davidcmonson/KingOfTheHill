@@ -8,7 +8,7 @@
 
 #import <MapKit/MapKit.h>
 #import <Parse/Parse.h>
-
+@class Vote;
 @class User;
 
 static NSString *videoKey = @"Video";
@@ -21,7 +21,7 @@ static NSString *titleOfVideoKey = @"name";
 static NSString *userOfVideoKey = @"user";
 static NSString *videoId = @"objectId";
 
-@interface Video : PFObject
+@interface Video : PFObject <PFSubclassing>
 
 // NOTE: For some reason, a Parse subclassed object CANNOT have additional properties than the ones on Parse.com. Trying to assign anything to these properties, the compiler doesn't recognize it.
 
@@ -29,7 +29,7 @@ static NSString *videoId = @"objectId";
 @property (nonatomic, strong) User *ownerOfVideo;
 @property (nonatomic) NSInteger videoAtIndex;
 @property (nonatomic) UIImage *thumbnail;
-@property (nonatomic, strong) NSString *votes;
+@property (nonatomic, strong) Vote *votes;
 
 @property (nonatomic, assign) CLLocationCoordinate2D location;
 @property (nonatomic, strong) NSString *objectId;

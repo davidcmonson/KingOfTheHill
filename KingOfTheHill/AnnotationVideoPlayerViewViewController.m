@@ -70,8 +70,9 @@
     [VideoController sharedInstance].arrayOfVotes = likes;
     [[VideoController sharedInstance] saveVoteToParse:[NSString stringWithFormat:@"%ld", (long)[VideoController sharedInstance].arrayOfVotes.count]];
     self.video = [VideoController sharedInstance].arrayOfVideoForFeed[self.videoAtIndex];
-    self.video.votes = [NSString stringWithFormat:@"%ld", (long)[VideoController sharedInstance].arrayOfVotes.count];
-    [[VideoController sharedInstance] saveVoteToParse:self.video.votes];
+    self.video.votes = [VideoController sharedInstance].arrayOfVotes[self.videoAtIndex];
+    [[VideoController sharedInstance] relationshipBetweenVote:self.video.votes AndVideo:self.video];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"reloadVoteCount" object:nil];
     
     NSLog(@"%@", self.video.votes);
 }

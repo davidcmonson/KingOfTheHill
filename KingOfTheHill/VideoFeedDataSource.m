@@ -17,7 +17,6 @@
 
 @property (nonatomic) NSIndexPath *currentIndex;
 @property (nonatomic, strong) VideoFeedTableViewCell *cell;
-@property (nonatomic, strong) UILabel *votes;
 
 @property (nonatomic, strong) UITapGestureRecognizer *presentVideoGesture;
 @property (nonatomic, strong) UITapGestureRecognizer *presentVoteGesture;
@@ -53,7 +52,7 @@
     
     self.votes = [[UILabel alloc] initWithFrame:CGRectMake(20, 20, 55, 55)];
     self.votes.text = [NSString stringWithFormat:@"%ld", (long)[VideoController sharedInstance].arrayOfVotes.count];
-    self.votes.textColor = [UIColor blackColor];
+    self.votes.textColor = [UIColor whiteColor];
     [self.cell.imageView addSubview:self.votes];
     return self.cell;
 }

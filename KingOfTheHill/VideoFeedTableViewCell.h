@@ -10,6 +10,6 @@
 
 @interface VideoFeedTableViewCell : UITableViewCell
 
-@property (nonatomic, strong) UILabel *votes;
+//@property (nonatomic, strong) UILabel *votes;
 
 @end

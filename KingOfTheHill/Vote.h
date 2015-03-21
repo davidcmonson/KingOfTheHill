@@ -14,7 +14,6 @@ static NSString *voteKey = @"Vote";
 
 @interface Vote : PFObject
 
-@property (nonatomic, assign) NSString *votes;
 @property (nonatomic, strong) NSString *uniqueId;
 
 @end

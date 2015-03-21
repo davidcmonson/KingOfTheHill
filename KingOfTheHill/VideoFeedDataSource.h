@@ -18,4 +18,6 @@
 
 -(void)registerTableView:(UITableView *)tableView;
 
+@property (nonatomic) CGRect dimensionsOfScreen;
+
 @end

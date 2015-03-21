@@ -18,9 +18,6 @@
 @property (nonatomic) NSIndexPath *currentIndex;
 @property (nonatomic, strong) VideoFeedTableViewCell *cell;
 
-@property (nonatomic, strong) UITapGestureRecognizer *presentVideoGesture;
-@property (nonatomic, strong) UITapGestureRecognizer *presentVoteGesture;
-
 @end
 
 @implementation VideoFeedDataSource
@@ -38,24 +35,16 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
-    return [VideoController sharedInstance].arrayOfVideoForFeed.count;;
+    return [VideoController sharedInstance].arrayOfVideoForFeed.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    VideoFeedTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([VideoFeedTableViewCell class])];
+    UIImage *thumbnail = [VideoController sharedInstance].arrayOfThumbnails[indexPath.row];
+    cell.photoImageView.image = thumbnail;
+    cell.contentView.backgroundColor = [UIColor blackColor];
     
-    
-    self.cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([VideoFeedTableViewCell class])];
-    self.cell.imageView.image = [VideoController sharedInstance].arrayOfThumbnails[indexPath.row];
-    self.cell.imageView.contentMode = UIViewContentModeScaleAspectFit;
-    
-    [self.presentVideoGesture requireGestureRecognizerToFail:self.presentVoteGesture];
-    
-    self.votes = [[UILabel alloc] initWithFrame:CGRectMake(20, 20, 55, 55)];
-    self.votes.text = [NSString stringWithFormat:@"%ld", (long)[VideoController sharedInstance].arrayOfVotes.count];
-    self.votes.textColor = [UIColor whiteColor];
-    [self.cell.imageView addSubview:self.votes];
-    return self.cell;
+    return cell;
 }
-
 
 @end

@@ -23,13 +23,14 @@ static NSString *videoId = @"objectId";
 
 @interface Video : PFObject <PFSubclassing>
 
-// NOTE: For some reason, a Parse subclassed object CANNOT have additional properties than the ones on Parse.com. Trying to assign anything to these properties, the compiler doesn't recognize it.
-
+// NOTE: PFObjects from Parse must be treated as Dictionaries. You cannot add properties/methods to them, they will just be returned nil
 @property (nonatomic, strong) NSString *nameOfVideo;
 @property (nonatomic, strong) User *ownerOfVideo;
 @property (nonatomic) NSInteger videoAtIndex;
 @property (nonatomic) UIImage *thumbnail;
+@property (nonatomic, strong) NSString *videoFile;
 @property (nonatomic, strong) Vote *votes;
+
 
 @property (nonatomic, assign) CLLocationCoordinate2D location;
 @property (nonatomic, strong) NSString *objectId;

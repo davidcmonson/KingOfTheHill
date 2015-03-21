@@ -10,22 +10,11 @@
 
 @implementation Video
 
-+ (void)load
-{
-    [self registerSubclass];
-}
-
-+ (NSString *)parseClassName
-{
-    return @"Video";
-}
-
 @dynamic nameOfVideo;
 @dynamic ownerOfVideo;
 @dynamic objectId;
 @dynamic location;
-@dynamic votes;
 @dynamic thumbnail;
-
+@dynamic videoFile;
 
 @end

@@ -87,7 +87,7 @@
     
     [[VideoController sharedInstance] queryForIndividualVote:newVote];
 //
-//    [[VideoController sharedInstance] queryForVotes:newVote onVideo:self.video];
+    [[VideoController sharedInstance] queryForVotes:newVote onVideo:self.video];
 
 }
 

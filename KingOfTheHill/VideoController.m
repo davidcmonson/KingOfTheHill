@@ -155,7 +155,9 @@
             NSLog(@"%@", error);
         }
         else {
-            [self.arrayOfVotes arrayByAddingObjectsFromArray:objects];
+            
+            self.arrayOfVotes = [[NSMutableArray alloc] initWithArray:objects];
+            
             NSLog(@"queried vote");
             NSLog(@"%@", self.arrayOfVotes);
         }

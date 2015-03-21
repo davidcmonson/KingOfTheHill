@@ -213,7 +213,9 @@ static float EXPOSURE_MINIMUM_DURATION = 1.0/1000; // Limit exposure duration to
                 NSDictionary *recordButton = NSDictionaryOfVariableBindings(_recordButton);
                 
 //                NSArray *horizontal = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[_recordButton(50)]" options:NSLayoutFormatAlignAllCenterY metrics:nil views:recordButton];
-//                NSArray *vertical = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[_recordButton(50)]" options:NSLayoutFormatAlignAllCenterX metrics:nil views:recordButton];
+                NSArray *vertical = [NSLayoutConstraint constraintsWithVisualFormat:@"V:[_recordButton(30)]-(<=35)-|" options:NSLayoutFormatAlignAllCenterX metrics:nil views:recordButton];
+                
+                [self.view addConstraints:vertical];
                 
                 NSLayoutConstraint *centerRecordX = [NSLayoutConstraint constraintWithItem:_recordButton
                                                                                 attribute:NSLayoutAttributeCenterX
@@ -223,27 +225,6 @@ static float EXPOSURE_MINIMUM_DURATION = 1.0/1000; // Limit exposure duration to
                                                                                multiplier:1.0
                                                                                  constant:0];
                 [self.view addConstraint:centerRecordX];
-                
-                NSLayoutConstraint *centerRecordY = [NSLayoutConstraint constraintWithItem:_recordButton
-                                                                                attribute:NSLayoutAttributeCenterY
-                                                                                relatedBy:NSLayoutRelationEqual
-                                                                                   toItem:self.view
-                                                                                attribute:NSLayoutAttributeCenterY
-                                                                               multiplier:1.0
-                                                                                 constant:0];
-                [self.view addConstraint:centerRecordY];
-                
-                NSLayoutConstraint *recordWidth = [NSLayoutConstraint constraintWithItem:_recordButton
-                                                                                attribute:NSLayoutAttributeWidth
-                                                                                relatedBy:NSLayoutRelationEqual
-                                                                                   toItem:_recordButton
-                                                                                attribute:NSLayoutAttributeWidth
-                                                                               multiplier:1.0
-                                                                                 constant:0];
-                [self.view addConstraint:recordWidth];
-                
-//                [self.view addConstraints:horizontal];
-//                [self.view addConstraints:vertical];
                 
             });
         }

@@ -58,6 +58,10 @@
     //[self.view addSubview:self.tableView];
 }
 
+- (void)stopRefresh
+{
+    [self.refreshControl endRefreshing];
+}
 
 -(void)refreshFeed {
     

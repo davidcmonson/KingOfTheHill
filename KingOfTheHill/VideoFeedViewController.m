@@ -18,7 +18,7 @@
 
 @interface VideoFeedViewController () <UITableViewDelegate>
 
-@property (nonatomic, strong) UITableView *tableView;
+//@property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) VideoFeedDataSource *dataSource;
 
 @property (nonatomic, strong) UIButton *headerButton;
@@ -32,10 +32,14 @@
     self.view.backgroundColor = [UIColor blackColor];
     self.dataSource = [VideoFeedDataSource new];
     self.dataSource.dimensionsOfScreen = self.view.frame;
-    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height) style:UITableViewStylePlain];
+    //self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height) style:UITableViewStylePlain];
     [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     self.tableView.delegate = self;
     self.tableView.backgroundColor = [UIColor blackColor];
+    
+
+
+    
     
     [self.dataSource registerTableView:self.tableView];
     self.tableView.dataSource = _dataSource;
@@ -43,7 +47,20 @@
     //    UITapGestureRecognizer *snowboardTapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(goToSnowboardFeed:)];
     //    [snowboardTapGesture setNumberOfTouchesRequired:1];
     //    [snowboarderView addGestureRecognizer:snowboardTapGesture];
-    [self.view addSubview:self.tableView];
+
+    // Refresh Table View
+    UIRefreshControl *refresh = [UIRefreshControl new];
+    refresh.attributedTitle = [[NSAttributedString alloc] initWithString:@"Pull to Refresh"];
+    [refresh addTarget:self action:@selector(refreshFeed) forControlEvents:UIControlEventValueChanged];
+    self.refreshControl = refresh;
+    
+    
+    //[self.view addSubview:self.tableView];
+}
+
+
+-(void)refreshFeed {
+    
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {

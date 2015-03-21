@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		12215DBF1AB78DC500D4E8A2 /* VideoFeedDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 12215DBE1AB78DC500D4E8A2 /* VideoFeedDataSource.m */; };
+		12215DC51AB9076900D4E8A2 /* SectionHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 12215DC41AB9076900D4E8A2 /* SectionHeaderView.m */; };
 		12A5C0551AB7771C00DB4ACB /* VideoFeedTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 12A5C0541AB7771C00DB4ACB /* VideoFeedTableViewCell.m */; };
 		12CD76B81ABBD99300438D7E /* LegalStuff.m in Sources */ = {isa = PBXBuildFile; fileRef = 12CD76B71ABBD99300438D7E /* LegalStuff.m */; };
 		12CD76BB1ABCA65400438D7E /* UILabel+DynamicLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 12CD76BA1ABCA65400438D7E /* UILabel+DynamicLabel.m */; };
@@ -45,7 +46,6 @@
 		70A1892E1AAF8E1C0044F98D /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 70A1892D1AAF8E1C0044F98D /* libz.dylib */; };
 		70A189301AAF8E250044F98D /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 70A1892F1AAF8E250044F98D /* libsqlite3.dylib */; };
 		70A189391AAF923E0044F98D /* Video.m in Sources */ = {isa = PBXBuildFile; fileRef = 70A189381AAF923E0044F98D /* Video.m */; };
-		70EA0ACC1ABD3D1200ECB9DB /* SectionHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 70EA0ACB1ABD3D1200ECB9DB /* SectionHeaderView.m */; };
 		77BC4EFC1AB8C77E004F0A58 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 77BC4EFB1AB8C77E004F0A58 /* Images.xcassets */; };
 		77D6FB2A1AA92CAC00E97862 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 77D6FB291AA92CAC00E97862 /* main.m */; };
 		77D6FB2D1AA92CAC00E97862 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 77D6FB2C1AA92CAC00E97862 /* AppDelegate.m */; };
@@ -69,6 +69,8 @@
 /* Begin PBXFileReference section */
 		12215DBD1AB78DC500D4E8A2 /* VideoFeedDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoFeedDataSource.h; sourceTree = "<group>"; };
 		12215DBE1AB78DC500D4E8A2 /* VideoFeedDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VideoFeedDataSource.m; sourceTree = "<group>"; };
+		12215DC31AB9076900D4E8A2 /* SectionHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SectionHeaderView.h; sourceTree = "<group>"; };
+		12215DC41AB9076900D4E8A2 /* SectionHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SectionHeaderView.m; sourceTree = "<group>"; };
 		12A5C0531AB7771C00DB4ACB /* VideoFeedTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoFeedTableViewCell.h; sourceTree = "<group>"; };
 		12A5C0541AB7771C00DB4ACB /* VideoFeedTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VideoFeedTableViewCell.m; sourceTree = "<group>"; };
 		12CD76B61ABBD99300438D7E /* LegalStuff.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LegalStuff.h; sourceTree = "<group>"; };
@@ -126,8 +128,6 @@
 		70A1892F1AAF8E250044F98D /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		70A189371AAF923E0044F98D /* Video.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Video.h; sourceTree = "<group>"; };
 		70A189381AAF923E0044F98D /* Video.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Video.m; sourceTree = "<group>"; };
-		70EA0ACA1ABD3D1200ECB9DB /* SectionHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SectionHeaderView.h; path = ../SectionHeaderView.h; sourceTree = "<group>"; };
-		70EA0ACB1ABD3D1200ECB9DB /* SectionHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SectionHeaderView.m; path = ../SectionHeaderView.m; sourceTree = "<group>"; };
 		77BC4EFB1AB8C77E004F0A58 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		77D6FB241AA92CAC00E97862 /* KingOfTheHill.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KingOfTheHill.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		77D6FB281AA92CAC00E97862 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -283,8 +283,8 @@
 				499F2CCB1AB2598B00B3FDDF /* VideoFeedViewController.m */,
 				12A5C0531AB7771C00DB4ACB /* VideoFeedTableViewCell.h */,
 				12A5C0541AB7771C00DB4ACB /* VideoFeedTableViewCell.m */,
-				70EA0ACA1ABD3D1200ECB9DB /* SectionHeaderView.h */,
-				70EA0ACB1ABD3D1200ECB9DB /* SectionHeaderView.m */,
+				12215DC31AB9076900D4E8A2 /* SectionHeaderView.h */,
+				12215DC41AB9076900D4E8A2 /* SectionHeaderView.m */,
 				12215DBD1AB78DC500D4E8A2 /* VideoFeedDataSource.h */,
 				12215DBE1AB78DC500D4E8A2 /* VideoFeedDataSource.m */,
 				499F2CC71AB2596400B3FDDF /* SwipePageViewController.h */,
@@ -383,7 +383,7 @@
 				TargetAttributes = {
 					77D6FB231AA92CAC00E97862 = {
 						CreatedOnToolsVersion = 6.1.1;
-						DevelopmentTeam = VBJ3B2RNGL;
+						DevelopmentTeam = K75493KQVP;
 						SystemCapabilities = {
 							com.apple.Maps.iOS = {
 								enabled = 1;
@@ -395,7 +395,7 @@
 					};
 					77D6FB3C1AA92CAC00E97862 = {
 						CreatedOnToolsVersion = 6.1.1;
-						DevelopmentTeam = VBJ3B2RNGL;
+						DevelopmentTeam = U5K4WANHCY;
 						TestTargetID = 77D6FB231AA92CAC00E97862;
 					};
 				};
@@ -447,7 +447,6 @@
 				499F2CC91AB2596400B3FDDF /* SwipePageViewController.m in Sources */,
 				705183BE1AAE574500A365FF /* Vote.m in Sources */,
 				499F2CCC1AB2598B00B3FDDF /* VideoFeedViewController.m in Sources */,
-				70EA0ACC1ABD3D1200ECB9DB /* SectionHeaderView.m in Sources */,
 				77D6FB4F1AA930E000E97862 /* User.m in Sources */,
 				49CC3CAD1AB550B000672138 /* LoadingStatus.m in Sources */,
 				499F2D0A1AB3375600B3FDDF /* AVPlayerDemoPlaybackView.m in Sources */,
@@ -467,6 +466,7 @@
 				77D6FB2D1AA92CAC00E97862 /* AppDelegate.m in Sources */,
 				12CD76BB1ABCA65400438D7E /* UILabel+DynamicLabel.m in Sources */,
 				77D6FB2A1AA92CAC00E97862 /* main.m in Sources */,
+				12215DC51AB9076900D4E8A2 /* SectionHeaderView.m in Sources */,
 				12CD76BE1ABCC08200438D7E /* DocsViewController.m in Sources */,
 				708554BA1AAE6BA8006DEB38 /* LocationViewController.m in Sources */,
 				49AF60BD1AB8CB06003C123D /* AAPLCameraViewController.m in Sources */,

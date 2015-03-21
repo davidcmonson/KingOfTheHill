@@ -14,7 +14,7 @@
 
 @property (nonatomic, strong) UIImageView *photoImageView;
 @property (nonatomic) NSInteger cellHeight;
-
+@property (nonatomic, strong) UILabel *votes;
 
 
 

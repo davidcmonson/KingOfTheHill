@@ -13,7 +13,8 @@
 #import "VideoController.h"
 #import "AnnotationVideoPlayerViewViewController.h"
 #import "LoadingStatus.h"
-
+#import "SectionHeaderView.h"
+#import "Vote.h"
 
 @interface VideoFeedViewController () <UITableViewDelegate>
 
@@ -29,7 +30,7 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [self.tableView reloadData];
-    [[VideoController sharedInstance] queryForVotes];
+//    [[VideoController sharedInstance] queryForVotes];
 }
 
 - (void)viewDidLoad {
@@ -60,7 +61,11 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    [self bringUpPlayer:indexPath.row];
+    Video *videoSelected = [VideoController sharedInstance].arrayOfVideoForFeed[indexPath.row];
+//    videoSelected.arrayOfVotes = [VideoController sharedInstance].arrayOfThumbnails[indexPath.row];
+//    Vote *vote = videoSelected.arrayOfVotes[indexPath.row];
+//    [[VideoController sharedInstance] queryForVotes:vote onVideo:videoSelected];
+    [self bringUpPlayer:videoSelected];
     NSLog(@"Selected Row %ld", (long)indexPath.row);
 }
 
@@ -80,16 +85,16 @@
 //    
 //}
 
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    
-    CGRect frame = CGRectMake(0, 0, tableView.frame.size.width, [SectionHeaderView headerHeight]);
-    
-    SectionHeaderView *sectionHeader = [[SectionHeaderView alloc] initWithFrame:frame];
-    [sectionHeader updateWithUserName:@"Ted" votes:1 andUpVotes:self.headerButton];
-    
-    return sectionHeader;
-    
-}
+//- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+//    
+//    CGRect frame = CGRectMake(0, 0, tableView.frame.size.width, [SectionHeaderView headerHeight]);
+//    
+//    SectionHeaderView *sectionHeader = [[SectionHeaderView alloc] initWithFrame:frame];
+//    [sectionHeader updateWithUserName:@"Ted" votes:1 andUpVotes:self.headerButton];
+//    
+//    return sectionHeader;
+//    
+//}
 
 //
 
@@ -98,13 +103,13 @@
     
 }
 
-- (void)bringUpPlayer:(NSInteger)index {
+- (void)bringUpPlayer:(Video *)video {
     
     AnnotationVideoPlayerViewViewController *videoVC = [AnnotationVideoPlayerViewViewController new];
-    videoVC.videoAtIndex = index;
+    [videoVC updateWithVideo:video];
     videoVC.edgesForExtendedLayout = UIRectEdgeNone;
     videoVC.modalPresentationStyle = UIModalPresentationOverCurrentContext;
-    videoVC.modalTransitionStyle = UIModalTransitionStyleCoverVertical;;
+    videoVC.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
     [self presentViewController:videoVC animated:YES completion:nil];
 }
 

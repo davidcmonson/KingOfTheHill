@@ -21,27 +21,6 @@
     return sharedInstance;
 }
 
-//- (void)relationshipBetweenVideoAndUser
-//{
-//    // create user object
-//    PFObject *user = [PFObject objectWithClassName:@"User"];
-//
-//    // user video
-//    PFObject *video = [PFObject objectWithClassName:@"Video"];
-//
-//    // set who the video is creatd by
-//    [video setObject:user forKeyedSubscript:@"ownerOfVideo"];
-//}
-//
-//- (void)relationshipBetweenVoteAndVideo
-//{
-//    PFObject *video = [PFObject objectWithClassName:@"video"];
-//
-//    PFObject *vote = [PFObject objectWithClassName:@"vote"];
-//
-//    [vote setObject:video forKeyedSubscript:@"voteSetOnVideo"];
-//}
-
 - (void)videoToParseWithFile:(PFFile *)file
                  andLocation:(PFGeoPoint *)currentLocationGeoPoint
                 andThumbnail:(PFFile *)thumbnailFile
@@ -61,18 +40,21 @@
     }];
 }
 
-- (void)relationshipBetweenVote:(Vote *)vote AndVideo:(Video *)video
-- (void)userToVoteToVideo:(Video *)video
-{
-    video = (Video *)[PFObject objectWithClassName:@"Video"];
-    vote = (Vote *)[PFObject objectWithClassName:@"Vote"];
-    vote[@"Video"] = video;
-    [vote saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-        if (succeeded) {
-            NSLog(@"relation between vote and video saved");
-        }
-    }];
-}
+//- (void)relationshipBetweenVote:(NSArray *)votes Video:(Video *)video
+//{
+//    video = (Video *)[PFObject objectWithClassName:@"Video"];
+//    Vote *voteObject = (Vote *)[PFObject objectWithClassName:@"Vote"];
+//    for (Vote *vote in votes) {
+//        [votes indexOfObject:vote];
+//    }
+//    voteObject[@"Video"] = video;
+////    voteObject[@"name"] = name;
+//    [voteObject saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+//        if (succeeded) {
+//            NSLog(@"relation between vote and video saved");
+//        }
+//    }];
+//}
 
 // Method to fetch videos
 //
@@ -113,17 +95,29 @@
         if (!video[urlOfThumbnail]) {
             // add "missing thumbnail" picture if video doesn't have thumbnail
             [mutableArray addObject:[UIImage imageNamed:@"blank"]];
-            NSLog(@"added blank thumbnail for video %ld", index);
+            NSLog(@"added blank thumbnail for video %ld", (long)index);
         } else {
             PFFile *thumbnailImage = video[urlOfThumbnail];
             NSURL *urlOfThumbnail = [NSURL URLWithString:thumbnailImage.url];
             NSData *dataOfThumbnail = [NSData dataWithContentsOfURL:urlOfThumbnail];
             UIImage *thumbnail = [UIImage imageWithData:dataOfThumbnail];
             [mutableArray addObject:thumbnail];
+        
+//            NSOperationQueue *queue = NSOperationQueuePriorityNormal;
+//            [queue addOperationWithBlock:^{
+//            PFQuery *queryForVotes = [Vote query];
+//            self.numberOfVotesForVideo = [NSString stringWithFormat:@"%ld", (long)[queryForVotes whereKey:@"toVideo" equalTo:videoId].countObjects];
+//            NSLog(@"%@",[NSString stringWithFormat:@"%ld", (long)[queryForVotes whereKey:@"toVideo" equalTo:videoId].countObjects]);
+//            }];
+////            [queryForVotes findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+////                if (error) {
+////                    NSLog(@"%@", error);
+////                }
+////                else {
+////                    NSLog(@"success");
         }
-        
-        
     }
+//
     [VideoController sharedInstance].arrayOfThumbnails = mutableArray;
     //NSLog(@"%@", [VideoController sharedInstance].arrayOfThumbnails);
 }
@@ -151,37 +145,58 @@
 //    }
 //    return mutableArray;
 //}
+//    }}
 
-
-- (NSInteger)totalVotesOnVideoWithIdentifier:(NSString *)identifier
+- (void)queryForIndividualVote:(Vote *)vote
 {
-    PFQuery *queryForVotes = [PFQuery queryWithClassName:@"Vote"];
-    [queryForVotes findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+    PFQuery *queryForVote = [Vote query];
+    [queryForVote findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (error) {
             NSLog(@"%@", error);
         }
         else {
-//            NSMutableArray *mutableObjects = [[NSMutableArray alloc] initWithArray:objects];
-//            for (Vote *votes in objects) {
-//                [mutableObjects addObject:votes];
-            
-                [VideoController sharedInstance].arrayOfVotes = objects;
-                NSLog(@"%ld", (long)[VideoController sharedInstance].arrayOfVotes.count);
-//            }
-            
+            [self.arrayOfVotes arrayByAddingObjectsFromArray:objects];
+            NSLog(@"queried vote");
+            NSLog(@"%@", self.arrayOfVotes);
         }
     }];
 }
 
-- (void)saveVoteToParse:(NSString *)vote;
+- (void)queryForVotes:(Vote *)vote onVideo:(Video *)video
 {
-    Vote *voteObject = (Vote *)[PFObject objectWithClassName:@"Vote"];
-    voteObject[@"Vote"] = vote;
-    [voteObject saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-        if (succeeded) {
-            NSLog(@"vote saved");
-        }
-    }];
-} 
+        PFQuery *queryForVotes = [Vote query];
+        [queryForVotes whereKey:vote.objectId equalTo:video.objectId];
+        [queryForVotes findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+            if (error) {
+                NSLog(@"This is the error quering for objects :%@",error);
+            } else {
+                NSLog(@"success: %@ and %@",video.objectId, vote.objectId);
+                [self.arrayOfVotes arrayByAddingObjectsFromArray:objects];
+            }
+        }];
+
+}
+
+
+//- (NSInteger)totalVotesOnVideoWithIdentifier:(NSString *)identifier
+//{
+//    PFQuery *queryForVotes = [PFQuery queryWithClassName:@"Vote"];
+//    [queryForVotes findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+//        if (error) {
+//            NSLog(@"%@", error);
+//        }
+//        else {
+////            NSMutableArray *mutableObjects = [[NSMutableArray alloc] initWithArray:objects];
+////            for (Vote *votes in objects) {
+////                [mutableObjects addObject:votes];
+//            
+//                [VideoController sharedInstance].arrayOfVotes = objects;
+//                NSLog(@"%ld", (long)[VideoController sharedInstance].arrayOfVotes.count);
+////            }
+//            
+//        }
+//    }];
+//}
+ 
 
 @end

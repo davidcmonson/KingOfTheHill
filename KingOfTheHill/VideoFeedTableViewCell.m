@@ -20,8 +20,9 @@
         _photoImageView.contentMode = UIViewContentModeScaleAspectFit;
         [self.contentView addSubview:_photoImageView];
         _cellHeight = _photoImageView.frame.size.height;
-//        _votes = [[UILabel alloc] initWithFrame:CGRectZero];
-//        [self.contentView addSubview:_votes];
+        _votes = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 300, 50)];
+        _votes.textColor = [UIColor whiteColor];
+        [self.photoImageView addSubview:_votes];
     }
     return self;
 }

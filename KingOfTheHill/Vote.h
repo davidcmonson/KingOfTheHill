@@ -12,9 +12,10 @@
 
 static NSString *voteKey = @"Vote";
 
-@interface Vote : PFObject
+@interface Vote : PFObject <PFSubclassing>
 
-@property (nonatomic, strong) NSString *uniqueId;
+@property (nonatomic, strong) NSString *objectId;
+
 
 @end
 

@@ -17,6 +17,7 @@
 @property (nonatomic, strong) AVPlayer *player;
 
 @property (nonatomic, strong) Video *video;
+@property (nonatomic, strong) User *user;
 
 @end
 
@@ -64,18 +65,30 @@
     
 }
 
+- (void)updateWithVideo:(Video *)video
+{
+    self.video = video;
+}
+
 - (void)likeVote:(id)likeGesture
 {
-    NSMutableArray *likes = [[NSMutableArray alloc] initWithArray:[VideoController sharedInstance].arrayOfVotes];
-    [likes addObject:likeGesture];
-    [VideoController sharedInstance].arrayOfVotes = likes;
-    [[VideoController sharedInstance] saveVoteToParse:[NSString stringWithFormat:@"%ld", (long)[VideoController sharedInstance].arrayOfVotes.count]];
-    self.video = [VideoController sharedInstance].arrayOfVideoForFeed[self.videoAtIndex];
-    self.video.votes = [VideoController sharedInstance].arrayOfVotes[self.videoAtIndex];
-    [[VideoController sharedInstance] relationshipBetweenVote:self.video.votes AndVideo:self.video];
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"reloadVoteCount" object:nil];
+    Vote *newVote = [Vote object];
+    newVote[@"fromUser"] = [PFUser currentUser];
+    newVote[@"Video"] = self.video;
     
-    NSLog(@"%@", self.video.votes);
+    [newVote saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        if (succeeded) {
+            NSLog(@"vote saved to Video");
+        }
+        else {
+            NSLog(@"%@", error);
+        }
+    }];
+    
+    [[VideoController sharedInstance] queryForIndividualVote:newVote];
+//
+//    [[VideoController sharedInstance] queryForVotes:newVote onVideo:self.video];
+
 }
 
 -(void)dismissView {
@@ -96,5 +109,7 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+
 
 @end

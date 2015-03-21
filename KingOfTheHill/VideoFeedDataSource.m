@@ -44,6 +44,9 @@
     cell.photoImageView.image = thumbnail;
     cell.contentView.backgroundColor = [UIColor blackColor];
     
+    cell.votes.text = [NSString stringWithFormat:@"%lu", (unsigned long)[VideoController sharedInstance].arrayOfVotes.count];
+;
+    
     return cell;
 }
 

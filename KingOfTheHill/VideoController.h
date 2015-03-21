@@ -22,19 +22,23 @@
 
 @property (nonatomic, assign) NSInteger *videoIndex;
 
+@property (nonatomic, assign) NSString *numberOfVotesForVideo;
+
 @property (nonatomic, assign) NSIndexPath *indexPathOfThumbnail;
 
 + (VideoController *)sharedInstance;
 - (void)videoToParseWithFile:(PFFile *)file
                  andLocation:(PFGeoPoint *)currentLocationGeoPoint
                 andThumbnail:(PFFile *)thumbnailFile;
-- (void)userToParse;
-- (void)userToVoteToVideo;
+
+
 - (void)videoToParseWithFile:(PFFile *)file andLocation:(PFGeoPoint *)currentLocationGeoPoint;
 - (void)saveVoteToParse:(NSString *)vote;
-- (void)relationshipBetweenVote:(Vote *)vote AndVideo:(Video *)video;
+//- (void)relationshipBetweenVote:(NSArray *)votes Video:(Video *)video;
 + (void)queryVideosForFeed;
-- (void)queryForVotes;
+- (void)queryForVotes:(Vote *)vote onVideo:(Video *)video;
+- (void)queryForIndividualVote:(Vote *)vote;
+
 
 @end
 

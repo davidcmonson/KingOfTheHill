@@ -856,82 +856,107 @@ static float EXPOSURE_MINIMUM_DURATION = 1.0/1000; // Limit exposure duration to
     //    exporter.outputFileType=AVFileTypeQuickTimeMovie;
     //
     //    [exporter exportAsynchronouslyWithCompletionHandler:^(void){}];
+    
     AVAsset *asset = [AVAsset assetWithURL:outputFileURL];
     
+    //    AVMutableComposition *videoComposition = [AVMutableComposition composition];
+    //    AVMutableCompositionTrack *compositionVideoTrack = [videoComposition addMutableTrackWithMediaType:AVMediaTypeVideo preferredTrackID:kCMPersistentTrackID_Invalid];
     
-    AVMutableComposition *videoComposition = [AVMutableComposition composition];
-    AVMutableCompositionTrack *compositionVideoTrack = [videoComposition addMutableTrackWithMediaType:AVMediaTypeVideo preferredTrackID:kCMPersistentTrackID_Invalid];
-
     AVAssetTrack *clipVideoTrack = [[asset tracksWithMediaType:AVMediaTypeVideo] objectAtIndex:0];
     
-    AVMutableVideoComposition *mutableVideoComposition = [AVMutableVideoComposition videoComposition];
-    mutableVideoComposition.renderSize = CGSizeMake(360, 360);
-    mutableVideoComposition.frameDuration = CMTimeMake(1, 30); //RESEARCH
+    AVMutableVideoComposition *videoComposition = [AVMutableVideoComposition videoComposition];
+    videoComposition.renderSize = CGSizeMake(360, 360);
+    videoComposition.frameDuration = CMTimeMake(1, 30); //RESEARCH
     
     AVMutableVideoCompositionInstruction *instruction = [AVMutableVideoCompositionInstruction videoCompositionInstruction];
     instruction.timeRange = CMTimeRangeMake(kCMTimeZero, CMTimeMakeWithSeconds(60, 30) );     //RESEARCH
     
     AVMutableVideoCompositionLayerInstruction* transformer = [AVMutableVideoCompositionLayerInstruction videoCompositionLayerInstructionWithAssetTrack:clipVideoTrack];  //RESEARCH
-    // setup a transform that grows the video, effectively causing a crop
-    CGAffineTransform finalTransform = CGAffineTransformMakeScale(1.0, 480.0/360.0);
+    
+//    // setup a transform that grows the video, effectively causing a crop
+//    CGAffineTransform finalTransform = CGAffineTransformMakeScale(1.0, 480.0/360.0);
+//    [transformer setTransform:finalTransform atTime:kCMTimeZero];
+    
+
+    CGAffineTransform t1 = CGAffineTransformMakeTranslation(clipVideoTrack.naturalSize.height, -(clipVideoTrack.naturalSize.width - clipVideoTrack.naturalSize.height) /2 );
+    
+    //Make sure the square is portrait
+    CGAffineTransform t2 = CGAffineTransformRotate(t1, M_PI_2);
+    
+    CGAffineTransform finalTransform = t2;
     [transformer setTransform:finalTransform atTime:kCMTimeZero];
+    
+    //add the transformer layer instructions, then add to video composition
+    instruction.layerInstructions = [NSArray arrayWithObject:transformer];
+    videoComposition.instructions = [NSArray arrayWithObject: instruction];
+    
+    //add the transformer layer instructions, then add to video composition
     instruction.layerInstructions = @[transformer];
-    mutableVideoComposition.instructions = @[instruction];
+    videoComposition.instructions = @[instruction];
+    
+    //Create an Export Path to store the cropped video
+    NSString * documentsPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    NSString *exportPath = [documentsPath stringByAppendingFormat:@"/CroppedVideo.mp4"];
+    NSURL *exportURL = [NSURL fileURLWithPath:exportPath];
+    
     
     AVURLAsset *outputAsset = [[AVURLAsset alloc] initWithURL:outputFileURL options:nil];
     AVAssetExportSession *exporter = [[AVAssetExportSession alloc] initWithAsset:outputAsset presetName:AVAssetExportPresetHighestQuality] ;
-    exporter.videoComposition = mutableVideoComposition;
-    exporter.outputURL=outputFileURL;
-    exporter.outputFileType=AVFileTypeQuickTimeMovie;
+    exporter.videoComposition = videoComposition;
+    exporter.outputURL = exportURL;
+    exporter.outputFileType = AVFileTypeQuickTimeMovie;
     
     [exporter exportAsynchronouslyWithCompletionHandler:^(void){
-        AVAssetImageGenerator *generate = [[AVAssetImageGenerator alloc] initWithAsset:outputAsset];
-        generate.maximumSize = CGSizeMake(200, 200);
-        generate.apertureMode = AVAssetImageGeneratorApertureModeCleanAperture;
-        generate.appliesPreferredTrackTransform = YES;
-        NSError *err = NULL;
-        CMTime time = CMTimeMake(1, 60);
-        CGImageRef imgRef = [generate copyCGImageAtTime:time actualTime:NULL error:&err];
-        NSLog(@"err==%@, imageRef==%@", err, imgRef);
-        UIImage *thumbnailImage = [[UIImage alloc] initWithCGImage:imgRef];
-        NSData *thumbnail = UIImagePNGRepresentation(thumbnailImage);
-        PFFile *thumbnailFile = [PFFile fileWithName:@"thumbnailFile.png" data:thumbnail contentType:@"image"];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            AVAssetImageGenerator *generate = [[AVAssetImageGenerator alloc] initWithAsset:[AVAsset assetWithURL:exporter.outputURL]];
+            generate.maximumSize = CGSizeMake(200, 200);
+            generate.apertureMode = AVAssetImageGeneratorApertureModeCleanAperture;
+            generate.appliesPreferredTrackTransform = YES;
+            NSError *err = NULL;
+            CMTime time = CMTimeMake(1, 60);
+            CGImageRef imgRef = [generate copyCGImageAtTime:time actualTime:NULL error:&err];
+            NSLog(@"err==%@, imageRef==%@", err, imgRef);
+            UIImage *thumbnailImage = [[UIImage alloc] initWithCGImage:imgRef];
+            NSData *thumbnail = UIImagePNGRepresentation(thumbnailImage);
+            PFFile *thumbnailFile = [PFFile fileWithName:@"thumbnailFile.png" data:thumbnail contentType:@"image"];
+            
+            NSData *data = [NSData dataWithContentsOfURL:exporter.outputURL];
+            PFFile *file = [PFFile fileWithName:@"Video.mov" data:data contentType:@"mov"];
+            self.name = [PFUser currentUser].username;
+            [[VideoController sharedInstance] videoToParseWithFile:file
+                                                       andLocation:self.currentLocationGeoPoint
+                                                      andThumbnail:thumbnailFile
+                                                           andName:self.name];
+            if (error)
+            {
+                NSLog(@"%@", error);
+            }
+            
+            [self setLockInterfaceRotation:NO];
+            
+            // Note the backgroundRecordingID for use in the ALAssetsLibrary completion handler to end the background task associated with this recording. This allows a new recording to be started, associated with a new UIBackgroundTaskIdentifier, once the movie file output's -isRecording is back to NO — which happens sometime after this method returns.
+            UIBackgroundTaskIdentifier backgroundRecordingID = [self backgroundRecordingID];
+            [self setBackgroundRecordingID:UIBackgroundTaskInvalid];
+            
+            [[[ALAssetsLibrary alloc] init] writeVideoAtPathToSavedPhotosAlbum:exporter.outputURL completionBlock:^(NSURL *assetURL, NSError *error) {
+                if (error)
+                {
+                    NSLog(@"%@", error);
+                }
+                
+                [[NSFileManager defaultManager] removeItemAtURL:exporter.outputURL error:nil];
+                
+                if (backgroundRecordingID != UIBackgroundTaskInvalid)
+                {
+                    [[UIApplication sharedApplication] endBackgroundTask:backgroundRecordingID];
+                }
+                
+            }];
+        });
         
-        NSData *data = [NSData dataWithContentsOfURL:outputAsset.URL];
-        PFFile *file = [PFFile fileWithName:@"Video.mov" data:data contentType:@"mov"];
-        self.name = [PFUser currentUser].username;
-        [[VideoController sharedInstance] videoToParseWithFile:file
-                                                   andLocation:self.currentLocationGeoPoint
-                                                  andThumbnail:thumbnailFile
-                                                       andName:self.name];
-
     }];
     
-    if (error)
-    {
-        NSLog(@"%@", error);
-    }
     
-    [self setLockInterfaceRotation:NO];
-    
-    // Note the backgroundRecordingID for use in the ALAssetsLibrary completion handler to end the background task associated with this recording. This allows a new recording to be started, associated with a new UIBackgroundTaskIdentifier, once the movie file output's -isRecording is back to NO — which happens sometime after this method returns.
-    UIBackgroundTaskIdentifier backgroundRecordingID = [self backgroundRecordingID];
-    [self setBackgroundRecordingID:UIBackgroundTaskInvalid];
-    
-    [[[ALAssetsLibrary alloc] init] writeVideoAtPathToSavedPhotosAlbum:outputFileURL completionBlock:^(NSURL *assetURL, NSError *error) {
-        if (error)
-        {
-            NSLog(@"%@", error);
-        }
-        
-        [[NSFileManager defaultManager] removeItemAtURL:outputFileURL error:nil];
-        
-        if (backgroundRecordingID != UIBackgroundTaskInvalid)
-        {
-            [[UIApplication sharedApplication] endBackgroundTask:backgroundRecordingID];
-        }
-        
-    }];
 }
 
 #pragma mark Device Configuration

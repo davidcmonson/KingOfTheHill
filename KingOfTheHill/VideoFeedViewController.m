@@ -50,7 +50,7 @@
 
     UIImage *image = [VideoController sharedInstance].arrayOfThumbnails[indexPath.row];
     UIImageView *imageViewInCell = [[UIImageView alloc]initWithImage:image];
-    imageViewInCell.frame = CGRectMake(0, 0, self.view.frame.size.width, 100);
+    imageViewInCell.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.width);
     imageViewInCell.contentMode = UIViewContentModeScaleAspectFit;
 
     return 428;

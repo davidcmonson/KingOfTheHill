@@ -78,8 +78,8 @@
     self.pageViewController.delegate = self;
     self.pageViewController.dataSource = self;
 
-//#warning SET CAMERA TO VIEWCONTROLLER! TURN ON CAMERA HERE!
-  [self.pageViewController setViewControllers:@[self.cameraVC] direction:UIPageViewControllerNavigationDirectionForward animated:YES completion:nil];
+#warning SET CAMERA TO VIEWCONTROLLER! TURN ON CAMERA HERE!
+  [self.pageViewController setViewControllers:@[self.videoVC] direction:UIPageViewControllerNavigationDirectionForward animated:YES completion:nil];
     
     [self addChildViewController:self.pageViewController];
     [self.pageViewController didMoveToParentViewController:self];

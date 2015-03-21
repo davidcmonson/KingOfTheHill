@@ -44,13 +44,14 @@
 
 - (void)videoToParseWithFile:(PFFile *)file
                  andLocation:(PFGeoPoint *)currentLocationGeoPoint
-                andThumbnail:(PFFile *)thumbnailFile
+                andThumbnail:(PFFile *)thumbnailFile andName:(NSString *)name
 {
     Video *video = (Video *)[PFObject objectWithClassName:@"Video"];
     
     video[@"videoFile"] = file;
     video[@"location"] = currentLocationGeoPoint;
     video[@"thumbnail"] = thumbnailFile;
+    video[@"name"] = name;
     [video saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         if (succeeded) {
             NSLog(@"Video has been uploaded to Parse");

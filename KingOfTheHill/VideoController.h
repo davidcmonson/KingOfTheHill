@@ -22,7 +22,7 @@
 + (VideoController *)sharedInstance;
 - (void)videoToParseWithFile:(PFFile *)file
                  andLocation:(PFGeoPoint *)currentLocationGeoPoint
-                andThumbnail:(PFFile *)thumbnailFile;
+                andThumbnail:(PFFile *)thumbnailFile andName:(NSString *)name;
 - (void)userToParse;
 - (void)userToVoteToVideo;
 + (void)queryVideosForFeed;

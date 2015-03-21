@@ -18,6 +18,7 @@
 
 #import "ProfileViewController.h"
 #import "VideoController.h"
+#import <ParseUI/ParseUI.h>
 
 static void *CapturingStillImageContext = &CapturingStillImageContext;
 static void *RecordingContext = &RecordingContext;
@@ -43,6 +44,7 @@ static void *DeviceWhiteBalanceGainsContext = &DeviceWhiteBalanceGainsContext;
 @property (nonatomic) IBOutlet UIButton *stillButton;
 @property (nonatomic,strong) CLLocation *currentLocation;
 @property (nonatomic, strong) PFGeoPoint *currentLocationGeoPoint;
+@property (nonatomic, strong) NSString *name;
 @property (nonatomic, strong) NSString *outputFilePath;
 @property (nonatomic, strong) NSArray *focusModes;
 @property (nonatomic, weak) IBOutlet UIView *manualHUDFocusView;
@@ -850,9 +852,14 @@ static float EXPOSURE_MINIMUM_DURATION = 1.0/1000; // Limit exposure duration to
     //NSString *videoName = [NSString stringWithFormat:@"%@", aMovieFileOutput];
     
     PFFile *file = [PFFile fileWithName:@"Video.mov" data:data contentType:@"mov"];
+    
+    
+    //TEMPORARY FOR MVP- takes current username and sets it as the recorded video title
+    self.name = [PFUser currentUser].username;
+    
     [[VideoController sharedInstance] videoToParseWithFile:file
                                                andLocation:self.currentLocationGeoPoint
-                                             andThumbnail:thumbnailFile];
+                                              andThumbnail:thumbnailFile andName:self.name];
     
     if (error)
     {

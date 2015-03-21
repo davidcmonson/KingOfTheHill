@@ -833,34 +833,7 @@ static float EXPOSURE_MINIMUM_DURATION = 1.0/1000; // Limit exposure duration to
 
 - (void)captureOutput:(AVCaptureFileOutput *)captureOutput didFinishRecordingToOutputFileAtURL:(NSURL *)outputFileURL fromConnections:(NSArray *)connections error:(NSError *)error {
     
-    //    AVMutableComposition *videoComposition = [AVMutableComposition composition];
-    //    AVMutableCompositionTrack *compositionVideoTrack = [videoComposition  addMutableTrackWithMediaType:AVMediaTypeVideo preferredTrackID:kCMPersistentTrackID_Invalid];
-    //    AVAssetTrack *clipVideoTrack = [[asset tracksWithMediaType:AVMediaTypeVideo] objectAtIndex:0];
-    //
-    //    AVMutableVideoComposition *mutableVideoComposition = [AVMutableVideoComposition videoComposition];
-    //    mutableVideoComposition.renderSize = CGSizeMake(360, 360);
-    //    mutableVideoComposition.frameDuration = CMTimeMake(1, 30); //RESEARCH
-    //
-    //    AVMutableVideoCompositionInstruction *instruction = [AVMutableVideoCompositionInstruction videoCompositionInstruction];
-    //    instruction.timeRange = CMTimeRangeMake(kCMTimeZero, CMTimeMakeWithSeconds(60, 30) );     //RESEARCH
-    //
-    //    AVMutableVideoCompositionLayerInstruction* transformer = [AVMutableVideoCompositionLayerInstruction videoCompositionLayerInstructionWithAssetTrack:clipVideoTrack];  //RESEARCH
-    //     // setup a transform that grows the video, effectively causing a crop
-    //    CGAffineTransform finalTransform = [transformer setTransform:finalTransform atTime:kCMTimeZero];
-    //    instruction.layerInstructions = [NSArray arrayWithObject:transformer];
-    //    videoComposition.instructions = [NSArray arrayWithObject: instruction];
-    //
-    //    AVAssetExportSession *exporter = [[AVAssetExportSession alloc] initWithAsset:saveComposition presetName:AVAssetExportPresetHighestQuality] ;
-    //    exporter.videoComposition = videoComposition;
-    //    exporter.outputURL=url3;
-    //    exporter.outputFileType=AVFileTypeQuickTimeMovie;
-    //
-    //    [exporter exportAsynchronouslyWithCompletionHandler:^(void){}];
-    
     AVAsset *asset = [AVAsset assetWithURL:outputFileURL];
-    
-    //    AVMutableComposition *videoComposition = [AVMutableComposition composition];
-    //    AVMutableCompositionTrack *compositionVideoTrack = [videoComposition addMutableTrackWithMediaType:AVMediaTypeVideo preferredTrackID:kCMPersistentTrackID_Invalid];
     
     AVAssetTrack *clipVideoTrack = [[asset tracksWithMediaType:AVMediaTypeVideo] objectAtIndex:0];
     
@@ -873,11 +846,6 @@ static float EXPOSURE_MINIMUM_DURATION = 1.0/1000; // Limit exposure duration to
     
     AVMutableVideoCompositionLayerInstruction* transformer = [AVMutableVideoCompositionLayerInstruction videoCompositionLayerInstructionWithAssetTrack:clipVideoTrack];  //RESEARCH
     
-//    // setup a transform that grows the video, effectively causing a crop
-//    CGAffineTransform finalTransform = CGAffineTransformMakeScale(1.0, 480.0/360.0);
-//    [transformer setTransform:finalTransform atTime:kCMTimeZero];
-    
-
     CGAffineTransform t1 = CGAffineTransformMakeTranslation(clipVideoTrack.naturalSize.height, -(clipVideoTrack.naturalSize.width - clipVideoTrack.naturalSize.height) /2 );
     
     //Make sure the square is portrait
@@ -899,7 +867,6 @@ static float EXPOSURE_MINIMUM_DURATION = 1.0/1000; // Limit exposure duration to
     NSString *exportPath = [documentsPath stringByAppendingFormat:@"/CroppedVideo.mp4"];
     NSURL *exportURL = [NSURL fileURLWithPath:exportPath];
     
-    
     AVURLAsset *outputAsset = [[AVURLAsset alloc] initWithURL:outputFileURL options:nil];
     AVAssetExportSession *exporter = [[AVAssetExportSession alloc] initWithAsset:outputAsset presetName:AVAssetExportPresetHighestQuality] ;
     exporter.videoComposition = videoComposition;
@@ -908,6 +875,8 @@ static float EXPOSURE_MINIMUM_DURATION = 1.0/1000; // Limit exposure duration to
     
     [exporter exportAsynchronouslyWithCompletionHandler:^(void){
         dispatch_async(dispatch_get_main_queue(), ^{
+            
+            //Creates the thumbnail
             AVAssetImageGenerator *generate = [[AVAssetImageGenerator alloc] initWithAsset:[AVAsset assetWithURL:exporter.outputURL]];
             generate.maximumSize = CGSizeMake(200, 200);
             generate.apertureMode = AVAssetImageGeneratorApertureModeCleanAperture;
@@ -919,7 +888,7 @@ static float EXPOSURE_MINIMUM_DURATION = 1.0/1000; // Limit exposure duration to
             UIImage *thumbnailImage = [[UIImage alloc] initWithCGImage:imgRef];
             NSData *thumbnail = UIImagePNGRepresentation(thumbnailImage);
             PFFile *thumbnailFile = [PFFile fileWithName:@"thumbnailFile.png" data:thumbnail contentType:@"image"];
-            
+            //Uploading to Parse
             NSData *data = [NSData dataWithContentsOfURL:exporter.outputURL];
             PFFile *file = [PFFile fileWithName:@"Video.mov" data:data contentType:@"mov"];
             self.name = [PFUser currentUser].username;
@@ -927,6 +896,8 @@ static float EXPOSURE_MINIMUM_DURATION = 1.0/1000; // Limit exposure duration to
                                                        andLocation:self.currentLocationGeoPoint
                                                       andThumbnail:thumbnailFile
                                                            andName:self.name];
+            
+            // Saves to Library
             if (error)
             {
                 NSLog(@"%@", error);

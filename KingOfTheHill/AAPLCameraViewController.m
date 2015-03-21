@@ -130,15 +130,15 @@ static float EXPOSURE_MINIMUM_DURATION = 1.0/1000; // Limit exposure duration to
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
-    dispatch_async(dispatch_get_main_queue(), ^{
-    locationManager = [[CLLocationManager alloc] init];
-    locationManager.delegate = self;
-    locationManager.distanceFilter = kCLDistanceFilterNone;
-    locationManager.desiredAccuracy = kCLLocationAccuracyBest;
     
-    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0)
-        [locationManager requestWhenInUseAuthorization];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        locationManager = [[CLLocationManager alloc] init];
+        locationManager.delegate = self;
+        locationManager.distanceFilter = kCLDistanceFilterNone;
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+        
+        if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0)
+            [locationManager requestWhenInUseAuthorization];
         [locationManager startUpdatingLocation];
     });
     
@@ -360,7 +360,7 @@ static float EXPOSURE_MINIMUM_DURATION = 1.0/1000; // Limit exposure duration to
             }
             
             // Update the orientation on the movie file output video connection before starting recording.
-//            [[[self movieFileOutput] connectionWithMediaType:AVMediaTypeVideo] setVideoOrientation:AVCaptureVideoOrientationPortrait];
+            //            [[[self movieFileOutput] connectionWithMediaType:AVMediaTypeVideo] setVideoOrientation:AVCaptureVideoOrientationPortrait];
             [[[self movieFileOutput] connectionWithMediaType:AVMediaTypeVideo] setVideoOrientation:AVCaptureVideoOrientationPortrait];
             // Turn OFF flash for video recording
             [AAPLCameraViewController setFlashMode:AVCaptureFlashModeOff forDevice:[self videoDevice]];
@@ -408,7 +408,7 @@ static float EXPOSURE_MINIMUM_DURATION = 1.0/1000; // Limit exposure duration to
             
             
             [[self movieFileOutput] stopRecording];
-           
+            
         }
     });
 }
@@ -417,305 +417,305 @@ static float EXPOSURE_MINIMUM_DURATION = 1.0/1000; // Limit exposure duration to
 
 
 -(void) hiddenIBActions {
-
-//- (IBAction)changeCamera:(id)sender
-//{
-//	[[self cameraButton] setEnabled:NO];
-//	[[self recordButton] setEnabled:NO];
-//	[[self stillButton] setEnabled:NO];
-//
-//	dispatch_async([self sessionQueue], ^{
-//		AVCaptureDevice *currentVideoDevice = [self videoDevice];
-//		AVCaptureDevicePosition preferredPosition = AVCaptureDevicePositionUnspecified;
-//		AVCaptureDevicePosition currentPosition = [currentVideoDevice position];
-//
-//		switch (currentPosition)
-//		{
-//			case AVCaptureDevicePositionUnspecified:
-//				preferredPosition = AVCaptureDevicePositionBack;
-//				break;
-//			case AVCaptureDevicePositionBack:
-//				preferredPosition = AVCaptureDevicePositionFront;
-//				break;
-//			case AVCaptureDevicePositionFront:
-//				preferredPosition = AVCaptureDevicePositionBack;
-//				break;
-//		}
-//
-//		AVCaptureDevice *newVideoDevice = [AAPLCameraViewController deviceWithMediaType:AVMediaTypeVideo preferringPosition:preferredPosition];
-//		AVCaptureDeviceInput *newVideoDeviceInput = [AVCaptureDeviceInput deviceInputWithDevice:newVideoDevice error:nil];
-//
-//		[[self session] beginConfiguration];
-//
-//		[[self session] removeInput:[self videoDeviceInput]];
-//		if ([[self session] canAddInput:newVideoDeviceInput])
-//		{
-//			[[NSNotificationCenter defaultCenter] removeObserver:self name:AVCaptureDeviceSubjectAreaDidChangeNotification object:currentVideoDevice];
-//
-//			[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(subjectAreaDidChange:) name:AVCaptureDeviceSubjectAreaDidChangeNotification object:newVideoDevice];
-//
-//			[[self session] addInput:newVideoDeviceInput];
-//			[self setVideoDeviceInput:newVideoDeviceInput];
-//			[self setVideoDevice:newVideoDeviceInput.device];
-//		}
-//		else
-//		{
-//			[[self session] addInput:[self videoDeviceInput]];
-//		}
-//
-//		[[self session] commitConfiguration];
-//
-//		dispatch_async(dispatch_get_main_queue(), ^{
-//			[[self cameraButton] setEnabled:YES];
-//			[[self recordButton] setEnabled:YES];
-//			[[self stillButton] setEnabled:YES];
-//
-//			[self configureManualHUD];
-//		});
-//	});
-//}
-//
-//- (IBAction)snapStillImage:(id)sender
-//{
-//	dispatch_async([self sessionQueue], ^{
-//		// Update the orientation on the still image output video connection before capturing.
-//		[[[self stillImageOutput] connectionWithMediaType:AVMediaTypeVideo] setVideoOrientation:[[(AVCaptureVideoPreviewLayer *)[self.previewView layer] connection] videoOrientation]];
-//
-//		// Flash set to Auto for Still Capture
-//		if (self.videoDevice.exposureMode == AVCaptureExposureModeCustom)
-//		{
-//			[AAPLCameraViewController setFlashMode:AVCaptureFlashModeOff forDevice:[self videoDevice]];
-//		}
-//		else
-//		{
-//			[AAPLCameraViewController setFlashMode:AVCaptureFlashModeAuto forDevice:[self videoDevice]];
-//		}
-//
-//		// Capture a still image
-//		[[self stillImageOutput] captureStillImageAsynchronouslyFromConnection:[[self stillImageOutput] connectionWithMediaType:AVMediaTypeVideo] completionHandler:^(CMSampleBufferRef imageDataSampleBuffer, NSError *error) {
-//
-//			if (imageDataSampleBuffer)
-//			{
-//				NSData *imageData = [AVCaptureStillImageOutput jpegStillImageNSDataRepresentation:imageDataSampleBuffer];
-//				UIImage *image = [[UIImage alloc] initWithData:imageData];
-//				[[[ALAssetsLibrary alloc] init] writeImageToSavedPhotosAlbum:[image CGImage] orientation:(ALAssetOrientation)[image imageOrientation] completionBlock:nil];
-//			}
-//		}];
-//	});
-//}
-//
-//- (IBAction)focusAndExposeTap:(UIGestureRecognizer *)gestureRecognizer
-//{
-//	if (self.videoDevice.focusMode != AVCaptureFocusModeLocked && self.videoDevice.exposureMode != AVCaptureExposureModeCustom)
-//	{
-//		CGPoint devicePoint = [(AVCaptureVideoPreviewLayer *)[self.previewView layer] captureDevicePointOfInterestForPoint:[gestureRecognizer locationInView:[gestureRecognizer view]]];
-//		[self focusWithMode:AVCaptureFocusModeContinuousAutoFocus exposeWithMode:AVCaptureExposureModeContinuousAutoExposure atDevicePoint:devicePoint monitorSubjectAreaChange:YES];
-//	}
-//}
-//
-//- (IBAction)changeManualHUD:(id)sender
-//{
-//	UISegmentedControl *control = sender;
-//
-//	[self positionManualHUD];
-//
-//	self.manualHUDFocusView.hidden = (control.selectedSegmentIndex == 1) ? NO : YES;
-//	self.manualHUDExposureView.hidden = (control.selectedSegmentIndex == 2) ? NO : YES;
-//	self.manualHUDWhiteBalanceView.hidden = (control.selectedSegmentIndex == 3) ? NO : YES;
-//}
-//
-//- (IBAction)changeFocusMode:(id)sender
-//{
-//	UISegmentedControl *control = sender;
-//	AVCaptureFocusMode mode = (AVCaptureFocusMode)[self.focusModes[control.selectedSegmentIndex] intValue];
-//	NSError *error = nil;
-//
-//	if ([self.videoDevice lockForConfiguration:&error])
-//	{
-//		if ([self.videoDevice isFocusModeSupported:mode])
-//		{
-//			self.videoDevice.focusMode = mode;
-//		}
-//		else
-//		{
-//			NSLog(@"Focus mode %@ is not supported. Focus mode is %@.", [self stringFromFocusMode:mode], [self stringFromFocusMode:self.videoDevice.focusMode]);
-//			self.focusModeControl.selectedSegmentIndex = [self.focusModes indexOfObject:@(self.videoDevice.focusMode)];
-//		}
-//		[self.videoDevice unlockForConfiguration];
-//	}
-//	else
-//	{
-//		NSLog(@"%@", error);
-//	}
-//}
-//- (IBAction)changeExposureMode:(id)sender
-//{
-//	UISegmentedControl *control = sender;
-//	NSError *error = nil;
-//	AVCaptureExposureMode mode = (AVCaptureExposureMode)[self.exposureModes[control.selectedSegmentIndex] intValue];
-//
-//	if ([self.videoDevice lockForConfiguration:&error])
-//	{
-//		if ([self.videoDevice isExposureModeSupported:mode])
-//		{
-//			self.videoDevice.exposureMode = mode;
-//		}
-//		else
-//		{
-//			NSLog(@"Exposure mode %@ is not supported. Exposure mode is %@.", [self stringFromExposureMode:mode], [self stringFromExposureMode:self.videoDevice.exposureMode]);
-//		}
-//		[self.videoDevice unlockForConfiguration];
-//	}
-//	else
-//	{
-//		NSLog(@"%@", error);
-//	}
-//}
-//
-//- (IBAction)changeWhiteBalanceMode:(id)sender
-//{
-//	UISegmentedControl *control = sender;
-//	AVCaptureWhiteBalanceMode mode = (AVCaptureWhiteBalanceMode)[self.whiteBalanceModes[control.selectedSegmentIndex] intValue];
-//	NSError *error = nil;
-//
-//	if ([self.videoDevice lockForConfiguration:&error])
-//	{
-//		if ([self.videoDevice isWhiteBalanceModeSupported:mode])
-//		{
-//			self.videoDevice.whiteBalanceMode = mode;
-//		}
-//		else
-//		{
-//			NSLog(@"White balance mode %@ is not supported. White balance mode is %@.", [self stringFromWhiteBalanceMode:mode], [self stringFromWhiteBalanceMode:self.videoDevice.whiteBalanceMode]);
-//		}
-//		[self.videoDevice unlockForConfiguration];
-//	}
-//	else
-//	{
-//		NSLog(@"%@", error);
-//	}
-//}
-//
-//- (IBAction)changeLensPosition:(id)sender
-//{
-//	UISlider *control = sender;
-//	NSError *error = nil;
-//
-//	if ([self.videoDevice lockForConfiguration:&error])
-//	{
-//		[self.videoDevice setFocusModeLockedWithLensPosition:control.value completionHandler:nil];
-//	    [self.videoDevice unlockForConfiguration];
-//	}
-//	else
-//	{
-//		NSLog(@"%@", error);
-//	}
-//}
-//
-//- (IBAction)changeExposureDuration:(id)sender
-//{
-//	UISlider *control = sender;
-//	NSError *error = nil;
-//
-//	double p = pow( control.value, EXPOSURE_DURATION_POWER ); // Apply power function to expand slider's low-end range
-//	double minDurationSeconds = MAX(CMTimeGetSeconds(self.videoDevice.activeFormat.minExposureDuration), EXPOSURE_MINIMUM_DURATION);
-//	double maxDurationSeconds = CMTimeGetSeconds(self.videoDevice.activeFormat.maxExposureDuration);
-//	double newDurationSeconds = p * ( maxDurationSeconds - minDurationSeconds ) + minDurationSeconds; // Scale from 0-1 slider range to actual duration
-//
-//	if (self.videoDevice.exposureMode == AVCaptureExposureModeCustom)
-//	{
-//		if ( newDurationSeconds < 1 )
-//		{
-//			int digits = MAX( 0, 2 + floor( log10( newDurationSeconds ) ) );
-//			self.exposureDurationValueLabel.text = [NSString stringWithFormat:@"1/%.*f", digits, 1/newDurationSeconds];
-//		}
-//		else
-//		{
-//			self.exposureDurationValueLabel.text = [NSString stringWithFormat:@"%.2f", newDurationSeconds];
-//		}
-//	}
-//
-//	if ([self.videoDevice lockForConfiguration:&error])
-//	{
-//		[self.videoDevice setExposureModeCustomWithDuration:CMTimeMakeWithSeconds(newDurationSeconds, 1000*1000*1000)  ISO:AVCaptureISOCurrent completionHandler:nil];
-//        [self.videoDevice unlockForConfiguration];
-//	}
-//	else
-//	{
-//		NSLog(@"%@", error);
-//	}
-//}
-//
-//- (IBAction)changeISO:(id)sender
-//{
-//	UISlider *control = sender;
-//	NSError *error = nil;
-//
-//	if ([self.videoDevice lockForConfiguration:&error])
-//	{
-//		[self.videoDevice setExposureModeCustomWithDuration:AVCaptureExposureDurationCurrent ISO:control.value completionHandler:nil];
-//        [self.videoDevice unlockForConfiguration];
-//	}
-//	else
-//	{
-//		NSLog(@"%@", error);
-//	}
-//}
-//
-//- (IBAction)changeExposureTargetBias:(id)sender
-//{
-//	UISlider *control = sender;
-//	NSError *error = nil;
-//
-//	if ([self.videoDevice lockForConfiguration:&error])
-//	{
-//		[self.videoDevice setExposureTargetBias:control.value completionHandler:nil];
-//        [self.videoDevice unlockForConfiguration];
-//		self.exposureTargetBiasValueLabel.text = [NSString stringWithFormat:@"%.1f", control.value];
-//	}
-//	else
-//	{
-//		NSLog(@"%@", error);
-//	}
-//}
-//
-//- (IBAction)changeTemperature:(id)sender
-//{
-//	AVCaptureWhiteBalanceTemperatureAndTintValues temperatureAndTint = {
-//		.temperature = self.temperatureSlider.value,
-//		.tint = self.tintSlider.value,
-//	};
-//
-//	[self setWhiteBalanceGains:[self.videoDevice deviceWhiteBalanceGainsForTemperatureAndTintValues:temperatureAndTint]];
-//}
-//
-//- (IBAction)changeTint:(id)sender
-//{
-//	AVCaptureWhiteBalanceTemperatureAndTintValues temperatureAndTint = {
-//		.temperature = self.temperatureSlider.value,
-//		.tint = self.tintSlider.value,
-//	};
-//
-//	[self setWhiteBalanceGains:[self.videoDevice deviceWhiteBalanceGainsForTemperatureAndTintValues:temperatureAndTint]];
-//}
-//
-//- (IBAction)lockWithGrayWorld:(id)sender
-//{
-//	[self setWhiteBalanceGains:self.videoDevice.grayWorldDeviceWhiteBalanceGains];
-//}
-//
-//- (IBAction)sliderTouchBegan:(id)sender
-//{
-//	UISlider *slider = (UISlider*)sender;
-//	[self setSlider:slider highlightColor:CONTROL_HIGHLIGHT_COLOR];
-//}
-//
-//- (IBAction)sliderTouchEnded:(id)sender
-//{
-//	UISlider *slider = (UISlider*)sender;
-//	[self setSlider:slider highlightColor:CONTROL_NORMAL_COLOR];
-//}
-
+    
+    //- (IBAction)changeCamera:(id)sender
+    //{
+    //	[[self cameraButton] setEnabled:NO];
+    //	[[self recordButton] setEnabled:NO];
+    //	[[self stillButton] setEnabled:NO];
+    //
+    //	dispatch_async([self sessionQueue], ^{
+    //		AVCaptureDevice *currentVideoDevice = [self videoDevice];
+    //		AVCaptureDevicePosition preferredPosition = AVCaptureDevicePositionUnspecified;
+    //		AVCaptureDevicePosition currentPosition = [currentVideoDevice position];
+    //
+    //		switch (currentPosition)
+    //		{
+    //			case AVCaptureDevicePositionUnspecified:
+    //				preferredPosition = AVCaptureDevicePositionBack;
+    //				break;
+    //			case AVCaptureDevicePositionBack:
+    //				preferredPosition = AVCaptureDevicePositionFront;
+    //				break;
+    //			case AVCaptureDevicePositionFront:
+    //				preferredPosition = AVCaptureDevicePositionBack;
+    //				break;
+    //		}
+    //
+    //		AVCaptureDevice *newVideoDevice = [AAPLCameraViewController deviceWithMediaType:AVMediaTypeVideo preferringPosition:preferredPosition];
+    //		AVCaptureDeviceInput *newVideoDeviceInput = [AVCaptureDeviceInput deviceInputWithDevice:newVideoDevice error:nil];
+    //
+    //		[[self session] beginConfiguration];
+    //
+    //		[[self session] removeInput:[self videoDeviceInput]];
+    //		if ([[self session] canAddInput:newVideoDeviceInput])
+    //		{
+    //			[[NSNotificationCenter defaultCenter] removeObserver:self name:AVCaptureDeviceSubjectAreaDidChangeNotification object:currentVideoDevice];
+    //
+    //			[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(subjectAreaDidChange:) name:AVCaptureDeviceSubjectAreaDidChangeNotification object:newVideoDevice];
+    //
+    //			[[self session] addInput:newVideoDeviceInput];
+    //			[self setVideoDeviceInput:newVideoDeviceInput];
+    //			[self setVideoDevice:newVideoDeviceInput.device];
+    //		}
+    //		else
+    //		{
+    //			[[self session] addInput:[self videoDeviceInput]];
+    //		}
+    //
+    //		[[self session] commitConfiguration];
+    //
+    //		dispatch_async(dispatch_get_main_queue(), ^{
+    //			[[self cameraButton] setEnabled:YES];
+    //			[[self recordButton] setEnabled:YES];
+    //			[[self stillButton] setEnabled:YES];
+    //
+    //			[self configureManualHUD];
+    //		});
+    //	});
+    //}
+    //
+    //- (IBAction)snapStillImage:(id)sender
+    //{
+    //	dispatch_async([self sessionQueue], ^{
+    //		// Update the orientation on the still image output video connection before capturing.
+    //		[[[self stillImageOutput] connectionWithMediaType:AVMediaTypeVideo] setVideoOrientation:[[(AVCaptureVideoPreviewLayer *)[self.previewView layer] connection] videoOrientation]];
+    //
+    //		// Flash set to Auto for Still Capture
+    //		if (self.videoDevice.exposureMode == AVCaptureExposureModeCustom)
+    //		{
+    //			[AAPLCameraViewController setFlashMode:AVCaptureFlashModeOff forDevice:[self videoDevice]];
+    //		}
+    //		else
+    //		{
+    //			[AAPLCameraViewController setFlashMode:AVCaptureFlashModeAuto forDevice:[self videoDevice]];
+    //		}
+    //
+    //		// Capture a still image
+    //		[[self stillImageOutput] captureStillImageAsynchronouslyFromConnection:[[self stillImageOutput] connectionWithMediaType:AVMediaTypeVideo] completionHandler:^(CMSampleBufferRef imageDataSampleBuffer, NSError *error) {
+    //
+    //			if (imageDataSampleBuffer)
+    //			{
+    //				NSData *imageData = [AVCaptureStillImageOutput jpegStillImageNSDataRepresentation:imageDataSampleBuffer];
+    //				UIImage *image = [[UIImage alloc] initWithData:imageData];
+    //				[[[ALAssetsLibrary alloc] init] writeImageToSavedPhotosAlbum:[image CGImage] orientation:(ALAssetOrientation)[image imageOrientation] completionBlock:nil];
+    //			}
+    //		}];
+    //	});
+    //}
+    //
+    //- (IBAction)focusAndExposeTap:(UIGestureRecognizer *)gestureRecognizer
+    //{
+    //	if (self.videoDevice.focusMode != AVCaptureFocusModeLocked && self.videoDevice.exposureMode != AVCaptureExposureModeCustom)
+    //	{
+    //		CGPoint devicePoint = [(AVCaptureVideoPreviewLayer *)[self.previewView layer] captureDevicePointOfInterestForPoint:[gestureRecognizer locationInView:[gestureRecognizer view]]];
+    //		[self focusWithMode:AVCaptureFocusModeContinuousAutoFocus exposeWithMode:AVCaptureExposureModeContinuousAutoExposure atDevicePoint:devicePoint monitorSubjectAreaChange:YES];
+    //	}
+    //}
+    //
+    //- (IBAction)changeManualHUD:(id)sender
+    //{
+    //	UISegmentedControl *control = sender;
+    //
+    //	[self positionManualHUD];
+    //
+    //	self.manualHUDFocusView.hidden = (control.selectedSegmentIndex == 1) ? NO : YES;
+    //	self.manualHUDExposureView.hidden = (control.selectedSegmentIndex == 2) ? NO : YES;
+    //	self.manualHUDWhiteBalanceView.hidden = (control.selectedSegmentIndex == 3) ? NO : YES;
+    //}
+    //
+    //- (IBAction)changeFocusMode:(id)sender
+    //{
+    //	UISegmentedControl *control = sender;
+    //	AVCaptureFocusMode mode = (AVCaptureFocusMode)[self.focusModes[control.selectedSegmentIndex] intValue];
+    //	NSError *error = nil;
+    //
+    //	if ([self.videoDevice lockForConfiguration:&error])
+    //	{
+    //		if ([self.videoDevice isFocusModeSupported:mode])
+    //		{
+    //			self.videoDevice.focusMode = mode;
+    //		}
+    //		else
+    //		{
+    //			NSLog(@"Focus mode %@ is not supported. Focus mode is %@.", [self stringFromFocusMode:mode], [self stringFromFocusMode:self.videoDevice.focusMode]);
+    //			self.focusModeControl.selectedSegmentIndex = [self.focusModes indexOfObject:@(self.videoDevice.focusMode)];
+    //		}
+    //		[self.videoDevice unlockForConfiguration];
+    //	}
+    //	else
+    //	{
+    //		NSLog(@"%@", error);
+    //	}
+    //}
+    //- (IBAction)changeExposureMode:(id)sender
+    //{
+    //	UISegmentedControl *control = sender;
+    //	NSError *error = nil;
+    //	AVCaptureExposureMode mode = (AVCaptureExposureMode)[self.exposureModes[control.selectedSegmentIndex] intValue];
+    //
+    //	if ([self.videoDevice lockForConfiguration:&error])
+    //	{
+    //		if ([self.videoDevice isExposureModeSupported:mode])
+    //		{
+    //			self.videoDevice.exposureMode = mode;
+    //		}
+    //		else
+    //		{
+    //			NSLog(@"Exposure mode %@ is not supported. Exposure mode is %@.", [self stringFromExposureMode:mode], [self stringFromExposureMode:self.videoDevice.exposureMode]);
+    //		}
+    //		[self.videoDevice unlockForConfiguration];
+    //	}
+    //	else
+    //	{
+    //		NSLog(@"%@", error);
+    //	}
+    //}
+    //
+    //- (IBAction)changeWhiteBalanceMode:(id)sender
+    //{
+    //	UISegmentedControl *control = sender;
+    //	AVCaptureWhiteBalanceMode mode = (AVCaptureWhiteBalanceMode)[self.whiteBalanceModes[control.selectedSegmentIndex] intValue];
+    //	NSError *error = nil;
+    //
+    //	if ([self.videoDevice lockForConfiguration:&error])
+    //	{
+    //		if ([self.videoDevice isWhiteBalanceModeSupported:mode])
+    //		{
+    //			self.videoDevice.whiteBalanceMode = mode;
+    //		}
+    //		else
+    //		{
+    //			NSLog(@"White balance mode %@ is not supported. White balance mode is %@.", [self stringFromWhiteBalanceMode:mode], [self stringFromWhiteBalanceMode:self.videoDevice.whiteBalanceMode]);
+    //		}
+    //		[self.videoDevice unlockForConfiguration];
+    //	}
+    //	else
+    //	{
+    //		NSLog(@"%@", error);
+    //	}
+    //}
+    //
+    //- (IBAction)changeLensPosition:(id)sender
+    //{
+    //	UISlider *control = sender;
+    //	NSError *error = nil;
+    //
+    //	if ([self.videoDevice lockForConfiguration:&error])
+    //	{
+    //		[self.videoDevice setFocusModeLockedWithLensPosition:control.value completionHandler:nil];
+    //	    [self.videoDevice unlockForConfiguration];
+    //	}
+    //	else
+    //	{
+    //		NSLog(@"%@", error);
+    //	}
+    //}
+    //
+    //- (IBAction)changeExposureDuration:(id)sender
+    //{
+    //	UISlider *control = sender;
+    //	NSError *error = nil;
+    //
+    //	double p = pow( control.value, EXPOSURE_DURATION_POWER ); // Apply power function to expand slider's low-end range
+    //	double minDurationSeconds = MAX(CMTimeGetSeconds(self.videoDevice.activeFormat.minExposureDuration), EXPOSURE_MINIMUM_DURATION);
+    //	double maxDurationSeconds = CMTimeGetSeconds(self.videoDevice.activeFormat.maxExposureDuration);
+    //	double newDurationSeconds = p * ( maxDurationSeconds - minDurationSeconds ) + minDurationSeconds; // Scale from 0-1 slider range to actual duration
+    //
+    //	if (self.videoDevice.exposureMode == AVCaptureExposureModeCustom)
+    //	{
+    //		if ( newDurationSeconds < 1 )
+    //		{
+    //			int digits = MAX( 0, 2 + floor( log10( newDurationSeconds ) ) );
+    //			self.exposureDurationValueLabel.text = [NSString stringWithFormat:@"1/%.*f", digits, 1/newDurationSeconds];
+    //		}
+    //		else
+    //		{
+    //			self.exposureDurationValueLabel.text = [NSString stringWithFormat:@"%.2f", newDurationSeconds];
+    //		}
+    //	}
+    //
+    //	if ([self.videoDevice lockForConfiguration:&error])
+    //	{
+    //		[self.videoDevice setExposureModeCustomWithDuration:CMTimeMakeWithSeconds(newDurationSeconds, 1000*1000*1000)  ISO:AVCaptureISOCurrent completionHandler:nil];
+    //        [self.videoDevice unlockForConfiguration];
+    //	}
+    //	else
+    //	{
+    //		NSLog(@"%@", error);
+    //	}
+    //}
+    //
+    //- (IBAction)changeISO:(id)sender
+    //{
+    //	UISlider *control = sender;
+    //	NSError *error = nil;
+    //
+    //	if ([self.videoDevice lockForConfiguration:&error])
+    //	{
+    //		[self.videoDevice setExposureModeCustomWithDuration:AVCaptureExposureDurationCurrent ISO:control.value completionHandler:nil];
+    //        [self.videoDevice unlockForConfiguration];
+    //	}
+    //	else
+    //	{
+    //		NSLog(@"%@", error);
+    //	}
+    //}
+    //
+    //- (IBAction)changeExposureTargetBias:(id)sender
+    //{
+    //	UISlider *control = sender;
+    //	NSError *error = nil;
+    //
+    //	if ([self.videoDevice lockForConfiguration:&error])
+    //	{
+    //		[self.videoDevice setExposureTargetBias:control.value completionHandler:nil];
+    //        [self.videoDevice unlockForConfiguration];
+    //		self.exposureTargetBiasValueLabel.text = [NSString stringWithFormat:@"%.1f", control.value];
+    //	}
+    //	else
+    //	{
+    //		NSLog(@"%@", error);
+    //	}
+    //}
+    //
+    //- (IBAction)changeTemperature:(id)sender
+    //{
+    //	AVCaptureWhiteBalanceTemperatureAndTintValues temperatureAndTint = {
+    //		.temperature = self.temperatureSlider.value,
+    //		.tint = self.tintSlider.value,
+    //	};
+    //
+    //	[self setWhiteBalanceGains:[self.videoDevice deviceWhiteBalanceGainsForTemperatureAndTintValues:temperatureAndTint]];
+    //}
+    //
+    //- (IBAction)changeTint:(id)sender
+    //{
+    //	AVCaptureWhiteBalanceTemperatureAndTintValues temperatureAndTint = {
+    //		.temperature = self.temperatureSlider.value,
+    //		.tint = self.tintSlider.value,
+    //	};
+    //
+    //	[self setWhiteBalanceGains:[self.videoDevice deviceWhiteBalanceGainsForTemperatureAndTintValues:temperatureAndTint]];
+    //}
+    //
+    //- (IBAction)lockWithGrayWorld:(id)sender
+    //{
+    //	[self setWhiteBalanceGains:self.videoDevice.grayWorldDeviceWhiteBalanceGains];
+    //}
+    //
+    //- (IBAction)sliderTouchBegan:(id)sender
+    //{
+    //	UISlider *slider = (UISlider*)sender;
+    //	[self setSlider:slider highlightColor:CONTROL_HIGHLIGHT_COLOR];
+    //}
+    //
+    //- (IBAction)sliderTouchEnded:(id)sender
+    //{
+    //	UISlider *slider = (UISlider*)sender;
+    //	[self setSlider:slider highlightColor:CONTROL_NORMAL_COLOR];
+    //}
+    
 } // Not a method, just to collapse IBActions (all commented out)
 
 
@@ -833,33 +833,82 @@ static float EXPOSURE_MINIMUM_DURATION = 1.0/1000; // Limit exposure duration to
 
 - (void)captureOutput:(AVCaptureFileOutput *)captureOutput didFinishRecordingToOutputFileAtURL:(NSURL *)outputFileURL fromConnections:(NSArray *)connections error:(NSError *)error {
     
-    NSURL *fileURL = outputFileURL;
-    NSData *data = [NSData dataWithContentsOfURL:fileURL];
+    //    AVMutableComposition *videoComposition = [AVMutableComposition composition];
+    //    AVMutableCompositionTrack *compositionVideoTrack = [videoComposition  addMutableTrackWithMediaType:AVMediaTypeVideo preferredTrackID:kCMPersistentTrackID_Invalid];
+    //    AVAssetTrack *clipVideoTrack = [[asset tracksWithMediaType:AVMediaTypeVideo] objectAtIndex:0];
+    //
+    //    AVMutableVideoComposition *mutableVideoComposition = [AVMutableVideoComposition videoComposition];
+    //    mutableVideoComposition.renderSize = CGSizeMake(360, 360);
+    //    mutableVideoComposition.frameDuration = CMTimeMake(1, 30); //RESEARCH
+    //
+    //    AVMutableVideoCompositionInstruction *instruction = [AVMutableVideoCompositionInstruction videoCompositionInstruction];
+    //    instruction.timeRange = CMTimeRangeMake(kCMTimeZero, CMTimeMakeWithSeconds(60, 30) );     //RESEARCH
+    //
+    //    AVMutableVideoCompositionLayerInstruction* transformer = [AVMutableVideoCompositionLayerInstruction videoCompositionLayerInstructionWithAssetTrack:clipVideoTrack];  //RESEARCH
+    //     // setup a transform that grows the video, effectively causing a crop
+    //    CGAffineTransform finalTransform = [transformer setTransform:finalTransform atTime:kCMTimeZero];
+    //    instruction.layerInstructions = [NSArray arrayWithObject:transformer];
+    //    videoComposition.instructions = [NSArray arrayWithObject: instruction];
+    //
+    //    AVAssetExportSession *exporter = [[AVAssetExportSession alloc] initWithAsset:saveComposition presetName:AVAssetExportPresetHighestQuality] ;
+    //    exporter.videoComposition = videoComposition;
+    //    exporter.outputURL=url3;
+    //    exporter.outputFileType=AVFileTypeQuickTimeMovie;
+    //
+    //    [exporter exportAsynchronouslyWithCompletionHandler:^(void){}];
+    AVAsset *asset = [AVAsset assetWithURL:outputFileURL];
     
-    AVURLAsset *asset = [[AVURLAsset alloc] initWithURL:fileURL options:nil];
-    AVAssetImageGenerator *generate = [[AVAssetImageGenerator alloc] initWithAsset:asset];
-    generate.maximumSize = CGSizeMake(200, 200);
-    generate.apertureMode = AVAssetImageGeneratorApertureModeCleanAperture;
-    generate.appliesPreferredTrackTransform = YES;
-    NSError *err = NULL;
-    CMTime time = CMTimeMake(1, 60);
-    CGImageRef imgRef = [generate copyCGImageAtTime:time actualTime:NULL error:&err];
-    NSLog(@"err==%@, imageRef==%@", err, imgRef);
-    UIImage *thumbnailImage = [[UIImage alloc] initWithCGImage:imgRef];
-    NSData *thumbnail = UIImagePNGRepresentation(thumbnailImage);
-    PFFile *thumbnailFile = [PFFile fileWithName:@"thumbnailFile.png" data:thumbnail contentType:@"image"];
+    
+    AVMutableComposition *videoComposition = [AVMutableComposition composition];
+    AVMutableCompositionTrack *compositionVideoTrack = [videoComposition addMutableTrackWithMediaType:AVMediaTypeVideo preferredTrackID:kCMPersistentTrackID_Invalid];
 
-    //NSString *videoName = [NSString stringWithFormat:@"%@", aMovieFileOutput];
-    
-    PFFile *file = [PFFile fileWithName:@"Video.mov" data:data contentType:@"mov"];
-    
-    
-    //TEMPORARY FOR MVP- takes current username and sets it as the recorded video title
     self.name = [PFUser currentUser].username;
     
     [[VideoController sharedInstance] videoToParseWithFile:file
                                                andLocation:self.currentLocationGeoPoint
                                               andThumbnail:thumbnailFile andName:self.name];
+    
+    AVAssetTrack *clipVideoTrack = [[asset tracksWithMediaType:AVMediaTypeVideo] objectAtIndex:0];
+    
+    AVMutableVideoComposition *mutableVideoComposition = [AVMutableVideoComposition videoComposition];
+    mutableVideoComposition.renderSize = CGSizeMake(360, 360);
+    mutableVideoComposition.frameDuration = CMTimeMake(1, 30); //RESEARCH
+    
+    AVMutableVideoCompositionInstruction *instruction = [AVMutableVideoCompositionInstruction videoCompositionInstruction];
+    instruction.timeRange = CMTimeRangeMake(kCMTimeZero, CMTimeMakeWithSeconds(60, 30) );     //RESEARCH
+    
+    AVMutableVideoCompositionLayerInstruction* transformer = [AVMutableVideoCompositionLayerInstruction videoCompositionLayerInstructionWithAssetTrack:clipVideoTrack];  //RESEARCH
+    // setup a transform that grows the video, effectively causing a crop
+    CGAffineTransform finalTransform = CGAffineTransformMakeScale(1.0, 480.0/360.0);
+    [transformer setTransform:finalTransform atTime:kCMTimeZero];
+    instruction.layerInstructions = @[transformer];
+    mutableVideoComposition.instructions = @[instruction];
+    
+    AVURLAsset *outputAsset = [[AVURLAsset alloc] initWithURL:outputFileURL options:nil];
+    AVAssetExportSession *exporter = [[AVAssetExportSession alloc] initWithAsset:outputAsset presetName:AVAssetExportPresetHighestQuality] ;
+    exporter.videoComposition = mutableVideoComposition;
+    exporter.outputURL=outputFileURL;
+    exporter.outputFileType=AVFileTypeQuickTimeMovie;
+    
+    [exporter exportAsynchronouslyWithCompletionHandler:^(void){
+        AVAssetImageGenerator *generate = [[AVAssetImageGenerator alloc] initWithAsset:outputAsset];
+        generate.maximumSize = CGSizeMake(200, 200);
+        generate.apertureMode = AVAssetImageGeneratorApertureModeCleanAperture;
+        generate.appliesPreferredTrackTransform = YES;
+        NSError *err = NULL;
+        CMTime time = CMTimeMake(1, 60);
+        CGImageRef imgRef = [generate copyCGImageAtTime:time actualTime:NULL error:&err];
+        NSLog(@"err==%@, imageRef==%@", err, imgRef);
+        UIImage *thumbnailImage = [[UIImage alloc] initWithCGImage:imgRef];
+        NSData *thumbnail = UIImagePNGRepresentation(thumbnailImage);
+        PFFile *thumbnailFile = [PFFile fileWithName:@"thumbnailFile.png" data:thumbnail contentType:@"image"];
+        
+        NSData *data = [NSData dataWithContentsOfURL:outputAsset.URL];
+        PFFile *file = [PFFile fileWithName:@"Video.mov" data:data contentType:@"mov"];
+        [[VideoController sharedInstance] videoToParseWithFile:file
+                                                   andLocation:self.currentLocationGeoPoint
+                                                  andThumbnail:thumbnailFile];
+    }];
     
     if (error)
     {

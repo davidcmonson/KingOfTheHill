@@ -88,7 +88,7 @@
                 NSLog(@"%@", error);
             }
             else {
-                //NSArray *arrayOfVideos = [[NSArray alloc] initWithArray:objects];
+                //[VideoController sharedInstance].objectArrayFromParse = objects;
                 [VideoController sharedInstance].arrayOfVideoForFeed = objects;
                 [[VideoController sharedInstance] populateThumbnailArray:objects];
                 NSLog(@"%ld videos with thumbnails",[VideoController sharedInstance].arrayOfVideoForFeed.count);
@@ -102,7 +102,6 @@
 
 // takes in the array from Parse, adds an image to each of it and puts it back into the sharedInstance array
 - (void)populateThumbnailArray:(NSArray *)array {
-    
     
     NSMutableArray *mutableArray = [NSMutableArray new];
     for (NSInteger index = 0; index < array.count; index++) {
@@ -125,6 +124,30 @@
     [VideoController sharedInstance].arrayOfThumbnails = mutableArray;
     //NSLog(@"%@", [VideoController sharedInstance].arrayOfThumbnails);
 }
+
+//// takes in the array from Parse, adds an image to each of it and puts it back into the sharedInstance array
+//-(NSArray *)arrayOfThumbnails
+//{
+//    NSArray *array = [VideoController sharedInstance].objectArrayFromParse;
+//    NSMutableArray *mutableArray = [NSMutableArray new];
+//    for (NSInteger index = 0; index < array.count; index++) {
+//        
+//        Video *video = array[index];
+//        if (!video[urlOfThumbnail]) {
+//            // add "missing thumbnail" picture if video doesn't have thumbnail
+//            [mutableArray addObject:[UIImage imageNamed:@"blank"]];
+//            NSLog(@"added blank thumbnail for video %ld", index);
+//        } else {
+//            PFFile *thumbnailImage = video[urlOfThumbnail];
+//            NSURL *urlOfThumbnail = [NSURL URLWithString:thumbnailImage.url];
+//            NSData *dataOfThumbnail = [NSData dataWithContentsOfURL:urlOfThumbnail];
+//            UIImage *thumbnail = [UIImage imageWithData:dataOfThumbnail];
+//            [mutableArray addObject:thumbnail];
+//        }
+//
+//    }
+//    return mutableArray;
+//}
 
 
 - (NSInteger)totalVotesOnVideoWithIdentifier:(NSString *)identifier

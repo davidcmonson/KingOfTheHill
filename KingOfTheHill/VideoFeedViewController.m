@@ -49,11 +49,12 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
 
-    UIImage *image = [VideoController sharedInstance].arrayOfThumbnails[3];
-    UIImageView *imageViewInCell = [[UIImageView alloc]initWithImage:image];
-    imageViewInCell.frame = CGRectMake(0, 0, self.view.frame.size.width, image.size.height);
-    imageViewInCell.contentMode = UIViewContentModeScaleAspectFit;
-    return imageViewInCell.frame.size.height;
+//    UIImage *image = [VideoController sharedInstance].arrayOfThumbnails[indexPath.row];
+//    UIImageView *imageViewInCell = [[UIImageView alloc]initWithImage:image];
+//    imageViewInCell.frame = CGRectZero;
+//    imageViewInCell.contentMode = UIViewContentModeScaleAspectFit;
+
+    return 428;
 
 }
 

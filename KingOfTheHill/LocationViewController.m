@@ -21,20 +21,14 @@
 #import <ImageIO/ImageIO.h>
 #import "LoadingStatus.h"
 
-
-
-
 @interface LocationViewController () <MKMapViewDelegate, CLLocationManagerDelegate, MKAnnotation>
 
-@property (nonatomic, strong) NSArray *thumbnails;
-@property (nonatomic, strong) MKMapView *allAnnotationsMapView;
+@property (nonatomic, strong) NSArray *arrayOfAllVideoPins;
 @property (nonatomic, strong) MKMapView *mainMapView;
-@property (nonatomic, strong) Video *video;
-@property (nonatomic, strong) UIButton *backButton;
+
 // Bool to zoom only once on initial launch
 @property (nonatomic) BOOL zoomedOnce;
 @property (nonatomic, strong) AnnotationVideoPlayerViewViewController *videoVC;
-
 
 @end
 
@@ -51,7 +45,6 @@
     if ([self.locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)]) {
         [self.locationManager requestWhenInUseAuthorization];
     }
-    
 }
 
 // Sets up bar at the bottom of the screen for users to swipe back to the main screen (camera)
@@ -121,39 +114,25 @@
             NSLog(@"%@", error);
         }
         else {
-            NSMutableArray *arrayOfVideos = [[NSMutableArray alloc] initWithArray:objects];
+            NSArray *arrayOfVideos = [[NSMutableArray alloc] initWithArray:objects];
             //[self dropPinAtCoordinatesForVideosInVideosArray:arrayOfVideos];
             [VideoController sharedInstance].arrayOfVideosNearLocation = arrayOfVideos;
-            [self dropPinAtCoordinatesForVideosInVideosArray:[VideoController sharedInstance].arrayOfVideosNearLocation];
+            [self putVideoPinsInArray];
+            [self.mainMapView addAnnotations:self.arrayOfAllVideoPins];
             NSLog(@"Videos Near Location: %ld",[VideoController sharedInstance].arrayOfVideosNearLocation.count);
         }
     }];
-    
 }
 
-
-- (void)dropPinAtCoordinatesForVideosInVideosArray:(NSArray *)array {
-    
-    for (NSInteger index = 0; index < array.count; index++) {
+- (void)putVideoPinsInArray {
+    NSArray *arrayOfVideos = [VideoController sharedInstance].arrayOfVideosNearLocation;
+    NSMutableArray *mutableArray = [[NSMutableArray alloc]initWithArray:self.arrayOfAllVideoPins];
+    for (Video *video in arrayOfVideos) {
+        VideoPin *videoPin = [[VideoPin alloc]initWithVideo:video];
+        [mutableArray addObject:videoPin];
         
-        // Create video instance to make it easier to read when getting coordinates from it.
-        Video *videoPFObjectAtIndex = array[index];
-        PFGeoPoint *geoPointOfVideo = videoPFObjectAtIndex[locationKeyOfVideo];
-        
-        // Convert GeoPoint to CLLocaation
-        CLLocationCoordinate2D coordinateOfVideo = [self convertPFGeoPointToLocationCoordinate2D:geoPointOfVideo];
-        
-        // Adding annotations
-        VideoPin *videoPin = [[VideoPin alloc]initWithVideo:videoPFObjectAtIndex];
-        
-        //    If you want to clear other pins/annotations this is how to do it
-        //        for (id annotation in self.map.annotations) {
-        //            [self.map removeAnnotation:annotation];
-        //        }
-        
-        //    Drop pin on map
-        [self.mainMapView addAnnotation:videoPin];
     }
+    self.arrayOfAllVideoPins = mutableArray;
 }
 
 -(CLLocationCoordinate2D)convertPFGeoPointToLocationCoordinate2D:(PFGeoPoint *)geoPoint {
@@ -164,7 +143,6 @@
     
     return coordinates;
 }
-
 
 
 #pragma mark Annotations section
@@ -181,7 +159,7 @@
         MKPinAnnotationView *annotationView = (MKPinAnnotationView *)[self.mainMapView dequeueReusableAnnotationViewWithIdentifier:annotationIdentifier];
         if (annotationView == nil)
             annotationView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:annotationIdentifier];
-        
+
         annotationView.canShowCallout = YES;
         annotationView.animatesDrop = YES;
         
@@ -201,27 +179,29 @@
     return nil;
 }
 
+
+
+
+
+
 // user tapped the call out accessory or the "i"/the "bubble" in the annotation
 - (void)mapView:(MKMapView *)aMapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control {
-    
 
+    VideoPin *pinAtAnnotation = view.annotation;
     
-    // Commented out for when we pass the actual Video info to the annotation.
-    //    VideoPin *annotation = (VideoPin *)view.annotation;
-    //    NSMutableArray *photosToShow = [NSMutableArray arrayWithObject:annotation];
-    //    [photosToShow addObjectsFromArray:annotation.containedAnnotations];
+    Video *videoPicked = pinAtAnnotation.currentVideo;
     
-    // This sets up the detail view for the user selected pin/annotation and presents the view
-    //    AnnotationVideoPlayerViewViewController *viewController = [AnnotationVideoPlayerViewViewController new];
-    //    //    viewController.videoAtIndex =
-    //    viewController.edgesForExtendedLayout = UIRectEdgeNone;
-    [self bringUpPlayer];
+    NSMutableArray *videosToShow = [NSMutableArray arrayWithObject:pinAtAnnotation];
+    [videosToShow addObjectsFromArray:pinAtAnnotation.containedAnnotations];
 
+    [self bringUpPlayerWithVideo:videoPicked];
+    
 }
 
-- (void)bringUpPlayer {
+- (void)bringUpPlayerWithVideo:(Video *)video {
     
     self.videoVC = [AnnotationVideoPlayerViewViewController new];
+    self.videoVC.currentVideo = video;
     self.videoVC.edgesForExtendedLayout = UIRectEdgeNone;
     self.videoVC.modalPresentationStyle = UIModalPresentationOverCurrentContext;
     self.videoVC.modalTransitionStyle = UIModalTransitionStyleCoverVertical;;
@@ -248,13 +228,9 @@
     }
 }
 
-
-
-
-
-// When the user taps/selects the Pin, updates if there's mutiple pins inside
+// When the user taps/selects the PIN, updates if there's mutiple pins inside
 - (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view {
-    
+
     if ([view.annotation isKindOfClass:[VideoPin class]])
     {
         VideoPin *annotation = (VideoPin *)view.annotation;
@@ -539,8 +515,6 @@
  }
  }
  }
- 
- 
  
  //
  //        if ([annotation isKindOfClass:[MKUserLocation class]]) {

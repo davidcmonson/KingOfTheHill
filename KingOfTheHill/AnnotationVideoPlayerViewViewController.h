@@ -8,10 +8,12 @@
 
 #import <UIKit/UIKit.h>
 #import <AVFoundation/AVFoundation.h>
+#import "Video.h"
 
 
 @interface AnnotationVideoPlayerViewViewController : UIViewController
 
 @property (nonatomic) NSInteger videoAtIndex;
+@property (nonatomic, strong) Video *currentVideo;
 
 @end

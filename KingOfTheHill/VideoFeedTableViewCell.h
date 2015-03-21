@@ -10,6 +10,12 @@
 
 @interface VideoFeedTableViewCell : UITableViewCell
 
-@property (nonatomic, strong) UILabel *votes;
+//@property (nonatomic, strong) UILabel *votes;
+
+@property (nonatomic, strong) UIImageView *photoImageView;
+@property (nonatomic) NSInteger cellHeight;
+
+
+
 
 @end

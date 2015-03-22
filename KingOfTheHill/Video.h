@@ -20,6 +20,7 @@ static NSString *urlOfThumbnail = @"thumbnail";
 static NSString *titleOfVideoKey = @"name";
 static NSString *userOfVideoKey = @"user";
 static NSString *videoId = @"objectId";
+static NSString *videoVotesKey = @"Votes";
 
 @interface Video : PFObject <PFSubclassing>
 
@@ -29,7 +30,7 @@ static NSString *videoId = @"objectId";
 @property (nonatomic) NSInteger videoAtIndex;
 @property (nonatomic) UIImage *thumbnail;
 @property (nonatomic, strong) NSString *videoFile;
-@property (nonatomic, strong) NSArray *arrayOfVotes;
+@property (nonatomic, strong) NSArray *Votes;
 
 
 @property (nonatomic, assign) CLLocationCoordinate2D location;

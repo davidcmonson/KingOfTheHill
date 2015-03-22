@@ -158,46 +158,27 @@
             
             self.arrayOfVotes = [[NSMutableArray alloc] initWithArray:objects];
             
-            NSLog(@"vote id: %@", vote.objectId);
+//            NSLog(@"vote id saved: %@", vote.objectId);
+//            NSLog(@"indiv vote : self.arrayOfVotes: %ld", (long)self.arrayOfVotes.count);
         }
     }];
 }
 
 - (void)queryForVotes:(Vote *)vote onVideo:(Video *)video
 {
-        PFQuery *queryForVotes = [Vote query];
-        [queryForVotes whereKey:vote.objectId equalTo:video.objectId];
+        PFQuery *queryForVotes = [PFQuery queryWithClassName:@"Vote"];
+        [queryForVotes whereKey:@"toVideo" equalTo:video];
         [queryForVotes findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
             if (error) {
-                NSLog(@"This is the error quering for objects :%@",error);
+                NSLog(@"error:%@",error);
             } else {
-                NSLog(@"success: %@ and %@",video.objectId, vote.objectId);
-                [self.arrayOfVotes arrayByAddingObjectsFromArray:objects];
+//                NSLog(@"votesOnVideoid: %@ and vote id: %@",video.objectId, vote.objectId);
+                self.arrayOfVotes = [[NSMutableArray alloc] initWithArray:objects];
+                NSLog(@"self.arrayOfVotes: %ld", (long)self.arrayOfVotes.count);
+
             }
         }];
-
 }
 
-
-//- (NSInteger)totalVotesOnVideoWithIdentifier:(NSString *)identifier
-//{
-//    PFQuery *queryForVotes = [PFQuery queryWithClassName:@"Vote"];
-//    [queryForVotes findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-//        if (error) {
-//            NSLog(@"%@", error);
-//        }
-//        else {
-////            NSMutableArray *mutableObjects = [[NSMutableArray alloc] initWithArray:objects];
-////            for (Vote *votes in objects) {
-////                [mutableObjects addObject:votes];
-//            
-//                [VideoController sharedInstance].arrayOfVotes = objects;
-//                NSLog(@"%ld", (long)[VideoController sharedInstance].arrayOfVotes.count);
-////            }
-//            
-//        }
-//    }];
-//}
- 
 
 @end

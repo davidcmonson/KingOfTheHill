@@ -6,6 +6,7 @@
 //  Copyright (c) 2015 David Monson. All rights reserved.
 //
 
+#import "VideoController.h"
 #import "VideoFeedTableViewCell.h"
 
 @implementation VideoFeedTableViewCell
@@ -20,9 +21,12 @@
         _photoImageView.contentMode = UIViewContentModeScaleAspectFit;
         [self.contentView addSubview:_photoImageView];
         _cellHeight = _photoImageView.frame.size.height;
-        _votes = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 300, 50)];
-        _votes.textColor = [UIColor whiteColor];
-        [self.photoImageView addSubview:_votes];
+        
+        _votes = [[NSArray alloc] init];
+        
+        _voteCount = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 300, 50)];
+        _voteCount.textColor = [UIColor whiteColor];
+        [self.photoImageView addSubview:_voteCount];
     }
     return self;
 }

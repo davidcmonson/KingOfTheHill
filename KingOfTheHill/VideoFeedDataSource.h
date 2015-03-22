@@ -13,7 +13,6 @@
 
 @interface VideoFeedDataSource : NSObject <UITableViewDataSource>
 
-@property (nonatomic, strong) UILabel *votes;
 @property (nonatomic, strong) Video *video;
 
 -(void)registerTableView:(UITableView *)tableView;

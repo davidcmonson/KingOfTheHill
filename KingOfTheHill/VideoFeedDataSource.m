@@ -22,6 +22,11 @@
 
 @implementation VideoFeedDataSource
 
+- (void)registerForNotifications
+{
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(cellForRowAtIndexPath:) name:@"updateCellVotes" object:nil];
+}
+
 - (void)registerTableView:(UITableView *)tableView {
     
     [tableView registerClass:[VideoFeedTableViewCell class] forCellReuseIdentifier:NSStringFromClass([VideoFeedTableViewCell class])];
@@ -38,16 +43,27 @@
     return [VideoController sharedInstance].arrayOfVideoForFeed.count;
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
     VideoFeedTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([VideoFeedTableViewCell class])];
     UIImage *thumbnail = [VideoController sharedInstance].arrayOfThumbnails[indexPath.row];
     cell.photoImageView.image = thumbnail;
     cell.contentView.backgroundColor = [UIColor blackColor];
     
-    cell.votes.text = [NSString stringWithFormat:@"%lu", (unsigned long)[VideoController sharedInstance].arrayOfVotes.count];
-;
+//    self.video.arrayOfVotes = [[NSMutableArray alloc] initWithArray:[VideoController sharedInstance].arrayOfVotes[indexPath.row]];
+//    cell.voteCount.text = [NSString stringWithFormat:@"%ld", (long)self.video.arrayOfVotes.count];
     
     return cell;
+}
+
+- (void)unregisterForNotifications
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"updateCellVotes" object:nil];
+}
+
+- (void)dealloc
+{
+    [self unregisterForNotifications];
 }
 
 @end

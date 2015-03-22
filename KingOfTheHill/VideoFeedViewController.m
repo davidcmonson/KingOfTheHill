@@ -29,8 +29,8 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
+    [VideoController sharedInstance].arrayOfVotes.count;
     [self.tableView reloadData];
-//    [[VideoController sharedInstance] queryForVotes];
 }
 
 - (void)viewDidLoad {
@@ -50,11 +50,6 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
 
-//    UIImage *image = [VideoController sharedInstance].arrayOfThumbnails[indexPath.row];
-//    UIImageView *imageViewInCell = [[UIImageView alloc]initWithImage:image];
-//    imageViewInCell.frame = CGRectZero;
-//    imageViewInCell.contentMode = UIViewContentModeScaleAspectFit;
-
     return 428;
 
 }
@@ -62,9 +57,7 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     Video *videoSelected = [VideoController sharedInstance].arrayOfVideoForFeed[indexPath.row];
-//    videoSelected.arrayOfVotes = [VideoController sharedInstance].arrayOfThumbnails[indexPath.row];
-//    Vote *vote = videoSelected.arrayOfVotes[indexPath.row];
-//    [[VideoController sharedInstance] queryForVotes:vote onVideo:videoSelected];
+
     [self bringUpPlayer:videoSelected];
     NSLog(@"Selected Row %ld", (long)indexPath.row);
 }

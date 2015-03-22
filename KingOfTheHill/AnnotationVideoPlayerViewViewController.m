@@ -75,8 +75,8 @@
 {
     Vote *newVote = [Vote object];
     newVote[@"fromUser"] = [PFUser currentUser];
-    newVote[@"Video"] = self.video;
-    
+    newVote[@"toVideo"] = self.video;
+
     [newVote saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         if (succeeded) {
             NSLog(@"vote saved to Video");
@@ -94,6 +94,7 @@
     [[VideoController sharedInstance] queryForIndividualVote:self.vote];
     
     [[VideoController sharedInstance] queryForVotes:self.vote onVideo:self.video];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"updateCellVotes" object:nil];
 }
 
 -(void)dismissView {

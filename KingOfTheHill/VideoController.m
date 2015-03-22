@@ -158,8 +158,7 @@
             
             self.arrayOfVotes = [[NSMutableArray alloc] initWithArray:objects];
             
-            NSLog(@"queried vote");
-            NSLog(@"%@", self.arrayOfVotes);
+            NSLog(@"vote id: %@", vote.objectId);
         }
     }];
 }

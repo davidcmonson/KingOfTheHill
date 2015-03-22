@@ -17,7 +17,7 @@
 @property (nonatomic, strong) AVPlayer *player;
 
 @property (nonatomic, strong) Video *video;
-@property (nonatomic, strong) User *user;
+@property (nonatomic, strong) Vote *vote;
 
 @end
 
@@ -70,6 +70,7 @@
     self.video = video;
 }
 
+
 - (void)likeVote:(id)likeGesture
 {
     Vote *newVote = [Vote object];
@@ -85,16 +86,21 @@
         }
     }];
     
-    [[VideoController sharedInstance] queryForIndividualVote:newVote];
-//
-    [[VideoController sharedInstance] queryForVotes:newVote onVideo:self.video];
+    self.vote = newVote;
+}
 
+- (void)queryForVote
+{
+    [[VideoController sharedInstance] queryForIndividualVote:self.vote];
+    
+    [[VideoController sharedInstance] queryForVotes:self.vote onVideo:self.video];
 }
 
 -(void)dismissView {
     
     [self dismissViewControllerAnimated:YES completion:^{
         [self.player pause];
+        [self queryForVote];
         [self.view removeFromSuperview];
     }];
   

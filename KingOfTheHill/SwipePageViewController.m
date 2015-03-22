@@ -63,7 +63,8 @@
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"backgroundBlues"]]];
     
     self.view.backgroundColor = [UIColor blackColor];
-    [VideoController queryVideosForFeed];
+    
+
     self.cameraVC = [AAPLCameraViewController new];
     
     
@@ -73,7 +74,7 @@
     
     self.mapVC = [LocationViewController new];
     
-    
+    [VideoController queryVideosForFeed];
     self.pageViewController = [[UIPageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStyleScroll navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal options:nil];
     self.pageViewController.delegate = self;
     self.pageViewController.dataSource = self;

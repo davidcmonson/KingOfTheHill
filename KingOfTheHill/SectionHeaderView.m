@@ -7,6 +7,7 @@
 //
 
 #import "SectionHeaderView.h"
+#import "UIColor+AlphaRed.h"
 
 @implementation SectionHeaderView
 
@@ -34,7 +35,7 @@
         [self addSubview:self.userName];
         
         self.upVote = [UIButton new];
-        self.upVote.backgroundColor = [UIColor redColor];
+        self.upVote.backgroundColor = [UIColor alphaRed];
         [self addSubview:self.upVote];
         
         NSDictionary *viewDictionary = NSDictionaryOfVariableBindings(_votes, _userName);

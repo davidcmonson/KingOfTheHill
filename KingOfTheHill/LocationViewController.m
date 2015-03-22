@@ -9,7 +9,7 @@
 
 #import "LocationViewController.h"
 
-
+#import "UIColor+AlphaRed.h"
 #import "VideoController.h"
 #import "VideoPin.h"
 #import "AnnotationVideoPlayerViewViewController.h"
@@ -39,12 +39,27 @@
     self.zoomedOnce = NO;
     [self showMainMapView];
     [self setUpSwipeBar];
+    [self setUpZoomToCurrentLocationButton];
     
     // Required method to notify user if it can use your current location
     // NOTE: Put notification later telling users why it will need to use their location
     if ([self.locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)]) {
         [self.locationManager requestWhenInUseAuthorization];
     }
+}
+
+- (void) setUpZoomToCurrentLocationButton {
+    UIButton *zoom = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    zoom.layer.cornerRadius = 35;
+    zoom.frame = CGRectMake(240, 490, 70, 70);
+    UIImageView *icon = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"homelocation"]];
+    icon.frame = CGRectMake(5, 5, zoom.frame.size.width * 0.85, zoom.frame.size.width * 0.85);
+    //    icon.center = zoom.frame.bounds.center;
+    [zoom addSubview:icon];
+    zoom.tintColor = [UIColor whiteColor];
+    zoom.backgroundColor = [UIColor alphaRed];
+    [self.view addSubview:zoom];
+    [zoom addTarget:self action:@selector(centerAndZoomToLocation:) forControlEvents:UIControlEventTouchUpInside];
 }
 
 // Sets up bar at the bottom of the screen for users to swipe back to the main screen (camera)
@@ -70,6 +85,10 @@
 }
 
 - (void)centerAndZoomToLocation:(CLLocationCoordinate2D)coordinate {
+    // If there's no specified location, it sets coordinate to the user's current location
+    if (CLLocationCoordinate2DIsValid(coordinate)) {
+        coordinate = self.myCoordinates;
+    }
     MKCoordinateRegion adjustedRegionForInitialZoomLevel = [self.mainMapView regionThatFits:MKCoordinateRegionMakeWithDistance(coordinate, 3000 , 3000)];
     adjustedRegionForInitialZoomLevel.center = coordinate;
     [self.mainMapView setRegion:adjustedRegionForInitialZoomLevel animated:YES];
@@ -91,14 +110,14 @@
     self.myCoordinates = self.mainMapView.userLocation.location.coordinate;
     if (self.zoomedOnce == NO) {
         [self centerAndZoomToLocation:self.mainMapView.userLocation.location.coordinate];
-        [self queryForAllVideosNearLocation:self.myCoordinates withinDistance:20000];
+        [self queryForAllVideosNearLocation:self.myCoordinates withinMileRadius:0.5];
         // [self dropPinAtCoordinatesForVideosInVideosArray:[VideoController sharedInstance].arrayOfVideos];
         self.zoomedOnce = YES;
     }
 }
 
 - (void)queryForAllVideosNearLocation:(CLLocationCoordinate2D)coordinates
-                       withinDistance:(double)radiusFromLocationInMeters
+                     withinMileRadius:(double)radiusFromLocationInMiles
 {
     // Parse query calls.
     
@@ -107,7 +126,7 @@
                                                   longitude:coordinates.longitude];
     [queryForVideos whereKey:locationKeyOfVideo
                 nearGeoPoint:geoPoint
-            withinKilometers:radiusFromLocationInMeters];
+                 withinMiles:radiusFromLocationInMiles];
     
     [queryForVideos findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (error) {
@@ -159,7 +178,7 @@
         MKPinAnnotationView *annotationView = (MKPinAnnotationView *)[self.mainMapView dequeueReusableAnnotationViewWithIdentifier:annotationIdentifier];
         if (annotationView == nil)
             annotationView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:annotationIdentifier];
-
+        
         annotationView.canShowCallout = YES;
         annotationView.animatesDrop = YES;
         
@@ -181,19 +200,16 @@
 
 
 
-
-
-
 // user tapped the call out accessory or the "i"/the "bubble" in the annotation
 - (void)mapView:(MKMapView *)aMapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control {
-
+    
     VideoPin *pinAtAnnotation = view.annotation;
     
     Video *videoPicked = pinAtAnnotation.currentVideo;
     
     NSMutableArray *videosToShow = [NSMutableArray arrayWithObject:pinAtAnnotation];
     [videosToShow addObjectsFromArray:pinAtAnnotation.containedAnnotations];
-
+    
     [self bringUpPlayerWithVideo:videoPicked];
     
 }
@@ -230,7 +246,7 @@
 
 // When the user taps/selects the PIN, updates if there's mutiple pins inside
 - (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view {
-
+    
     if ([view.annotation isKindOfClass:[VideoPin class]])
     {
         VideoPin *annotation = (VideoPin *)view.annotation;

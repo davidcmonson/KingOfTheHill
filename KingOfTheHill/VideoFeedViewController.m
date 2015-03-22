@@ -5,7 +5,7 @@
 //  Created by Ryan S. Watt on 3/12/15.
 //  Copyright (c) 2015 David Monson. All rights reserved.
 //
-
+#import "UIColor+AlphaRed.h"
 #import "VideoFeedViewController.h"
 #import "VideoFeedTableViewCell.h"
 #import "VideoFeedDataSource.h"
@@ -35,7 +35,7 @@
     //self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height) style:UITableViewStylePlain];
     [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     self.tableView.delegate = self;
-    self.tableView.backgroundColor = [UIColor redColor];
+    self.tableView.backgroundColor = [UIColor alphaRed];
     // This allows each cell to "snap" to the top/bottom edges as user scrolls through the cells
     //self.tableView.pagingEnabled = YES; // DISABLED: snaps weirdly
     

@@ -13,6 +13,7 @@
 #import <AVFoundation/AVFoundation.h>
 #import <AssetsLibrary/AssetsLibrary.h>
 #import <CoreLocation/CoreLocation.h>
+#import "UIColor+AlphaRed.h"
 
 #import "AAPLPreviewView.h"
 
@@ -131,7 +132,7 @@ static float EXPOSURE_MINIMUM_DURATION = 1.0/1000; // Limit exposure duration to
 {
     [super viewDidLoad];
     
-    dispatch_async(dispatch_get_main_queue(), ^{
+dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         locationManager = [[CLLocationManager alloc] init];
         locationManager.delegate = self;
         locationManager.distanceFilter = kCLDistanceFilterNone;
@@ -149,7 +150,7 @@ static float EXPOSURE_MINIMUM_DURATION = 1.0/1000; // Limit exposure duration to
     self.recordButton = [[UIButton alloc]initWithFrame:CGRectMake(90, 500, 150, 50)];
     // NOTE: Addsubview is at the bottom because it needs to be added AFTER the previewLayer is added
     // Instantiating it here, will make the button hide behind the preview.
-    self.recordButton.backgroundColor = [UIColor redColor];
+    self.recordButton.backgroundColor = [UIColor alphaRed];
     self.recordButton.layer.cornerRadius = self.stillButton.layer.cornerRadius = self.cameraButton.layer.cornerRadius = 4;
     // self.recordButton.clipsToBounds = self.stillButton.clipsToBounds = self.cameraButton.clipsToBounds = YES;
     [self.recordButton addTarget:self action:@selector(toggleMovieRecording) forControlEvents:UIControlEventTouchDown];

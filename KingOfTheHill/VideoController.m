@@ -88,13 +88,13 @@
                 NSLog(@"%@", error);
             }
             else {
-                
+                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
                     //[VideoController sharedInstance].objectArrayFromParse = objects;
                 [VideoController sharedInstance].arrayOfVideoForFeed = objects;
                 [[VideoController sharedInstance] populateThumbnailArray:objects];
                 NSLog(@"%ld videos with thumbnails",[VideoController sharedInstance].arrayOfVideoForFeed.count);
                 NSLog(@"Thumbnails Loaded!");
-                
+                });
             }
         }];
 }

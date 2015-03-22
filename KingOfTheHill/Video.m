@@ -26,6 +26,6 @@
 @dynamic thumbnail;
 @dynamic videoFile;
 @dynamic videoAtIndex;
-@dynamic Votes;
+//@dynamic votes;
 
 @end

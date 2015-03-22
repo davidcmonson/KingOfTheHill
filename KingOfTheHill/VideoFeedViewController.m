@@ -30,7 +30,11 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
-//    [[VideoController sharedInstance] queryForVotesOnVideo:self.videoSelected];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadTable) name:@"updateCellVotes" object:nil];
+}
+
+- (void)reloadTable
+{
     [self.tableView reloadData];
 }
 
@@ -59,8 +63,8 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     self.videoSelected = [Video new];
     self.videoSelected = [VideoController sharedInstance].arrayOfVideoForFeed[indexPath.row];
-
     [self bringUpPlayer:self.videoSelected];
+    [self.tableView reloadData];
     NSLog(@"Selected Row %ld", (long)indexPath.row);
 }
 
@@ -106,6 +110,16 @@
     videoVC.modalPresentationStyle = UIModalPresentationOverCurrentContext;
     videoVC.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
     [self presentViewController:videoVC animated:YES completion:nil];
+}
+
+- (void)unregisterForNotifications
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"updateCellVotes" object:nil];
+}
+
+- (void)dealloc
+{
+    [self unregisterForNotifications];
 }
 
 @end

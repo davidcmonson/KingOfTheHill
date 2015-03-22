@@ -68,6 +68,14 @@
     
 }
 
+//+ (void)queryVotesForVideos
+//{
+//    NSLog(@"Votes Loading");
+//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+//        <#code#>
+//    })
+//}
+
 
 // takes in the array from Parse, adds an image to each of it and puts it back into the sharedInstance array
 - (void)populateThumbnailArray:(NSArray *)array {
@@ -82,6 +90,9 @@
             NSLog(@"added blank thumbnail for video %ld", (long)index);
         } else {
             PFFile *thumbnailImage = video[urlOfThumbnail];
+            
+            [[VideoController sharedInstance] queryForVotesOnVideo:video];
+            
             NSURL *urlOfThumbnail = [NSURL URLWithString:thumbnailImage.url];
             NSData *dataOfThumbnail = [NSData dataWithContentsOfURL:urlOfThumbnail];
             UIImage *thumbnail = [UIImage imageWithData:dataOfThumbnail];
@@ -130,7 +141,7 @@
 //    return mutableArray;
 //}
 //    }}
-
+//
 //- (void)queryForIndividualVote:(Vote *)vote
 //{
 //    PFQuery *queryForVote = [Vote query];
@@ -140,15 +151,15 @@
 //        }
 //        else {
 //            
-//            self.arrayOfVotes = [[NSMutableArray alloc] initWithArray:objects];
+//            self.votesSpecificToVideo = [[NSMutableArray alloc] initWithArray:objects];
 //            
-////            NSLog(@"vote id saved: %@", vote.objectId);
-////            NSLog(@"indiv vote : self.arrayOfVotes: %ld", (long)self.arrayOfVotes.count);
+//            NSLog(@"vote id saved: %@", vote.objectId);
+//            NSLog(@"indiv vote : self.arrayOfVotes: %ld", (long)self.votesSpecificToVideo.count);
 //        }
 //    }];
 //}
 
-- (void)queryForVotesOnVideo:(Video *)video
+- (NSArray *)queryForVotesOnVideo:(Video *)video
 {
         PFQuery *queryForVotes = [PFQuery queryWithClassName:@"Vote"];
         [queryForVotes whereKey:@"toVideo" equalTo:video];
@@ -156,12 +167,18 @@
             if (error) {
                 NSLog(@"error:%@",error);
             } else {
-//                NSLog(@"votesOnVideoid: %@ and vote id: %@",video.objectId, vote.objectId);
-                self.arrayOfVotes = [[NSMutableArray alloc] initWithArray:objects];
-                NSLog(@"self.arrayOfVotes: %ld", (long)self.arrayOfVotes.count);
+//                NSMutableArray *mutable = [[NSMutableArray alloc] initWithArray:objects];
+//                NSMutableArray *mutable = [NSMutableArray array];
+//                [mutable addObjectsFromArray:objects];
+//                self.arrayOfVotes = mutable;
+
+                [VideoController sharedInstance].arrayOfVotes = objects;
+                NSLog(@"arrayOfVotes: %ld", (long)[VideoController sharedInstance].arrayOfVotes.count);
 
             }
         }];
+    
+    return [VideoController sharedInstance].arrayOfVotes;
 }
 
 

@@ -18,14 +18,11 @@
 @property (nonatomic) NSIndexPath *currentIndex;
 @property (nonatomic, strong) VideoFeedTableViewCell *cell;
 
+@property (nonatomic, strong) NSArray *voteCount;
+
 @end
 
 @implementation VideoFeedDataSource
-
-- (void)registerForNotifications
-{
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(cellForRowAtIndexPath:) name:@"updateCellVotes" object:nil];
-}
 
 - (void)registerTableView:(UITableView *)tableView {
     
@@ -50,19 +47,23 @@
     cell.photoImageView.image = thumbnail;
     cell.contentView.backgroundColor = [UIColor blackColor];
     
-    cell.voteCount.text = [NSString stringWithFormat:@"%ld", (long)[VideoController sharedInstance].arrayOfVotes.count];
+    NSMutableArray *mutable = [[NSMutableArray alloc] initWithArray:[VideoController sharedInstance].arrayOfVotes];
     
+    for (NSArray *array in mutable) {
+        
+        for (NSInteger index = 0; index < array.count; index++)
+        {
+            NSArray *voteCount = mutable[indexPath.row];
+            cell.voteCount.text = [NSString stringWithFormat:@"%ld", (long)voteCount.count];
+        }
+    }
+    
+//    for (NSArray *array in [VideoController sharedInstance].arrayOfVotes) {
+//        NSArray *voteCount = array[indexPath.row];
+//        cell.voteCount.text = [NSString stringWithFormat:@"%ld", (long)voteCount.count];
+//    }
+
     return cell;
-}
-
-- (void)unregisterForNotifications
-{
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"updateCellVotes" object:nil];
-}
-
-- (void)dealloc
-{
-    [self unregisterForNotifications];
 }
 
 @end

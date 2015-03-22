@@ -30,7 +30,7 @@ static NSString *videoVotesKey = @"Votes";
 @property (nonatomic) NSInteger videoAtIndex;
 @property (nonatomic) UIImage *thumbnail;
 @property (nonatomic, strong) NSString *videoFile;
-@property (nonatomic, strong) NSArray *Votes;
+//@property (nonatomic, strong) NSArray *votes;
 
 
 @property (nonatomic, assign) CLLocationCoordinate2D location;

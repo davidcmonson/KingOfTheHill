@@ -19,6 +19,7 @@
 @property (nonatomic, strong) NSArray *arrayOfVideosNearLocation;
 @property (nonatomic ,strong) NSArray *arrayOfThumbnails;
 @property (nonatomic, strong) NSArray *arrayOfVotes;
+@property (nonatomic, strong) NSArray *votesSpecificToVideo;
 
 @property (nonatomic, assign) NSInteger *videoIndex;
 
@@ -35,7 +36,8 @@
 - (void)videoToParseWithFile:(PFFile *)file andLocation:(PFGeoPoint *)currentLocationGeoPoint;
 - (void)saveVoteToParse:(NSString *)vote;
 + (void)queryVideosForFeed;
-- (void)queryForVotesOnVideo:(Video *)video;
+- (void)queryForIndividualVote:(Vote *)vote;
+- (NSArray *)queryForVotesOnVideo:(Video *)video;
 
 
 @end

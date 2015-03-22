@@ -94,7 +94,7 @@
                 [[VideoController sharedInstance] populateThumbnailArray:objects];
                 NSLog(@"%ld videos with thumbnails",[VideoController sharedInstance].arrayOfVideoForFeed.count);
                 NSLog(@"Thumbnails Loaded!");
-                });
+                }); 
             }
         }];
 }

@@ -50,8 +50,7 @@
     cell.photoImageView.image = thumbnail;
     cell.contentView.backgroundColor = [UIColor blackColor];
     
-//    self.video.arrayOfVotes = [[NSMutableArray alloc] initWithArray:[VideoController sharedInstance].arrayOfVotes[indexPath.row]];
-//    cell.voteCount.text = [NSString stringWithFormat:@"%ld", (long)self.video.arrayOfVotes.count];
+    cell.voteCount.text = [NSString stringWithFormat:@"%ld", (long)[VideoController sharedInstance].arrayOfVotes.count];
     
     return cell;
 }

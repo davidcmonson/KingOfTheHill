@@ -34,10 +34,8 @@
 
 - (void)videoToParseWithFile:(PFFile *)file andLocation:(PFGeoPoint *)currentLocationGeoPoint;
 - (void)saveVoteToParse:(NSString *)vote;
-//- (void)relationshipBetweenVote:(NSArray *)votes Video:(Video *)video;
 + (void)queryVideosForFeed;
-- (void)queryForVotes:(Vote *)vote onVideo:(Video *)video;
-- (void)queryForIndividualVote:(Vote *)vote;
+- (void)queryForVotesOnVideo:(Video *)video;
 
 
 @end

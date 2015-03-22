@@ -22,6 +22,7 @@
 @property (nonatomic, strong) VideoFeedDataSource *dataSource;
 
 @property (nonatomic, strong) UIButton *headerButton;
+@property (nonatomic, strong) Video *videoSelected;
 
 @end
 
@@ -29,7 +30,7 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
-    [VideoController sharedInstance].arrayOfVotes.count;
+//    [[VideoController sharedInstance] queryForVotesOnVideo:self.videoSelected];
     [self.tableView reloadData];
 }
 
@@ -56,9 +57,10 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    Video *videoSelected = [VideoController sharedInstance].arrayOfVideoForFeed[indexPath.row];
+    self.videoSelected = [Video new];
+    self.videoSelected = [VideoController sharedInstance].arrayOfVideoForFeed[indexPath.row];
 
-    [self bringUpPlayer:videoSelected];
+    [self bringUpPlayer:self.videoSelected];
     NSLog(@"Selected Row %ld", (long)indexPath.row);
 }
 

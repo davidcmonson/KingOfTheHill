@@ -91,9 +91,9 @@
 
 - (void)queryForVote
 {
-    [[VideoController sharedInstance] queryForIndividualVote:self.vote];
+//    [[VideoController sharedInstance] queryForIndividualVote:self.vote];
     
-    [[VideoController sharedInstance] queryForVotes:self.vote onVideo:self.video];
+    [[VideoController sharedInstance] queryForVotesOnVideo:self.video];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"updateCellVotes" object:nil];
 }
 

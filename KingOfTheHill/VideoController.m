@@ -40,22 +40,6 @@
     }];
 }
 
-//- (void)relationshipBetweenVote:(NSArray *)votes Video:(Video *)video
-//{
-//    video = (Video *)[PFObject objectWithClassName:@"Video"];
-//    Vote *voteObject = (Vote *)[PFObject objectWithClassName:@"Vote"];
-//    for (Vote *vote in votes) {
-//        [votes indexOfObject:vote];
-//    }
-//    voteObject[@"Video"] = video;
-////    voteObject[@"name"] = name;
-//    [voteObject saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-//        if (succeeded) {
-//            NSLog(@"relation between vote and video saved");
-//        }
-//    }];
-//}
-
 // Method to fetch videos
 //
 //
@@ -147,24 +131,24 @@
 //}
 //    }}
 
-- (void)queryForIndividualVote:(Vote *)vote
-{
-    PFQuery *queryForVote = [Vote query];
-    [queryForVote findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-        if (error) {
-            NSLog(@"%@", error);
-        }
-        else {
-            
-            self.arrayOfVotes = [[NSMutableArray alloc] initWithArray:objects];
-            
-//            NSLog(@"vote id saved: %@", vote.objectId);
-//            NSLog(@"indiv vote : self.arrayOfVotes: %ld", (long)self.arrayOfVotes.count);
-        }
-    }];
-}
+//- (void)queryForIndividualVote:(Vote *)vote
+//{
+//    PFQuery *queryForVote = [Vote query];
+//    [queryForVote findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+//        if (error) {
+//            NSLog(@"%@", error);
+//        }
+//        else {
+//            
+//            self.arrayOfVotes = [[NSMutableArray alloc] initWithArray:objects];
+//            
+////            NSLog(@"vote id saved: %@", vote.objectId);
+////            NSLog(@"indiv vote : self.arrayOfVotes: %ld", (long)self.arrayOfVotes.count);
+//        }
+//    }];
+//}
 
-- (void)queryForVotes:(Vote *)vote onVideo:(Video *)video
+- (void)queryForVotesOnVideo:(Video *)video
 {
         PFQuery *queryForVotes = [PFQuery queryWithClassName:@"Vote"];
         [queryForVotes whereKey:@"toVideo" equalTo:video];

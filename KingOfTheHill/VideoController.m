@@ -91,7 +91,7 @@
         } else {
             PFFile *thumbnailImage = video[urlOfThumbnail];
             
-            [[VideoController sharedInstance] queryForVotesOnVideo:video];
+            //[[VideoController sharedInstance] queryForVotesOnVideo:video];
             
             NSURL *urlOfThumbnail = [NSURL URLWithString:thumbnailImage.url];
             NSData *dataOfThumbnail = [NSData dataWithContentsOfURL:urlOfThumbnail];
@@ -161,32 +161,11 @@
 
 - (void)queryForVotesOnVideo:(Video *)video
 {
-   
-    PFQuery *queryForVotes = [PFQuery queryWithClassName:@"Vote"];
-    [queryForVotes whereKey:@"toVideo" equalTo:video];
-    
-
-    [queryForVotes countObjectsInBackgroundWithBlock:^(int number, NSError *error) {
-        
-        if (error) {
-            NSLog(@"error:%@",error);
-        } else {
-            //                NSMutableArray *mutable = [[NSMutableArray alloc] initWithArray:objects];
-            //                NSMutableArray *mutable = [NSMutableArray array];
-            //                [mutable addObjectsFromArray:objects];
-            //                self.arrayOfVotes = mutable;
-            
-            [VideoController sharedInstance].currentVotesOnVideo = number;
-            //NSLog(@"arrayOfVotes: %ld", (long)[VideoController sharedInstance].arrayOfVotes.count);
-            
-        }
-        NSLog(@"OBJECTS Array: %d", number);
-
-        
-    }];
-
+    PFQuery *queryForVotesOnVideo = [PFQuery queryWithClassName:@"Vote"];
+    [queryForVotesOnVideo whereKey:@"toVideo" equalTo:video];
+    NSInteger vote = [queryForVotesOnVideo countObjects];
+    self.voteCount = vote;
 }
-
 
 
 
@@ -198,18 +177,18 @@
 //     //                NSMutableArray *mutable = [NSMutableArray array];
 //     //                [mutable addObjectsFromArray:objects];
 //     //                self.arrayOfVotes = mutable;
-//     
+//
 //                     [VideoController sharedInstance].arrayOfVotes = objects;
-//     
+//
 //                     //NSLog(@"arrayOfVotes: %ld", (long)[VideoController sharedInstance].arrayOfVotes.count);
-//     
+//
 //                 }
 //                                 NSLog(@"OBJECTS Array: %@", [VideoController sharedInstance].arrayOfVotes[0]);
-//     
+//
 //             }];
-//     
+//
 //         return [VideoController sharedInstance].arrayOfVotes;
 //     }
 
-     
-     @end
+
+@end

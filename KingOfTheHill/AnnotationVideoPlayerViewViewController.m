@@ -93,8 +93,8 @@
 {
 //    [[VideoController sharedInstance] queryForIndividualVote:self.vote];
     
-    [[VideoController sharedInstance] queryForVotesOnVideo:self.video];
-                    NSLog(@"arrayOfVotes ANNOTATION VIEW CONTROLLER: %ld", (long)[VideoController sharedInstance].arrayOfVotes.count);
+    //[[VideoController sharedInstance] queryForVotesOnVideo:self.video];
+
     [[NSNotificationCenter defaultCenter] postNotificationName:@"updateCellVotes" object:nil];
 }
 

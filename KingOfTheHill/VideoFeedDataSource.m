@@ -47,24 +47,27 @@
     cell.photoImageView.image = thumbnail;
     cell.contentView.backgroundColor = [UIColor blackColor];
     
-    cell.voteCount.text = [NSString stringWithFormat:@"%d", [VideoController sharedInstance].currentVotesOnVideo];
+    Video *currentVideo = [VideoController sharedInstance].arrayOfVideoForFeed[indexPath.row];
     
-//    NSMutableArray *mutable = [[NSMutableArray alloc] initWithArray:[VideoController sharedInstance].arrayOfVotes];
-//    
-//    for (NSArray *array in mutable) {
-//        
-//        for (NSInteger index = 0; index < array.count; index++)
-//        {
-//            NSArray *voteCount = mutable[indexPath.row];
-//           cell.voteCount.text = [NSString stringWithFormat:@"%ld", (long)voteCount.count];
-//        }
+    [[VideoController sharedInstance] queryForVotesOnVideo:currentVideo];
+    cell.voteCount.text = [NSString stringWithFormat:@"%lu", [VideoController sharedInstance].voteCount];
+    
+    //    NSMutableArray *mutable = [[NSMutableArray alloc] initWithArray:[VideoController sharedInstance].arrayOfVotes];
+    //
+    //    for (NSArray *array in mutable) {
+    //
+    //        for (NSInteger index = 0; index < array.count; index++)
+    //        {
+    //            NSArray *voteCount = mutable[indexPath.row];
+    //           cell.voteCount.text = [NSString stringWithFormat:@"%ld", (long)voteCount.count];
+    //        }
     //}
     
-//    for (NSArray *array in [VideoController sharedInstance].arrayOfVotes) {
-//        NSArray *voteCount = array[indexPath.row];
-//        cell.voteCount.text = [NSString stringWithFormat:@"%ld", (long)voteCount.count];
-//    }
-
+    //    for (NSArray *array in [VideoController sharedInstance].arrayOfVotes) {
+    //        NSArray *voteCount = array[indexPath.row];
+    //        cell.voteCount.text = [NSString stringWithFormat:@"%ld", (long)voteCount.count];
+    //    }
+    
     return cell;
 }
 

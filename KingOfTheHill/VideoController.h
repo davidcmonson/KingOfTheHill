@@ -18,7 +18,7 @@
 @property (nonatomic, strong) NSArray *arrayOfVideoForFeed;
 @property (nonatomic, strong) NSArray *arrayOfVideosNearLocation;
 @property (nonatomic ,strong) NSArray *arrayOfThumbnails;
-@property (nonatomic, strong) NSArray *arrayOfVotes;
+@property (nonatomic, strong) NSMutableArray *arrayOfVotes;
 @property (nonatomic, strong) NSArray *votesSpecificToVideo;
 
 @property (nonatomic, assign) NSInteger *videoIndex;
@@ -27,7 +27,10 @@
 
 @property (nonatomic, assign) NSIndexPath *indexPathOfThumbnail;
 
-@property (nonatomic) int currentVotesOnVideo;
+
+@property (nonatomic) NSInteger voteCount;
+
+
 
 + (VideoController *)sharedInstance;
 - (void)videoToParseWithFile:(PFFile *)file

@@ -27,6 +27,8 @@
 
 @property (nonatomic, assign) NSIndexPath *indexPathOfThumbnail;
 
+@property (nonatomic) int currentVotesOnVideo;
+
 + (VideoController *)sharedInstance;
 - (void)videoToParseWithFile:(PFFile *)file
                  andLocation:(PFGeoPoint *)currentLocationGeoPoint
@@ -37,7 +39,7 @@
 - (void)saveVoteToParse:(NSString *)vote;
 + (void)queryVideosForFeed;
 - (void)queryForIndividualVote:(Vote *)vote;
-- (NSArray *)queryForVotesOnVideo:(Video *)video;
+- (void)queryForVotesOnVideo:(Video *)video;
 
 
 @end

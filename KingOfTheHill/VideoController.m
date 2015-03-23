@@ -97,22 +97,22 @@
             NSData *dataOfThumbnail = [NSData dataWithContentsOfURL:urlOfThumbnail];
             UIImage *thumbnail = [UIImage imageWithData:dataOfThumbnail];
             [mutableArray addObject:thumbnail];
-        
-//            NSOperationQueue *queue = NSOperationQueuePriorityNormal;
-//            [queue addOperationWithBlock:^{
-//            PFQuery *queryForVotes = [Vote query];
-//            self.numberOfVotesForVideo = [NSString stringWithFormat:@"%ld", (long)[queryForVotes whereKey:@"toVideo" equalTo:videoId].countObjects];
-//            NSLog(@"%@",[NSString stringWithFormat:@"%ld", (long)[queryForVotes whereKey:@"toVideo" equalTo:videoId].countObjects]);
-//            }];
-////            [queryForVotes findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-////                if (error) {
-////                    NSLog(@"%@", error);
-////                }
-////                else {
-////                    NSLog(@"success");
+            
+            //            NSOperationQueue *queue = NSOperationQueuePriorityNormal;
+            //            [queue addOperationWithBlock:^{
+            //            PFQuery *queryForVotes = [Vote query];
+            //            self.numberOfVotesForVideo = [NSString stringWithFormat:@"%ld", (long)[queryForVotes whereKey:@"toVideo" equalTo:videoId].countObjects];
+            //            NSLog(@"%@",[NSString stringWithFormat:@"%ld", (long)[queryForVotes whereKey:@"toVideo" equalTo:videoId].countObjects]);
+            //            }];
+            ////            [queryForVotes findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+            ////                if (error) {
+            ////                    NSLog(@"%@", error);
+            ////                }
+            ////                else {
+            ////                    NSLog(@"success");
         }
     }
-//
+    //
     [VideoController sharedInstance].arrayOfThumbnails = mutableArray;
     //NSLog(@"%@", [VideoController sharedInstance].arrayOfThumbnails);
 }
@@ -123,7 +123,7 @@
 //    NSArray *array = [VideoController sharedInstance].objectArrayFromParse;
 //    NSMutableArray *mutableArray = [NSMutableArray new];
 //    for (NSInteger index = 0; index < array.count; index++) {
-//        
+//
 //        Video *video = array[index];
 //        if (!video[urlOfThumbnail]) {
 //            // add "missing thumbnail" picture if video doesn't have thumbnail
@@ -150,36 +150,66 @@
 //            NSLog(@"%@", error);
 //        }
 //        else {
-//            
+//
 //            self.votesSpecificToVideo = [[NSMutableArray alloc] initWithArray:objects];
-//            
+//
 //            NSLog(@"vote id saved: %@", vote.objectId);
 //            NSLog(@"indiv vote : self.arrayOfVotes: %ld", (long)self.votesSpecificToVideo.count);
 //        }
 //    }];
 //}
 
-- (NSArray *)queryForVotesOnVideo:(Video *)video
+- (void)queryForVotesOnVideo:(Video *)video
 {
-        PFQuery *queryForVotes = [PFQuery queryWithClassName:@"Vote"];
-        [queryForVotes whereKey:@"toVideo" equalTo:video];
-        [queryForVotes findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-            if (error) {
-                NSLog(@"error:%@",error);
-            } else {
-//                NSMutableArray *mutable = [[NSMutableArray alloc] initWithArray:objects];
-//                NSMutableArray *mutable = [NSMutableArray array];
-//                [mutable addObjectsFromArray:objects];
-//                self.arrayOfVotes = mutable;
-
-                [VideoController sharedInstance].arrayOfVotes = objects;
-                NSLog(@"arrayOfVotes: %ld", (long)[VideoController sharedInstance].arrayOfVotes.count);
-
-            }
-        }];
+   
+    PFQuery *queryForVotes = [PFQuery queryWithClassName:@"Vote"];
+    [queryForVotes whereKey:@"toVideo" equalTo:video];
     
-    return [VideoController sharedInstance].arrayOfVotes;
+
+    [queryForVotes countObjectsInBackgroundWithBlock:^(int number, NSError *error) {
+        
+        if (error) {
+            NSLog(@"error:%@",error);
+        } else {
+            //                NSMutableArray *mutable = [[NSMutableArray alloc] initWithArray:objects];
+            //                NSMutableArray *mutable = [NSMutableArray array];
+            //                [mutable addObjectsFromArray:objects];
+            //                self.arrayOfVotes = mutable;
+            
+            [VideoController sharedInstance].currentVotesOnVideo = number;
+            //NSLog(@"arrayOfVotes: %ld", (long)[VideoController sharedInstance].arrayOfVotes.count);
+            
+        }
+        NSLog(@"OBJECTS Array: %d", number);
+
+        
+    }];
+
 }
 
 
-@end
+
+
+//             [queryForVotes findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+//                 if (error) {
+//                     NSLog(@"error:%@",error);
+//                 } else {
+//     //                NSMutableArray *mutable = [[NSMutableArray alloc] initWithArray:objects];
+//     //                NSMutableArray *mutable = [NSMutableArray array];
+//     //                [mutable addObjectsFromArray:objects];
+//     //                self.arrayOfVotes = mutable;
+//     
+//                     [VideoController sharedInstance].arrayOfVotes = objects;
+//     
+//                     //NSLog(@"arrayOfVotes: %ld", (long)[VideoController sharedInstance].arrayOfVotes.count);
+//     
+//                 }
+//                                 NSLog(@"OBJECTS Array: %@", [VideoController sharedInstance].arrayOfVotes[0]);
+//     
+//             }];
+//     
+//         return [VideoController sharedInstance].arrayOfVotes;
+//     }
+
+     
+     @end

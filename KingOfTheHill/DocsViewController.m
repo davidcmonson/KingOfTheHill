@@ -7,7 +7,6 @@
 //
 
 #import "DocsViewController.h"
-#import "LegalStuff.h"
 
 @implementation DocsViewController
 
@@ -37,9 +36,6 @@
     [self.view addSubview:legalScroll];
     UILabel *legalLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 30, self.view.bounds.size.width, 13800)];
     [legalLabel setNumberOfLines:0];
-    //    legalLabel
-    //    [legalLabel sizeToFit];
-    legalLabel.text = [[LegalStuff legalDocs] objectForKey:LegalKey];
     legalLabel.textColor = [UIColor lightGrayColor];
     [legalScroll addSubview:legalLabel];
     [legalScroll setContentSize:CGSizeMake(self.view.frame.size.width, 13800)];

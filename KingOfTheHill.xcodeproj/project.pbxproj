@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		12215DBF1AB78DC500D4E8A2 /* VideoFeedDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 12215DBE1AB78DC500D4E8A2 /* VideoFeedDataSource.m */; };
 		12A5C0551AB7771C00DB4ACB /* VideoFeedTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 12A5C0541AB7771C00DB4ACB /* VideoFeedTableViewCell.m */; };
-		12CD76B81ABBD99300438D7E /* LegalStuff.m in Sources */ = {isa = PBXBuildFile; fileRef = 12CD76B71ABBD99300438D7E /* LegalStuff.m */; };
 		12CD76BB1ABCA65400438D7E /* UILabel+DynamicLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 12CD76BA1ABCA65400438D7E /* UILabel+DynamicLabel.m */; };
 		12CD76BE1ABCC08200438D7E /* DocsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 12CD76BD1ABCC08200438D7E /* DocsViewController.m */; };
 		4980860A1ABDCCBE00F19AE1 /* UIColor+AlphaRed.m in Sources */ = {isa = PBXBuildFile; fileRef = 498086091ABDCCBE00F19AE1 /* UIColor+AlphaRed.m */; };
@@ -72,8 +71,6 @@
 		12215DBE1AB78DC500D4E8A2 /* VideoFeedDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VideoFeedDataSource.m; sourceTree = "<group>"; };
 		12A5C0531AB7771C00DB4ACB /* VideoFeedTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoFeedTableViewCell.h; sourceTree = "<group>"; };
 		12A5C0541AB7771C00DB4ACB /* VideoFeedTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VideoFeedTableViewCell.m; sourceTree = "<group>"; };
-		12CD76B61ABBD99300438D7E /* LegalStuff.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LegalStuff.h; sourceTree = "<group>"; };
-		12CD76B71ABBD99300438D7E /* LegalStuff.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LegalStuff.m; sourceTree = "<group>"; };
 		12CD76B91ABCA65400438D7E /* UILabel+DynamicLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UILabel+DynamicLabel.h"; sourceTree = "<group>"; };
 		12CD76BA1ABCA65400438D7E /* UILabel+DynamicLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UILabel+DynamicLabel.m"; sourceTree = "<group>"; };
 		12CD76BC1ABCC08200438D7E /* DocsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DocsViewController.h; sourceTree = "<group>"; };
@@ -183,36 +180,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		498086061ABD708D00F19AE1 /* VideoFeed */ = {
-			isa = PBXGroup;
-			children = (
-				499F2CCA1AB2598B00B3FDDF /* VideoFeedViewController.h */,
-				499F2CCB1AB2598B00B3FDDF /* VideoFeedViewController.m */,
-				12A5C0531AB7771C00DB4ACB /* VideoFeedTableViewCell.h */,
-				12A5C0541AB7771C00DB4ACB /* VideoFeedTableViewCell.m */,
-				12215DC31AB9076900D4E8A2 /* SectionHeaderView.h */,
-				12215DC41AB9076900D4E8A2 /* SectionHeaderView.m */,
-				12215DBD1AB78DC500D4E8A2 /* VideoFeedDataSource.h */,
-				12215DBE1AB78DC500D4E8A2 /* VideoFeedDataSource.m */,
-			);
-			name = VideoFeed;
-			sourceTree = "<group>";
-		};
-		498086071ABD70D000F19AE1 /* ProfileView */ = {
-			isa = PBXGroup;
-			children = (
-				499F2CCD1AB259A800B3FDDF /* ProfileViewController.h */,
-				499F2CCE1AB259A800B3FDDF /* ProfileViewController.m */,
-				12CD76BC1ABCC08200438D7E /* DocsViewController.h */,
-				12CD76BD1ABCC08200438D7E /* DocsViewController.m */,
-				12CD76B61ABBD99300438D7E /* LegalStuff.h */,
-				12CD76B71ABBD99300438D7E /* LegalStuff.m */,
-				12CD76B91ABCA65400438D7E /* UILabel+DynamicLabel.h */,
-				12CD76BA1ABCA65400438D7E /* UILabel+DynamicLabel.m */,
-			);
-			name = ProfileView;
-			sourceTree = "<group>";
-		};
 		49AF60BF1AB8CB0C003C123D /* Camera */ = {
 			isa = PBXGroup;
 			children = (
@@ -416,7 +383,7 @@
 				TargetAttributes = {
 					77D6FB231AA92CAC00E97862 = {
 						CreatedOnToolsVersion = 6.1.1;
-						DevelopmentTeam = K75493KQVP;
+						DevelopmentTeam = N7G76WLU2V;
 						SystemCapabilities = {
 							com.apple.Maps.iOS = {
 								enabled = 1;
@@ -428,7 +395,7 @@
 					};
 					77D6FB3C1AA92CAC00E97862 = {
 						CreatedOnToolsVersion = 6.1.1;
-						DevelopmentTeam = VBJ3B2RNGL;
+						DevelopmentTeam = N7G76WLU2V;
 						TestTargetID = 77D6FB231AA92CAC00E97862;
 					};
 				};
@@ -491,7 +458,6 @@
 				499F2CC31AB241D700B3FDDF /* VideoPin.m in Sources */,
 				4980860A1ABDCCBE00F19AE1 /* UIColor+AlphaRed.m in Sources */,
 				49F462CB1AA93A5400E56599 /* Location.m in Sources */,
-				12CD76B81ABBD99300438D7E /* LegalStuff.m in Sources */,
 				499F2D0D1AB3423D00B3FDDF /* UserController.m in Sources */,
 				49AF60BE1AB8CB06003C123D /* AAPLPreviewView.m in Sources */,
 				49CC3CA31AB368C300672138 /* CameraViewController.m in Sources */,

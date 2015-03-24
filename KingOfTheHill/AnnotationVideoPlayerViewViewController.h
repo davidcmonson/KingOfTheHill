@@ -13,7 +13,7 @@
 @interface AnnotationVideoPlayerViewViewController : UIViewController
 
 @property (nonatomic) NSInteger videoAtIndex;
-@property (nonatomic, strong) Video *currentVideo;
+//@property (nonatomic, strong) Video *currentVideo;
 
 - (void)updateWithVideo:(Video *)video;
 

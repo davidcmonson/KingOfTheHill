@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "LegalStuff.h"
 @interface DocsViewController : UIViewController
 
 @end

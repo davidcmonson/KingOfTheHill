@@ -217,7 +217,7 @@
 - (void)bringUpPlayerWithVideo:(Video *)video {
     
     self.videoVC = [AnnotationVideoPlayerViewViewController new];
-    self.videoVC.currentVideo = video;
+
     self.videoVC.edgesForExtendedLayout = UIRectEdgeNone;
     self.videoVC.modalPresentationStyle = UIModalPresentationOverCurrentContext;
     self.videoVC.modalTransitionStyle = UIModalTransitionStyleCoverVertical;;

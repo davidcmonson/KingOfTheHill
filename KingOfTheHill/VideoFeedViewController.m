@@ -99,6 +99,7 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     self.videoSelected = [Video new];
     self.videoSelected = [VideoController sharedInstance].arrayOfVideoForFeed[indexPath.row];
+    
     [self bringUpPlayer:self.videoSelected];
     [self.tableView reloadData];
     NSLog(@"Selected Row %ld", (long)indexPath.row);
@@ -141,7 +142,7 @@
 - (void)bringUpPlayer:(Video *)video {
     
     AnnotationVideoPlayerViewViewController *videoVC = [AnnotationVideoPlayerViewViewController new];
-    videoVC.videoAtIndex = index;
+
     [videoVC updateWithVideo:video];
     videoVC.edgesForExtendedLayout = UIRectEdgeNone;
     videoVC.modalPresentationStyle = UIModalPresentationOverCurrentContext;

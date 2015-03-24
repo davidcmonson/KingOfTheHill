@@ -7,7 +7,6 @@
 //
 
 #import "ProfileViewController.h"
-#import "LegalStuff.h"
 #import "UILabel+DynamicLabel.h"
 #import "DocsViewController.h"
 #import <UIKit/UIKit.h>

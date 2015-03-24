@@ -147,11 +147,13 @@ dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
     self.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     
     // Set up record button
-    self.recordButton = [[UIButton alloc]initWithFrame:CGRectMake(90, 500, 150, 50)];
+    self.recordButton = [[UIButton alloc]init];
     // NOTE: Addsubview is at the bottom because it needs to be added AFTER the previewLayer is added
     // Instantiating it here, will make the button hide behind the preview.
-    self.recordButton.backgroundColor = [UIColor alphaRed];
-    self.recordButton.layer.cornerRadius = self.stillButton.layer.cornerRadius = self.cameraButton.layer.cornerRadius = 4;
+//    self.recordButton.backgroundColor = [UIColor cl];
+    self.recordButton.layer.cornerRadius = 15;
+    self.recordButton.layer.borderWidth = 1;
+    self.recordButton.layer.borderColor = [UIColor whiteColor].CGColor;
     // self.recordButton.clipsToBounds = self.stillButton.clipsToBounds = self.cameraButton.clipsToBounds = YES;
     [self.recordButton addTarget:self action:@selector(toggleMovieRecording) forControlEvents:UIControlEventTouchDown];
     
@@ -211,6 +213,24 @@ dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
                 // adds subview AFTER the preview layer is added
                 [self.view addSubview:self.recordButton];
                 [self theSteezyProfile];
+                
+                // autoLayout
+                [self.recordButton setTranslatesAutoresizingMaskIntoConstraints:NO];
+                
+                NSDictionary *recordButton = NSDictionaryOfVariableBindings(_recordButton);
+                
+                NSArray *vertical = [NSLayoutConstraint constraintsWithVisualFormat:@"V:[_recordButton(30)]-(<=25)-|" options:NSLayoutFormatAlignAllCenterX metrics:nil views:recordButton];
+                
+                [self.view addConstraints:vertical];
+                
+                NSLayoutConstraint *centerRecordX = [NSLayoutConstraint constraintWithItem:_recordButton
+                                                                                attribute:NSLayoutAttributeCenterX
+                                                                                relatedBy:NSLayoutRelationEqual
+                                                                                   toItem:self.view
+                                                                                attribute:NSLayoutAttributeCenterX
+                                                                               multiplier:1.0
+                                                                                 constant:0];
+                [self.view addConstraint:centerRecordX];
                 
             });
         }
@@ -1020,7 +1040,7 @@ dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         dispatch_async([strongSelf sessionQueue], ^{
             // Manually restart the session since it must have been stopped due to an error
             [[strongSelf session] startRunning];
-            [[strongSelf recordButton] setTitle:NSLocalizedString(@"Record", @"Recording button record title") forState:UIControlStateNormal];
+            [[strongSelf recordButton] setTitle:NSLocalizedString(@"", @"Recording button record title") forState:UIControlStateNormal];
         });
     }]];
 }
@@ -1175,13 +1195,15 @@ dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             if (isRecording)
             {
                 [[self cameraButton] setEnabled:NO];
-                [[self recordButton] setTitle:NSLocalizedString(@"Stop", @"Recording button stop title") forState:UIControlStateNormal];
+                [[self recordButton] setTitle:NSLocalizedString(@"-", @"Recording button stop title") forState:UIControlStateNormal];
+//                [self.recordButton setBackgroundColor:[UIColor redColor]];
                 [[self recordButton] setEnabled:YES];
             }
             else
             {
-                [[self cameraButton] setEnabled:YES];
-                [[self recordButton] setTitle:NSLocalizedString(@"Record", @"Recording button record title") forState:UIControlStateNormal];
+//                [[self cameraButton] setEnabled:YES];
+                [[self recordButton] setTitle:NSLocalizedString(@"", @"Recording button record title") forState:UIControlStateNormal];
+                [self.recordButton setBackgroundColor:[UIColor clearColor]];
                 [[self recordButton] setEnabled:YES];
             }
         });

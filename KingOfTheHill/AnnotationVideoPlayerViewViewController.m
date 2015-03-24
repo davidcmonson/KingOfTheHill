@@ -16,7 +16,8 @@
 @property (nonatomic, strong) NSURL *videoURL;
 @property (nonatomic, strong) AVPlayer *player;
 
-
+@property (nonatomic, strong) Video *video;
+@property (nonatomic, strong) Vote *vote;
 
 @end
 
@@ -32,6 +33,10 @@
     UISwipeGestureRecognizer *gestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(dismissView)];
     [gestureRecognizer setDirection:(UISwipeGestureRecognizerDirectionDown)];
     [self.view addGestureRecognizer:gestureRecognizer];
+    
+    UITapGestureRecognizer *likeVideo = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(likeVote:)];
+    likeVideo.numberOfTapsRequired = 2;
+    [self.view addGestureRecognizer:likeVideo];
     
     // loads the video and player asynchronously
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
@@ -66,13 +71,47 @@
     
 }
 
+- (void)updateWithVideo:(Video *)video
+{
+    self.video = video;
+}
+
+
+- (void)likeVote:(id)likeGesture
+{
+    Vote *newVote = [Vote object];
+    newVote[@"fromUser"] = [PFUser currentUser];
+    newVote[@"toVideo"] = self.video;
+
+    [newVote saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        if (succeeded) {
+            NSLog(@"vote saved to Video");
+        }
+        else {
+            NSLog(@"%@", error);
+        }
+    }];
+    
+    self.vote = newVote;
+}
+
+- (void)queryForVote
+{
+//    [[VideoController sharedInstance] queryForIndividualVote:self.vote];
+    
+    //[[VideoController sharedInstance] queryForVotesOnVideo:self.video];
+
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"updateCellVotes" object:nil];
+}
 
 -(void)dismissView {
     
     [self dismissViewControllerAnimated:YES completion:^{
         [self.player pause];
+        [self queryForVote];
         [self.view removeFromSuperview];
     }];
+  
 }
 
 - (void)viewDidLoad {
@@ -85,14 +124,6 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
- #pragma mark - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
- }
- */
+
 
 @end

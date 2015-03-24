@@ -9,8 +9,11 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #import "VideoFeedTableViewCell.h"
+@class Video;
 
 @interface VideoFeedDataSource : NSObject <UITableViewDataSource>
+
+@property (nonatomic, strong) Video *video;
 
 -(void)registerTableView:(UITableView *)tableView;
 

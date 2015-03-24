@@ -8,7 +8,7 @@
 
 #import <MapKit/MapKit.h>
 #import <Parse/Parse.h>
-
+@class Vote;
 @class User;
 
 static NSString *videoKey = @"Video";
@@ -20,15 +20,17 @@ static NSString *urlOfThumbnail = @"thumbnail";
 static NSString *titleOfVideoKey = @"name";
 static NSString *userOfVideoKey = @"user";
 static NSString *videoId = @"objectId";
+static NSString *videoVotesKey = @"Votes";
 
-@interface Video : PFObject
+@interface Video : PFObject <PFSubclassing>
 
 // NOTE: PFObjects from Parse must be treated as Dictionaries. You cannot add properties/methods to them, they will just be returned nil
-@property (nonatomic, strong) NSString *nameOfVideo;
+//@property (nonatomic, strong) NSString *nameOfVideo;
 @property (nonatomic, strong) User *ownerOfVideo;
 @property (nonatomic) NSInteger videoAtIndex;
 @property (nonatomic) UIImage *thumbnail;
 @property (nonatomic, strong) NSString *videoFile;
+//@property (nonatomic, strong) NSArray *votes;
 
 
 @property (nonatomic, assign) CLLocationCoordinate2D location;

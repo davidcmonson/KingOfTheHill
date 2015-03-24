@@ -53,6 +53,7 @@
     
     [self.dataSource registerTableView:self.tableView];
     self.tableView.dataSource = _dataSource;
+<<<<<<< HEAD
     
     //    UITapGestureRecognizer *snowboardTapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(goToSnowboardFeed:)];
     //    [snowboardTapGesture setNumberOfTouchesRequired:1];
@@ -68,6 +69,10 @@
     self.refreshControl = refresh;
     
 
+=======
+
+    [self.view addSubview:self.tableView];
+>>>>>>> updated18
 }
 
 -(void)refreshFeed {
@@ -86,12 +91,16 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
 
+<<<<<<< HEAD
     UIImage *image = [VideoController sharedInstance].arrayOfThumbnails[indexPath.row];
     UIImageView *imageViewInCell = [[UIImageView alloc]initWithImage:image];
     imageViewInCell.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.width);
     imageViewInCell.contentMode = UIViewContentModeScaleAspectFit;
 
     return self.view.frame.size.width;
+=======
+    return 428;
+>>>>>>> updated18
 
 }
 
@@ -141,7 +150,6 @@
 - (void)bringUpPlayer:(Video *)video {
     
     AnnotationVideoPlayerViewViewController *videoVC = [AnnotationVideoPlayerViewViewController new];
-    videoVC.videoAtIndex = index;
     [videoVC updateWithVideo:video];
     videoVC.edgesForExtendedLayout = UIRectEdgeNone;
     videoVC.modalPresentationStyle = UIModalPresentationOverCurrentContext;

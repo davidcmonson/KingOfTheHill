@@ -5,7 +5,7 @@
 //  Created by Ryan S. Watt on 3/12/15.
 //  Copyright (c) 2015 David Monson. All rights reserved.
 //
-#import "UIColor+AlphaRed.h"
+
 #import "VideoFeedViewController.h"
 #import "VideoFeedTableViewCell.h"
 #import "VideoFeedDataSource.h"
@@ -18,7 +18,7 @@
 
 @interface VideoFeedViewController () <UITableViewDelegate>
 
-//@property (nonatomic, strong) UITableView *tableView;
+@property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) VideoFeedDataSource *dataSource;
 
 @property (nonatomic, strong) UIButton *headerButton;
@@ -44,54 +44,19 @@
     self.view.backgroundColor = [UIColor blackColor];
     self.dataSource = [VideoFeedDataSource new];
     self.dataSource.dimensionsOfScreen = self.view.frame;
-    //self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height) style:UITableViewStylePlain];
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height) style:UITableViewStylePlain];
     [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     self.tableView.delegate = self;
-    self.tableView.backgroundColor = [UIColor alphaRed];
-    // This allows each cell to "snap" to the top/bottom edges as user scrolls through the cells
-    //self.tableView.pagingEnabled = YES; // DISABLED: snaps weirdly
     
     [self.dataSource registerTableView:self.tableView];
     self.tableView.dataSource = _dataSource;
-    
-    //    UITapGestureRecognizer *snowboardTapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(goToSnowboardFeed:)];
-    //    [snowboardTapGesture setNumberOfTouchesRequired:1];
-    //    [snowboarderView addGestureRecognizer:snowboardTapGesture];
 
-    // Refresh Table View
-    NSAttributedString *title = [[NSAttributedString alloc] initWithString:@"Pull to Refresh"
-                                                                attributes: @{NSForegroundColorAttributeName:[UIColor whiteColor]}];
-    UIRefreshControl *refresh = [UIRefreshControl new];
-    refresh.attributedTitle = [[NSAttributedString alloc] initWithAttributedString:title];
-    refresh.tintColor = [UIColor whiteColor];
-    [refresh addTarget:self action:@selector(refreshFeed) forControlEvents:UIControlEventValueChanged];
-    self.refreshControl = refresh;
-    
-
+    [self.view addSubview:self.tableView];
 }
-
--(void)refreshFeed {
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        [VideoController queryVideosForFeed];
-        [self.tableView reloadData];
-        [self stopRefresh];
-    });
-}
-
-- (void)stopRefresh
-{
-    [self.refreshControl endRefreshing];
-}
-
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
 
-    UIImage *image = [VideoController sharedInstance].arrayOfThumbnails[indexPath.row];
-    UIImageView *imageViewInCell = [[UIImageView alloc]initWithImage:image];
-    imageViewInCell.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.width);
-    imageViewInCell.contentMode = UIViewContentModeScaleAspectFit;
-
-    return self.view.frame.size.width;
+    return 428;
 
 }
 
@@ -141,7 +106,6 @@
 - (void)bringUpPlayer:(Video *)video {
     
     AnnotationVideoPlayerViewViewController *videoVC = [AnnotationVideoPlayerViewViewController new];
-    videoVC.videoAtIndex = index;
     [videoVC updateWithVideo:video];
     videoVC.edgesForExtendedLayout = UIRectEdgeNone;
     videoVC.modalPresentationStyle = UIModalPresentationOverCurrentContext;

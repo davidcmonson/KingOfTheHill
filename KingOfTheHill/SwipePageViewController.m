@@ -12,6 +12,7 @@
 #import "CameraViewController.h"
 #import <ParseUI/ParseUI.h>
 #import "User.h"
+#import "AnnotationVideoPlayerViewViewController.h"
 
 #import "AAPLCameraViewController.h"
 #import "VideoController.h"

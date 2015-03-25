@@ -50,22 +50,23 @@
 
 + (void)queryVideosForFeed {
     NSLog(@"Photos Loading!");
-        // Parse query calls.
-        PFQuery *queryForVideos = [Video query];
-        [queryForVideos findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-            if (error) {
-                NSLog(@"%@", error);
-            }
-            else {
-                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-                    //[VideoController sharedInstance].objectArrayFromParse = objects;
+    // Parse query calls.
+    PFQuery *queryForVideos = [Video query];
+    queryForVideos.limit = 10;
+    [queryForVideos findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if (error) {
+            NSLog(@"%@", error);
+        }
+        else {
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                //[VideoController sharedInstance].objectArrayFromParse = objects;
                 [VideoController sharedInstance].arrayOfVideoForFeed = objects;
                 [[VideoController sharedInstance] populateThumbnailArray:objects];
                 NSLog(@"%ld videos with thumbnails",(long)[VideoController sharedInstance].arrayOfVideoForFeed.count);
                 NSLog(@"Thumbnails Loaded!");
-                }); 
-            }
-        }];
+            });
+        }
+    }];
 }
 
 //+ (void)queryVotesForVideos

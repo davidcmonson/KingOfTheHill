@@ -41,7 +41,6 @@ static void *DeviceWhiteBalanceGainsContext = &DeviceWhiteBalanceGainsContext;
 
 @property (nonatomic, weak) IBOutlet AAPLPreviewView *previewView;
 @property (nonatomic) UIButton *recordButton;
-@property (nonatomic) UIButton *recordingRedCircle;
 @property (nonatomic) IBOutlet UIButton *cameraButton;
 @property (nonatomic) IBOutlet UIButton *stillButton;
 @property (nonatomic,strong) CLLocation *currentLocation;
@@ -155,12 +154,6 @@ static float EXPOSURE_MINIMUM_DURATION = 1.0/1000; // Limit exposure duration to
     // self.recordButton.clipsToBounds = self.stillButton.clipsToBounds = self.cameraButton.clipsToBounds = YES;
     [self.recordButton addTarget:self action:@selector(toggleMovieRecording) forControlEvents:UIControlEventTouchDown];
     
-    // Set up red "Recording" indicator button
-    self.recordingRedCircle = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 30, 30)];
-    self.recordingRedCircle.backgroundColor = [UIColor alphaRed];
-    self.recordingRedCircle.layer.cornerRadius = 15;
-    
-    
     // Create the AVCaptureSession
     AVCaptureSession *session = [[AVCaptureSession alloc] init];
     [session setSessionPreset:AVCaptureSessionPresetMedium];
@@ -216,14 +209,12 @@ static float EXPOSURE_MINIMUM_DURATION = 1.0/1000; // Limit exposure duration to
                 
                 // adds subview AFTER the preview layer is added
                 [self.view addSubview:self.recordButton];
-                [self.view addSubview:self.recordingRedCircle];
                 [self theSteezyProfile];
                 
                 // autoLayout
                 [self.recordButton setTranslatesAutoresizingMaskIntoConstraints:NO];
                 
                 NSDictionary *recordButtonDict = NSDictionaryOfVariableBindings(_recordButton);
-                
                 
                 // Vertical Constraint
                 NSArray *vertical = [NSLayoutConstraint constraintsWithVisualFormat:@"V:[_recordButton(30)]-(<=25)-|" options:NSLayoutFormatAlignAllCenterX metrics:nil views:recordButtonDict];

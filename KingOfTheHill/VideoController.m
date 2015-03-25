@@ -53,6 +53,7 @@
     // Parse query calls.
     PFQuery *queryForVideos = [Video query];
     queryForVideos.limit = 10;
+    [queryForVideos orderByDescending:@"createdAt"];
     [queryForVideos findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (error) {
             NSLog(@"%@", error);

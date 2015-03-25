@@ -12,9 +12,9 @@
 #import "Video.h"
 #import "VideoController.h"
 #import "AnnotationVideoPlayerViewViewController.h"
-//#import "LocationViewController.h"
 #import "LoadingStatus.h"
 #import "SectionHeaderView.h"
+#import "Vote.h"
 
 @interface VideoFeedViewController () <UITableViewDelegate>
 
@@ -22,10 +22,22 @@
 @property (nonatomic, strong) VideoFeedDataSource *dataSource;
 
 @property (nonatomic, strong) UIButton *headerButton;
+@property (nonatomic, strong) Video *videoSelected;
 
 @end
 
 @implementation VideoFeedViewController
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadTable) name:@"updateCellVotes" object:nil];
+    [self reloadTable];
+}
+
+- (void)reloadTable
+{
+    [self.tableView reloadData];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -85,9 +97,11 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    NSLog(@"Selected Row %ld", indexPath.row);
-    [self bringUpPlayer:indexPath.row];
-    
+    self.videoSelected = [Video new];
+    self.videoSelected = [VideoController sharedInstance].arrayOfVideoForFeed[indexPath.row];
+    [self bringUpPlayer:self.videoSelected];
+    [self.tableView reloadData];
+    NSLog(@"Selected Row %ld", (long)indexPath.row);
 }
 
 // add header view
@@ -106,16 +120,16 @@
 //    
 //}
 
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    
-    CGRect frame = CGRectMake(0, 0, tableView.frame.size.width, [SectionHeaderView headerHeight]);
-    
-    SectionHeaderView *sectionHeader = [[SectionHeaderView alloc] initWithFrame:frame];
-    [sectionHeader updateWithUserName:@"Ted" votes:1 andUpVotes:self.headerButton];
-    
-    return sectionHeader;
-    
-}
+//- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+//    
+//    CGRect frame = CGRectMake(0, 0, tableView.frame.size.width, [SectionHeaderView headerHeight]);
+//    
+//    SectionHeaderView *sectionHeader = [[SectionHeaderView alloc] initWithFrame:frame];
+//    [sectionHeader updateWithUserName:@"Ted" votes:1 andUpVotes:self.headerButton];
+//    
+//    return sectionHeader;
+//    
+//}
 
 //
 
@@ -124,37 +138,24 @@
     
 }
 
-- (void)bringUpPlayer:(NSInteger)index {
+- (void)bringUpPlayer:(Video *)video {
     
     AnnotationVideoPlayerViewViewController *videoVC = [AnnotationVideoPlayerViewViewController new];
-    videoVC.videoAtIndex = index;
+    [videoVC updateWithVideo:video];
     videoVC.edgesForExtendedLayout = UIRectEdgeNone;
     videoVC.modalPresentationStyle = UIModalPresentationOverCurrentContext;
-    videoVC.modalTransitionStyle = UIModalTransitionStyleCoverVertical;;
+    videoVC.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
     [self presentViewController:videoVC animated:YES completion:nil];
-    
-    //    if (!UIAccessibilityIsReduceTransparencyEnabled) {
-    //        UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleExtraLight];
-    //        UIVisualEffectView *viewWithBlurredBackground = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
-    //        viewWithBlurredBackground.frame = self.view.bounds;
-    //        [self.view addSubview:viewWithBlurredBackground];
-    
-    //only apply the blur if the user hasn't disabled transparency effects
-    
-    //if you have more UIViews on screen, use insertSubview:belowSubview: to place it underneath the lowest view
-    
-    //add auto layout constraints so that the blur fills the screen upon rotating device
-    //viewWithBlurredBackground.setTranslatesAutoresizingMaskIntoConstraints(false);
-    //        self.view.addConstraint(NSLayoutConstraint(item: blurEffectView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: view, attribute: NSLayoutAttribute.Top, multiplier: 1, constant: 0));
-    //        self.view.addConstraint(NSLayoutConstraint(item: blurEffectView, attribute: NSLayoutAttribute.Bottom, relatedBy: NSLayoutRelation.Equal, toItem: view, attribute: NSLayoutAttribute.Bottom, multiplier: 1, constant: 0));
-    //        self.view.addConstraint(NSLayoutConstraint(item: blurEffectView, attribute: NSLayoutAttribute.Leading, relatedBy: NSLayoutRelation.Equal, toItem: view, attribute: NSLayoutAttribute.Leading, multiplier: 1, constant: 0));
-    //        self.view.addConstraint(NSLayoutConstraint(item: blurEffectView, attribute: NSLayoutAttribute.Trailing, relatedBy: NSLayoutRelation.Equal, toItem: view, attribute: NSLayoutAttribute.Trailing, multiplier: 1, constant: 0));
-    //    } else {
-    //        self.view.backgroundColor = [UIColor blackColor];
-    //    }
 }
 
+- (void)unregisterForNotifications
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"updateCellVotes" object:nil];
+}
 
-
+- (void)dealloc
+{
+    [self unregisterForNotifications];
+}
 
 @end

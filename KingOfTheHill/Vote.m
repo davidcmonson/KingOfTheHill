@@ -10,7 +10,16 @@
 
 @implementation Vote
 
-@dynamic likeVote;
-@dynamic uniqueId;
++ (void)load
+{
+    [self registerSubclass];
+}
+
++ (NSString *)parseClassName
+{
+    return @"Vote";
+}
+
+@dynamic objectId;
 
 @end

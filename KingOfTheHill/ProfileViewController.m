@@ -12,7 +12,7 @@
 #import "DocsViewController.h"
 #import <UIKit/UIKit.h>
 
-@interface ProfileViewController ()
+@interface ProfileViewController () <UITextFieldDelegate>
 
 @end
 
@@ -31,11 +31,6 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    //    UIBlurEffect *effect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleExtraLight];
-    //    UIVisualEffectView *viewWithBlurredBackground = [[UIVisualEffectView alloc] initWithEffect:effect];
-    //    [self.view addSubview:viewWithBlurredBackground];
-    
-    //    [self.view setBackgroundColor:[UIColor colorWithRed:0.5 green:0.5 blue:0.5 alpha:0.5]];
     UIBlurEffect *effect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleExtraLight];
     UIVisualEffectView *viewWithBlurredBackground = [[UIVisualEffectView alloc] initWithEffect:effect];
     [self.view addSubview:viewWithBlurredBackground];

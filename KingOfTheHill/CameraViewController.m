@@ -32,7 +32,6 @@
     [self setHidesBottomBarWhenPushed:YES];
     [self setVideoQuality:UIImagePickerControllerQualityTypeMedium];
     
-    //self.view.backgroundColor = [UIColor blueColor];
     [self theSteezyProfile];
 }
 
@@ -74,17 +73,6 @@
     profileVC.modalTransitionStyle = UIModalTransitionStyleCoverVertical;;
     
     [self.parentViewController presentViewController:profileVC animated:YES completion:nil];
-    
-    //    UIBlurEffect *effect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleExtraLight];
-    
-    //    UIVisualEffectView *viewWithBlurredBackground = [[UIVisualEffectView alloc] initWithEffect:effect];
-    
-    //    [self.view addSubview:viewWithBlurredBackground];
-    
-
-    
-    
-    
 }
 
 

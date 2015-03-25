@@ -9,7 +9,7 @@
 
 #import "LocationViewController.h"
 
-#import "UIColor+AlphaRed.h"
+
 #import "VideoController.h"
 #import "VideoPin.h"
 #import "AnnotationVideoPlayerViewViewController.h"
@@ -21,14 +21,19 @@
 #import <ImageIO/ImageIO.h>
 #import "LoadingStatus.h"
 
+
+
+
 @interface LocationViewController () <MKMapViewDelegate, CLLocationManagerDelegate, MKAnnotation>
 
-@property (nonatomic, strong) NSArray *arrayOfAllVideoPins;
+@property (nonatomic, strong) NSArray *thumbnails;
+@property (nonatomic, strong) MKMapView *allAnnotationsMapView;
 @property (nonatomic, strong) MKMapView *mainMapView;
-
+@property (nonatomic, strong) Video *video;
+@property (nonatomic, strong) UIButton *backButton;
 // Bool to zoom only once on initial launch
 @property (nonatomic) BOOL zoomedOnce;
-@property (nonatomic, strong) AnnotationVideoPlayerViewViewController *videoVC;
+
 
 @end
 
@@ -39,27 +44,13 @@
     self.zoomedOnce = NO;
     [self showMainMapView];
     [self setUpSwipeBar];
-    [self setUpZoomToCurrentLocationButton];
     
     // Required method to notify user if it can use your current location
     // NOTE: Put notification later telling users why it will need to use their location
     if ([self.locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)]) {
         [self.locationManager requestWhenInUseAuthorization];
     }
-}
-
-- (void) setUpZoomToCurrentLocationButton {
-    UIButton *zoom = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    zoom.layer.cornerRadius = 35;
-    zoom.frame = CGRectMake(240, 490, 70, 70);
-    UIImageView *icon = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"homelocation"]];
-    icon.frame = CGRectMake(5, 5, zoom.frame.size.width * 0.85, zoom.frame.size.width * 0.85);
-    //    icon.center = zoom.frame.bounds.center;
-    [zoom addSubview:icon];
-    zoom.tintColor = [UIColor whiteColor];
-    zoom.backgroundColor = [UIColor alphaRed];
-    [self.view addSubview:zoom];
-    [zoom addTarget:self action:@selector(centerAndZoomToLocation:) forControlEvents:UIControlEventTouchUpInside];
+    
 }
 
 // Sets up bar at the bottom of the screen for users to swipe back to the main screen (camera)
@@ -85,10 +76,6 @@
 }
 
 - (void)centerAndZoomToLocation:(CLLocationCoordinate2D)coordinate {
-    // If there's no specified location, it sets coordinate to the user's current location
-    if (CLLocationCoordinate2DIsValid(coordinate)) {
-        coordinate = self.myCoordinates;
-    }
     MKCoordinateRegion adjustedRegionForInitialZoomLevel = [self.mainMapView regionThatFits:MKCoordinateRegionMakeWithDistance(coordinate, 3000 , 3000)];
     adjustedRegionForInitialZoomLevel.center = coordinate;
     [self.mainMapView setRegion:adjustedRegionForInitialZoomLevel animated:YES];
@@ -110,14 +97,14 @@
     self.myCoordinates = self.mainMapView.userLocation.location.coordinate;
     if (self.zoomedOnce == NO) {
         [self centerAndZoomToLocation:self.mainMapView.userLocation.location.coordinate];
-        [self queryForAllVideosNearLocation:self.myCoordinates withinMileRadius:0.5];
+        [self queryForAllVideosNearLocation:self.myCoordinates withinDistance:20000];
         // [self dropPinAtCoordinatesForVideosInVideosArray:[VideoController sharedInstance].arrayOfVideos];
         self.zoomedOnce = YES;
     }
 }
 
 - (void)queryForAllVideosNearLocation:(CLLocationCoordinate2D)coordinates
-                     withinMileRadius:(double)radiusFromLocationInMiles
+                       withinDistance:(double)radiusFromLocationInMeters
 {
     // Parse query calls.
     
@@ -126,31 +113,46 @@
                                                   longitude:coordinates.longitude];
     [queryForVideos whereKey:locationKeyOfVideo
                 nearGeoPoint:geoPoint
-                 withinMiles:radiusFromLocationInMiles];
+            withinKilometers:radiusFromLocationInMeters];
     
     [queryForVideos findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (error) {
             NSLog(@"%@", error);
         }
         else {
-            NSArray *arrayOfVideos = [[NSMutableArray alloc] initWithArray:objects];
+            NSMutableArray *arrayOfVideos = [[NSMutableArray alloc] initWithArray:objects];
             //[self dropPinAtCoordinatesForVideosInVideosArray:arrayOfVideos];
             [VideoController sharedInstance].arrayOfVideosNearLocation = arrayOfVideos;
             [self dropPinAtCoordinatesForVideosInVideosArray:[VideoController sharedInstance].arrayOfVideosNearLocation];
-            NSLog(@"Videos Near Location: %ld",(unsigned long)[VideoController sharedInstance].arrayOfVideosNearLocation.count);
+            NSLog(@"Videos Near Location: %ld",[VideoController sharedInstance].arrayOfVideosNearLocation.count);
         }
     }];
+    
 }
 
-- (void)putVideoPinsInArray {
-    NSArray *arrayOfVideos = [VideoController sharedInstance].arrayOfVideosNearLocation;
-    NSMutableArray *mutableArray = [[NSMutableArray alloc]initWithArray:self.arrayOfAllVideoPins];
-    for (Video *video in arrayOfVideos) {
-        VideoPin *videoPin = [[VideoPin alloc]initWithVideo:video];
-        [mutableArray addObject:videoPin];
+
+- (void)dropPinAtCoordinatesForVideosInVideosArray:(NSArray *)array {
+    
+    for (NSInteger index = 0; index < array.count; index++) {
         
+        // Create video instance to make it easier to read when getting coordinates from it.
+        Video *videoPFObjectAtIndex = array[index];
+        PFGeoPoint *geoPointOfVideo = videoPFObjectAtIndex[locationKeyOfVideo];
+        
+        // Convert GeoPoint to CLLocaation
+        CLLocationCoordinate2D coordinateOfVideo = [self convertPFGeoPointToLocationCoordinate2D:geoPointOfVideo];
+        
+        // Adding annotations
+        VideoPin *videoPin = [[VideoPin alloc]initWithVideo:videoPFObjectAtIndex];
+        
+        //    If you want to clear other pins/annotations this is how to do it
+        //        for (id annotation in self.map.annotations) {
+        //            [self.map removeAnnotation:annotation];
+        //        }
+        
+        //    Drop pin on map
+        [self.mainMapView addAnnotation:videoPin];
     }
-    self.arrayOfAllVideoPins = mutableArray;
 }
 
 -(CLLocationCoordinate2D)convertPFGeoPointToLocationCoordinate2D:(PFGeoPoint *)geoPoint {
@@ -161,6 +163,7 @@
     
     return coordinates;
 }
+
 
 
 #pragma mark Annotations section
@@ -197,30 +200,29 @@
     return nil;
 }
 
-
-
 // user tapped the call out accessory or the "i"/the "bubble" in the annotation
 - (void)mapView:(MKMapView *)aMapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control {
     
-    VideoPin *pinAtAnnotation = view.annotation;
+    // Commented out for when we pass the actual Video info to the annotation.
+    //    VideoPin *annotation = (VideoPin *)view.annotation;
+    //    NSMutableArray *photosToShow = [NSMutableArray arrayWithObject:annotation];
+    //    [photosToShow addObjectsFromArray:annotation.containedAnnotations];
     
-    Video *videoPicked = pinAtAnnotation.currentVideo;
-    
-    NSMutableArray *videosToShow = [NSMutableArray arrayWithObject:pinAtAnnotation];
-    [videosToShow addObjectsFromArray:pinAtAnnotation.containedAnnotations];
-    
-    [self bringUpPlayerWithVideo:videoPicked];
-    
+    // This sets up the detail view for the user selected pin/annotation and presents the view
+    //    AnnotationVideoPlayerViewViewController *viewController = [AnnotationVideoPlayerViewViewController new];
+    //    //    viewController.videoAtIndex =
+    //    viewController.edgesForExtendedLayout = UIRectEdgeNone;
+    [self bringUpPlayer];
+    //[self presentViewController:viewController animated:YES completion:nil];
 }
 
-- (void)bringUpPlayerWithVideo:(Video *)video {
+- (void)bringUpPlayer {
     
-    self.videoVC = [AnnotationVideoPlayerViewViewController new];
-    self.videoVC.currentVideo = video;
-    self.videoVC.edgesForExtendedLayout = UIRectEdgeNone;
-    self.videoVC.modalPresentationStyle = UIModalPresentationOverCurrentContext;
-    self.videoVC.modalTransitionStyle = UIModalTransitionStyleCoverVertical;;
-    [self presentViewController:self.videoVC animated:YES completion:nil];
+    AnnotationVideoPlayerViewViewController *videoVC = [AnnotationVideoPlayerViewViewController new];
+    videoVC.edgesForExtendedLayout = UIRectEdgeNone;
+    videoVC.modalPresentationStyle = UIModalPresentationOverCurrentContext;
+    videoVC.modalTransitionStyle = UIModalTransitionStyleCoverVertical;;
+    [self presentViewController:videoVC animated:YES completion:nil];
     
     if (!UIAccessibilityIsReduceTransparencyEnabled) {
         UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleExtraLight];
@@ -243,7 +245,11 @@
     }
 }
 
-// When the user taps/selects the PIN, updates if there's mutiple pins inside
+
+
+
+
+// When the user taps/selects the Pin, updates if there's mutiple pins inside
 - (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view {
     
     if ([view.annotation isKindOfClass:[VideoPin class]])
@@ -530,6 +536,8 @@
  }
  }
  }
+ 
+ 
  
  //
  //        if ([annotation isKindOfClass:[MKUserLocation class]]) {

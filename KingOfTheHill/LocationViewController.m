@@ -136,8 +136,9 @@
             NSArray *arrayOfVideos = [[NSMutableArray alloc] initWithArray:objects];
             //[self dropPinAtCoordinatesForVideosInVideosArray:arrayOfVideos];
             [VideoController sharedInstance].arrayOfVideosNearLocation = arrayOfVideos;
-            [self dropPinAtCoordinatesForVideosInVideosArray:[VideoController sharedInstance].arrayOfVideosNearLocation];
-            NSLog(@"Videos Near Location: %ld",(unsigned long)[VideoController sharedInstance].arrayOfVideosNearLocation.count);
+            [self putVideoPinsInArray];
+            [self.mainMapView addAnnotations:self.arrayOfAllVideoPins];
+            NSLog(@"Videos Near Location: %ld",[VideoController sharedInstance].arrayOfVideosNearLocation.count);
         }
     }];
 }
@@ -148,8 +149,8 @@
     for (Video *video in arrayOfVideos) {
         VideoPin *videoPin = [[VideoPin alloc]initWithVideo:video];
         [mutableArray addObject:videoPin];
-        
     }
+    [self.mainMapView addAnnotations:mutableArray];
     self.arrayOfAllVideoPins = mutableArray;
 }
 
@@ -216,7 +217,7 @@
 - (void)bringUpPlayerWithVideo:(Video *)video {
     
     self.videoVC = [AnnotationVideoPlayerViewViewController new];
-    self.videoVC.currentVideo = video;
+    [self.videoVC updateWithVideo:video];
     self.videoVC.edgesForExtendedLayout = UIRectEdgeNone;
     self.videoVC.modalPresentationStyle = UIModalPresentationOverCurrentContext;
     self.videoVC.modalTransitionStyle = UIModalTransitionStyleCoverVertical;;

@@ -38,8 +38,6 @@
                 andThumbnail:(PFFile *)thumbnailFile andName:(NSString *)name;
 - (void)userToParse;
 - (void)userToVoteToVideo;
-                andThumbnail:(PFFile *)thumbnailFile;
-
 
 - (void)videoToParseWithFile:(PFFile *)file andLocation:(PFGeoPoint *)currentLocationGeoPoint;
 - (void)saveVoteToParse:(NSString *)vote;

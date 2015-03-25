@@ -40,17 +40,11 @@
     
     // loads the video and player asynchronously
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        PFFile *videoFile;
         
-        if (!self.currentVideo) {
-            self.currentVideo = [VideoController sharedInstance].arrayOfVideoForFeed[self.videoAtIndex];
-            videoFile = self.currentVideo[urlOfVideo];
-        } else {
-            videoFile = self.currentVideo[urlOfVideo];
-        }
+        PFFile *videoFile = self.video[urlOfVideo];
         self.videoURL = [NSURL URLWithString:videoFile.url];
         AVAsset *video = [AVAsset assetWithURL:self.videoURL];
-
+        
         AVPlayerItem *item = [[AVPlayerItem alloc] initWithAsset:video];
         self.player = [AVPlayer playerWithPlayerItem:item];
         

@@ -104,6 +104,16 @@
     NSLog(@"Selected Row %ld", (long)indexPath.row);
 }
 
+- (void)bringUpPlayer:(Video *)video {
+    
+    AnnotationVideoPlayerViewViewController *videoVC = [AnnotationVideoPlayerViewViewController new];
+    [videoVC updateWithVideo:video];
+    videoVC.edgesForExtendedLayout = UIRectEdgeNone;
+    videoVC.modalPresentationStyle = UIModalPresentationOverCurrentContext;
+    videoVC.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+    [self presentViewController:videoVC animated:YES completion:nil];
+}
+
 // add header view
 //- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
 //    return [SectionHeaderView headerHeight];
@@ -136,16 +146,6 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     
-}
-
-- (void)bringUpPlayer:(Video *)video {
-    
-    AnnotationVideoPlayerViewViewController *videoVC = [AnnotationVideoPlayerViewViewController new];
-    [videoVC updateWithVideo:video];
-    videoVC.edgesForExtendedLayout = UIRectEdgeNone;
-    videoVC.modalPresentationStyle = UIModalPresentationOverCurrentContext;
-    videoVC.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
-    [self presentViewController:videoVC animated:YES completion:nil];
 }
 
 - (void)unregisterForNotifications

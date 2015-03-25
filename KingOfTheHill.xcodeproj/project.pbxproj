@@ -183,36 +183,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		498086061ABD708D00F19AE1 /* VideoFeed */ = {
-			isa = PBXGroup;
-			children = (
-				499F2CCA1AB2598B00B3FDDF /* VideoFeedViewController.h */,
-				499F2CCB1AB2598B00B3FDDF /* VideoFeedViewController.m */,
-				12A5C0531AB7771C00DB4ACB /* VideoFeedTableViewCell.h */,
-				12A5C0541AB7771C00DB4ACB /* VideoFeedTableViewCell.m */,
-				12215DC31AB9076900D4E8A2 /* SectionHeaderView.h */,
-				12215DC41AB9076900D4E8A2 /* SectionHeaderView.m */,
-				12215DBD1AB78DC500D4E8A2 /* VideoFeedDataSource.h */,
-				12215DBE1AB78DC500D4E8A2 /* VideoFeedDataSource.m */,
-			);
-			name = VideoFeed;
-			sourceTree = "<group>";
-		};
-		498086071ABD70D000F19AE1 /* ProfileView */ = {
-			isa = PBXGroup;
-			children = (
-				499F2CCD1AB259A800B3FDDF /* ProfileViewController.h */,
-				499F2CCE1AB259A800B3FDDF /* ProfileViewController.m */,
-				12CD76BC1ABCC08200438D7E /* DocsViewController.h */,
-				12CD76BD1ABCC08200438D7E /* DocsViewController.m */,
-				12CD76B61ABBD99300438D7E /* LegalStuff.h */,
-				12CD76B71ABBD99300438D7E /* LegalStuff.m */,
-				12CD76B91ABCA65400438D7E /* UILabel+DynamicLabel.h */,
-				12CD76BA1ABCA65400438D7E /* UILabel+DynamicLabel.m */,
-			);
-			name = ProfileView;
-			sourceTree = "<group>";
-		};
 		49AF60BF1AB8CB0C003C123D /* Camera */ = {
 			isa = PBXGroup;
 			children = (

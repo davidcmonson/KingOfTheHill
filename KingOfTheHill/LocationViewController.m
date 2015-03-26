@@ -142,24 +142,22 @@
         }
         else {
             NSArray *arrayOfVideos = [[NSMutableArray alloc] initWithArray:objects];
-            //[self dropPinAtCoordinatesForVideosInVideosArray:arrayOfVideos];
+            
+            NSMutableArray *mutableArray = [[NSMutableArray alloc]initWithArray:self.arrayOfAllVideoPins];
+            for (Video *video in arrayOfVideos) {
+                VideoPin *videoPin = [[VideoPin alloc]initWithVideo:video];
+                [mutableArray addObject:videoPin];
+            }
+            self.arrayOfAllVideoPins = mutableArray;
+            
             [VideoController sharedInstance].arrayOfVideosNearLocation = arrayOfVideos;
-            [self putVideoPinsInArray];
-            [self.mainMapView addAnnotations:self.arrayOfAllVideoPins];
+
+            [self.mainMapView addAnnotations:mutableArray];
+            
+            
             NSLog(@"Videos Near Location: %ld",[VideoController sharedInstance].arrayOfVideosNearLocation.count);
         }
     }];
-}
-
-- (void)putVideoPinsInArray {
-    NSArray *arrayOfVideos = [VideoController sharedInstance].arrayOfVideosNearLocation;
-    NSMutableArray *mutableArray = [[NSMutableArray alloc]initWithArray:self.arrayOfAllVideoPins];
-    for (Video *video in arrayOfVideos) {
-        VideoPin *videoPin = [[VideoPin alloc]initWithVideo:video];
-        [mutableArray addObject:videoPin];
-    }
-    [self.mainMapView addAnnotations:mutableArray];
-    self.arrayOfAllVideoPins = mutableArray;
 }
 
 -(CLLocationCoordinate2D)convertPFGeoPointToLocationCoordinate2D:(PFGeoPoint *)geoPoint {

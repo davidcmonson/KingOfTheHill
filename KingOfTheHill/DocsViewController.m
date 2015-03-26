@@ -52,7 +52,7 @@
     [backButton setTitle:@"< Back" forState:UIControlStateNormal];
     backButton.titleLabel.font = [UIFont fontWithName:@"BradleyHandITCTT-Bold" size:18];
     [backButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [backButton setTitleColor:[UIColor blueColor] forState:UIControlEventTouchDown];
+    [backButton setTitleColor:[UIColor blueColor] forState:UIControlStateSelected];
     [backButton addTarget:self action:@selector(backToProfile:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:backButton];
 }

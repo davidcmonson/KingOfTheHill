@@ -10,6 +10,7 @@
 #import "LocationViewController.h"
 #import "VideoController.h"
 #import "LoadingStatus.h"
+#import "ThumbAnimation.h"
 
 @interface AnnotationVideoPlayerViewViewController ()
 
@@ -76,6 +77,12 @@
     Vote *newVote = [Vote object];
     newVote[@"fromUser"] = [PFUser currentUser];
     newVote[@"toVideo"] = self.video;
+    
+    ThumbAnimation *thumb = [[ThumbAnimation alloc]initWithFrame:CGRectMake(self.view.frame.size.width / 2 - 50,
+                                                                            self.view.frame.size.height / 2 - 50,
+                                                                            100, 100)];
+    [self.view addSubview:thumb];
+    [thumb removeFromSuperviewWithFade];
     
     [newVote saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         if (succeeded) {

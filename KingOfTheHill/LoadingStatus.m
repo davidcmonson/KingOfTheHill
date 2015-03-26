@@ -69,7 +69,7 @@
     return [[LoadingStatus alloc] initWithFrame:CGRectMake(0.0, 0.0, width, height) withMessage:message];
 }
 
-// Commented out are for adding a label along with the progress bar.
+
 - (id)initWithFrame:(CGRect)frame withMessage:(NSString *)message{
     if (message == nil) {
         self.message = @"";

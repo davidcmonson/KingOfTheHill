@@ -12,6 +12,7 @@
 		12CD76B81ABBD99300438D7E /* LegalStuff.m in Sources */ = {isa = PBXBuildFile; fileRef = 12CD76B71ABBD99300438D7E /* LegalStuff.m */; };
 		12CD76BB1ABCA65400438D7E /* UILabel+DynamicLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 12CD76BA1ABCA65400438D7E /* UILabel+DynamicLabel.m */; };
 		12CD76BE1ABCC08200438D7E /* DocsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 12CD76BD1ABCC08200438D7E /* DocsViewController.m */; };
+		497C604A1AC3E5BF004CDAF0 /* ThumbAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 497C60491AC3E5BF004CDAF0 /* ThumbAnimation.m */; };
 		4980860A1ABDCCBE00F19AE1 /* UIColor+AlphaRed.m in Sources */ = {isa = PBXBuildFile; fileRef = 498086091ABDCCBE00F19AE1 /* UIColor+AlphaRed.m */; };
 		499F2CC31AB241D700B3FDDF /* VideoPin.m in Sources */ = {isa = PBXBuildFile; fileRef = 499F2CC21AB241D700B3FDDF /* VideoPin.m */; };
 		499F2CC91AB2596400B3FDDF /* SwipePageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 499F2CC81AB2596400B3FDDF /* SwipePageViewController.m */; };
@@ -78,6 +79,8 @@
 		12CD76BA1ABCA65400438D7E /* UILabel+DynamicLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UILabel+DynamicLabel.m"; sourceTree = "<group>"; };
 		12CD76BC1ABCC08200438D7E /* DocsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DocsViewController.h; sourceTree = "<group>"; };
 		12CD76BD1ABCC08200438D7E /* DocsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DocsViewController.m; sourceTree = "<group>"; };
+		497C60481AC3E5BF004CDAF0 /* ThumbAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThumbAnimation.h; sourceTree = "<group>"; };
+		497C60491AC3E5BF004CDAF0 /* ThumbAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThumbAnimation.m; sourceTree = "<group>"; };
 		498086081ABDCCBE00F19AE1 /* UIColor+AlphaRed.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+AlphaRed.h"; sourceTree = "<group>"; };
 		498086091ABDCCBE00F19AE1 /* UIColor+AlphaRed.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+AlphaRed.m"; sourceTree = "<group>"; };
 		499F2CC11AB241D700B3FDDF /* VideoPin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoPin.h; sourceTree = "<group>"; };
@@ -224,6 +227,8 @@
 				49CC3CAC1AB550B000672138 /* LoadingStatus.m */,
 				499F2D021AB2852600B3FDDF /* AnnotationVideoPlayerViewViewController.h */,
 				499F2D031AB2852600B3FDDF /* AnnotationVideoPlayerViewViewController.m */,
+				497C60481AC3E5BF004CDAF0 /* ThumbAnimation.h */,
+				497C60491AC3E5BF004CDAF0 /* ThumbAnimation.m */,
 				499F2D081AB3375600B3FDDF /* AVPlayerDemoPlaybackView.h */,
 				499F2D091AB3375600B3FDDF /* AVPlayerDemoPlaybackView.m */,
 			);
@@ -468,6 +473,7 @@
 				49AF60BE1AB8CB06003C123D /* AAPLPreviewView.m in Sources */,
 				49CC3CA31AB368C300672138 /* CameraViewController.m in Sources */,
 				70A189391AAF923E0044F98D /* Video.m in Sources */,
+				497C604A1AC3E5BF004CDAF0 /* ThumbAnimation.m in Sources */,
 				77D6FB301AA92CAC00E97862 /* ViewController.m in Sources */,
 				49F462C51AA9356E00E56599 /* VideoController.m in Sources */,
 				77D6FB2D1AA92CAC00E97862 /* AppDelegate.m in Sources */,

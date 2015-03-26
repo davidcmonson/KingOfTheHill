@@ -176,7 +176,7 @@
             self.arrayOfAllVideoPins = mutableArray;
             
             [VideoController sharedInstance].arrayOfVideosNearLocation = arrayOfVideos;
-            [self.mainMapView addAnnotations:mutableArray];
+            [self.allAnnotationsMapView addAnnotations:mutableArray];
             [self updateVisibleAnnotations];
             
             NSLog(@"Videos Near Location: %ld",[VideoController sharedInstance].arrayOfVideosNearLocation.count);
@@ -241,7 +241,7 @@
             annotationView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:annotationIdentifier];
         
         annotationView.canShowCallout = YES;
-        annotationView.animatesDrop = YES;
+        annotationView.animatesDrop = NO;
         
         // Disabled: Pins show up too fast for custom image to be initialized.
         //annotationView.image = [UIImage imageNamed:@"Skateboarding-50"];
@@ -427,6 +427,9 @@
 
 #pragma mark ---------------------------
 
+
+
+
 - (void)updateVisibleAnnotations {
     
     // This value to controls the number of off screen annotations are displayed.
@@ -437,18 +440,20 @@
     // Adjust this roughly based on the dimensions of your annotations views.
     // Bigger numbers more aggressively coalesce annotations (fewer annotations displayed but better performance).
     // Numbers too small result in overlapping annotations views and too many annotations on screen.
-    static float bucketSize = 60.0;
+    static float bucketSize = 60; //60 default
     
     // find all the annotations in the visible area + a wide margin to avoid popping annotation views in and out while panning the map.
     MKMapRect visibleMapRect = [self.mainMapView visibleMapRect];
-    MKMapRect adjustedVisibleMapRect = MKMapRectInset(visibleMapRect, -marginFactor * visibleMapRect.size.width, -marginFactor * visibleMapRect.size.height);
+    MKMapRect adjustedVisibleMapRect = visibleMapRect; //MKMapRectInset(visibleMapRect, -marginFactor * visibleMapRect.size.width, -marginFactor * visibleMapRect.size.height);
     
     // determine how wide each bucket will be, as a MKMapRect square
     CLLocationCoordinate2D leftCoordinate = [self.mainMapView convertPoint:CGPointZero toCoordinateFromView:self.view];
     CLLocationCoordinate2D rightCoordinate = [self.mainMapView convertPoint:CGPointMake(bucketSize, 0) toCoordinateFromView:self.view];
    double gridSize = MKMapPointForCoordinate(rightCoordinate).x - MKMapPointForCoordinate(leftCoordinate).x;
-    MKMapRect gridMapRect = MKMapRectMake(0, 0, gridSize, gridSize);
+//    MKMapRect gridMapRect = MKMapRectMake(leftCoordinate.latitude, leftCoordinate.longitude, gridSize, gridSize);
     
+    
+    MKMapRect gridMapRect = MKMapRectMake(0, 0, gridSize, gridSize);
 
     
     NSLog(@"%f, %f", leftCoordinate.latitude, leftCoordinate.longitude);

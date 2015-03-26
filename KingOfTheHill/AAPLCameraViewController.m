@@ -14,6 +14,7 @@
 #import <AssetsLibrary/AssetsLibrary.h>
 #import <CoreLocation/CoreLocation.h>
 #import "UIColor+AlphaRed.h"
+#import "LoadingStatus.h"
 
 #import "AAPLPreviewView.h"
 
@@ -47,6 +48,9 @@ static void *DeviceWhiteBalanceGainsContext = &DeviceWhiteBalanceGainsContext;
 @property (nonatomic, strong) PFGeoPoint *currentLocationGeoPoint;
 @property (nonatomic, strong) NSString *name;
 @property (nonatomic, strong) NSString *outputFilePath;
+@property (nonatomic) BOOL foundUserLocation;
+
+
 @property (nonatomic, strong) NSArray *focusModes;
 @property (nonatomic, weak) IBOutlet UIView *manualHUDFocusView;
 @property (nonatomic, weak) IBOutlet UISegmentedControl *focusModeControl;
@@ -123,23 +127,32 @@ static float EXPOSURE_MINIMUM_DURATION = 1.0/1000; // Limit exposure duration to
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
     self.currentLocation = [locations lastObject];
-    //NSLog(@"Current Location: %@",self.currentLocation);
+//    NSLog(@"Current Location: %@",self.currentLocation);
     
+}
+
+- (void)locationManager:(CLLocationManager *)manager
+       didFailWithError:(NSError *)error {
+    NSLog(@"%@", error);
 }
 
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    LoadingStatus *cameraLoad = [LoadingStatus defaultLoadingStatusWithWidth:CGRectGetWidth(self.view.frame)
+                                                                      Height:CGRectGetHeight(self.view.frame)];
+    [self.view addSubview:cameraLoad];
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         locationManager = [[CLLocationManager alloc] init];
         locationManager.delegate = self;
         locationManager.distanceFilter = kCLDistanceFilterNone;
         locationManager.desiredAccuracy = kCLLocationAccuracyBest;
-        
         if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0)
             [locationManager requestWhenInUseAuthorization];
+        self.currentLocation = locationManager.location;
+        NSLog(@"Initital User Location %@", self.currentLocation);
         [locationManager startUpdatingLocation];
     });
     
@@ -231,6 +244,7 @@ static float EXPOSURE_MINIMUM_DURATION = 1.0/1000; // Limit exposure duration to
                                                                                 multiplier:1.0
                                                                                   constant:0];
                 [self.view addConstraint:centerRecordX];
+                [cameraLoad removeFromSuperviewWithFade];
             });
         }
         
@@ -246,7 +260,6 @@ static float EXPOSURE_MINIMUM_DURATION = 1.0/1000; // Limit exposure duration to
         {
             [session addInput:audioDeviceInput];
         }
-        
         
         AVCaptureMovieFileOutput *movieFileOutput = [[AVCaptureMovieFileOutput alloc] init];
         
@@ -396,7 +409,7 @@ static float EXPOSURE_MINIMUM_DURATION = 1.0/1000; // Limit exposure duration to
             
             
             /////////////////////////////////////////////////////////////////////
-            ///attaches location to video when recording ends
+            ///        attaches location to PFGeoPoint when video gets uploaded later
             /////////////////////////////////////////////////////////////////////
             
             AVCaptureMovieFileOutput *aMovieFileOutput = self.movieFileOutput;
@@ -413,15 +426,31 @@ static float EXPOSURE_MINIMUM_DURATION = 1.0/1000; // Limit exposure duration to
             item.keySpace = AVMetadataKeySpaceCommon;
             item.key = AVMetadataCommonKeyLocation;
             
-            CLLocation *location = self.currentLocation;
-            item.value = [NSString stringWithFormat:@"%+08.4lf%+09.4lf/",
-                          location.coordinate.latitude, location.coordinate.longitude];
-            self.currentLocationGeoPoint = [PFGeoPoint geoPointWithLatitude:self.currentLocation.coordinate.latitude
-                                                                  longitude:self.currentLocation.coordinate.longitude];
-            
-            [newMetadataArray addObject:item];
-            
-            aMovieFileOutput.metadata = newMetadataArray;
+            LoadingStatus *loadingStatus = [LoadingStatus defaultLoadingStatusWithWidth:CGRectGetWidth(self.view.frame)
+                                                                                 Height:CGRectGetHeight(self.view.frame)];
+            if (self.currentLocation == nil) {
+                self.foundUserLocation = NO;
+                [self.view addSubview:loadingStatus];
+                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                    
+                    NSLog(@"Getting User Location...");
+                    
+                    [loadingStatus removeFromSuperviewWithFade];
+                    
+                });
+            } else {
+                CLLocation *location = self.currentLocation;
+                item.value = [NSString stringWithFormat:@"%+08.4lf%+09.4lf/",
+                              location.coordinate.latitude, location.coordinate.longitude];
+                self.currentLocationGeoPoint = [PFGeoPoint geoPointWithLatitude:self.currentLocation.coordinate.latitude
+                                                                      longitude:self.currentLocation.coordinate.longitude];
+                
+                [newMetadataArray addObject:item];
+                
+                aMovieFileOutput.metadata = newMetadataArray;
+                
+                self.foundUserLocation = YES;
+            }
             
             /////////////////////////////////////////////////////////////////////
             
@@ -894,26 +923,38 @@ static float EXPOSURE_MINIMUM_DURATION = 1.0/1000; // Limit exposure duration to
     [exporter exportAsynchronouslyWithCompletionHandler:^(void){
         dispatch_async(dispatch_get_main_queue(), ^{
             
-            //Creates the thumbnail
-            AVAssetImageGenerator *generate = [[AVAssetImageGenerator alloc] initWithAsset:[AVAsset assetWithURL:exporter.outputURL]];
-            generate.maximumSize = CGSizeMake(200, 200);
-            generate.apertureMode = AVAssetImageGeneratorApertureModeCleanAperture;
-            generate.appliesPreferredTrackTransform = YES;
-            NSError *err = NULL;
-            CMTime time = CMTimeMake(1, 60);
-            CGImageRef imgRef = [generate copyCGImageAtTime:time actualTime:NULL error:&err];
-            NSLog(@"err==%@, imageRef==%@", err, imgRef);
-            UIImage *thumbnailImage = [[UIImage alloc] initWithCGImage:imgRef];
-            NSData *thumbnail = UIImagePNGRepresentation(thumbnailImage);
-            PFFile *thumbnailFile = [PFFile fileWithName:@"thumbnailFile.png" data:thumbnail contentType:@"image"];
-            //Uploading to Parse
-            NSData *data = [NSData dataWithContentsOfURL:exporter.outputURL];
-            PFFile *file = [PFFile fileWithName:@"Video.mov" data:data contentType:@"mov"];
-            self.name = [PFUser currentUser].username;
-            [[VideoController sharedInstance] videoToParseWithFile:file
-                                                       andLocation:self.currentLocationGeoPoint
-                                                      andThumbnail:thumbnailFile
-                                                           andName:self.name];
+            
+            // If user location has yet to be found, video will not upload
+            if (self.foundUserLocation == YES) {
+                
+                //Creates the thumbnail
+                AVAssetImageGenerator *generate = [[AVAssetImageGenerator alloc] initWithAsset:[AVAsset assetWithURL:exporter.outputURL]];
+                generate.maximumSize = CGSizeMake(200, 200);
+                generate.apertureMode = AVAssetImageGeneratorApertureModeCleanAperture;
+                generate.appliesPreferredTrackTransform = YES;
+                NSError *err = NULL;
+                CMTime time = CMTimeMake(1, 60);
+                CGImageRef imgRef = [generate copyCGImageAtTime:time actualTime:NULL error:&err];
+                NSLog(@"err==%@, imageRef==%@", err, imgRef);
+                UIImage *thumbnailImage = [[UIImage alloc] initWithCGImage:imgRef];
+                NSData *thumbnail = UIImagePNGRepresentation(thumbnailImage);
+                PFFile *thumbnailFile = [PFFile fileWithName:@"thumbnailFile.png" data:thumbnail contentType:@"image"];
+                //Uploading to Parse
+                NSData *data = [NSData dataWithContentsOfURL:exporter.outputURL];
+                PFFile *file = [PFFile fileWithName:@"Video.mov" data:data contentType:@"mov"];
+                self.name = [PFUser currentUser].username;
+                
+                [[VideoController sharedInstance] videoToParseWithFile:file
+                                                           andLocation:self.currentLocationGeoPoint
+                                                          andThumbnail:thumbnailFile
+                                                               andName:self.name];
+                
+                
+            } else {
+                
+                UIAlertView *didNotRecordAlert = [[UIAlertView alloc] initWithTitle:@"No Location Found" message:@"The user location was not found. Video cannot be uploaded to Alpha. Video saved to Camera Roll." delegate:self cancelButtonTitle:@"Okay" otherButtonTitles:nil];
+                [didNotRecordAlert show];
+            }
             
             // Saves to Library
             if (error)
@@ -1187,7 +1228,7 @@ static float EXPOSURE_MINIMUM_DURATION = 1.0/1000; // Limit exposure duration to
     else if (context == RecordingContext)
     {
         BOOL isRecording = [change[NSKeyValueChangeNewKey] boolValue];
-
+        
         dispatch_async(dispatch_get_main_queue(), ^{
             if (isRecording)
             {

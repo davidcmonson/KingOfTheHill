@@ -15,7 +15,7 @@
 @property (nonatomic, strong) UIImageView *photoImageView;
 @property (nonatomic) NSInteger cellHeight;
 @property (nonatomic, strong) UILabel *voteCount;
-@property (nonatomic, strong) NSArray *votes;
+@property (nonatomic, strong) NSArray *arrayOfUsers;
 
 
 

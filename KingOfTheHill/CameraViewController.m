@@ -24,14 +24,17 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+
     LocationViewController *hiddenMapView = [LocationViewController new];
+        NSLog(@"Load 2");
     hiddenMapView.view.hidden = YES;
+        NSLog(@"Load 3");
     self.allowsEditing = YES;
     self.sourceType = UIImagePickerControllerSourceTypeCamera;
     self.mediaTypes = [[NSArray alloc]initWithObjects:(NSString *) kUTTypeMovie, nil];
     [self setHidesBottomBarWhenPushed:YES];
     [self setVideoQuality:UIImagePickerControllerQualityTypeMedium];
-    
+        NSLog(@"Load 4");
     [self theSteezyProfile];
 }
 

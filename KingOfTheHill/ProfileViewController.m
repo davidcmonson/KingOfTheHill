@@ -76,7 +76,6 @@
     [goToDocs setTitle:@"Legal Docs" forState:UIControlStateNormal];
     goToDocs.titleLabel.font = [UIFont fontWithName:@"BradleyHandITCTT-Bold" size:24];
     [goToDocs setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [goToDocs setTitleColor:[UIColor redColor] forState:UIControlEventAllTouchEvents];
     [goToDocs addTarget:self action:@selector(docsPage:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:goToDocs];
 }

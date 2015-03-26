@@ -68,19 +68,16 @@
 
     self.cameraVC = [AAPLCameraViewController new];
     
-    
-
-    //    self.cameraVC = [CameraViewController new]; // OLD CAMERA
     self.videoVC = [VideoFeedViewController new];
     
     self.mapVC = [LocationViewController new];
     
     [VideoController queryVideosForFeed];
+    
     self.pageViewController = [[UIPageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStyleScroll navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal options:nil];
     self.pageViewController.delegate = self;
     self.pageViewController.dataSource = self;
 
-//#warning SET CAMERA TO VIEWCONTROLLER! TURN ON CAMERA HERE!
   [self.pageViewController setViewControllers:@[self.cameraVC] direction:UIPageViewControllerNavigationDirectionForward animated:YES completion:nil];
     
     [self addChildViewController:self.pageViewController];

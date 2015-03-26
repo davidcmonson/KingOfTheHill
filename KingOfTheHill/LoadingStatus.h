@@ -48,8 +48,9 @@
 #import <UIKit/UIKit.h>
 
 @interface LoadingStatus : UIView
++ (id)defaultLoadingStatusWithWidth:(CGFloat)width Height:(CGFloat)height;
++ (id)defaultLoadingStatusWithWidth:(CGFloat)width Height:(CGFloat)height withMessage:(NSString *)message;
 
-+ (id)defaultLoadingStatusWithWidth:(CGFloat)width Height:(CGFloat)height ;
 - (void)removeFromSuperviewWithFade;
 
 @end

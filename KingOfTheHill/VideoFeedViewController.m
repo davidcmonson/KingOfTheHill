@@ -30,13 +30,18 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadTable) name:@"updateCellVotes" object:nil];
     [self reloadTable];
 }
 
 - (void)reloadTable
 {
+    NSLog(@"refreshing...");
     [self.tableView reloadData];
+}
+
+// Dealloc / unregister methods at the bottom
+- (void) registerForNotifications {
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadTable) name:@"updateCellVotes" object:nil];
 }
 
 - (void)viewDidLoad {
@@ -44,12 +49,13 @@
     self.view.backgroundColor = [UIColor blackColor];
     self.dataSource = [VideoFeedDataSource new];
     self.dataSource.dimensionsOfScreen = self.view.frame;
-    //self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height) style:UITableViewStylePlain];
     [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     self.tableView.delegate = self;
     self.tableView.backgroundColor = [UIColor alphaRed];
+    
     // This allows each cell to "snap" to the top/bottom edges as user scrolls through the cells
     //self.tableView.pagingEnabled = YES; // DISABLED: snaps weirdly
+    
     
     [self.dataSource registerTableView:self.tableView];
     self.tableView.dataSource = _dataSource;
@@ -67,13 +73,12 @@
     [refresh addTarget:self action:@selector(refreshFeed) forControlEvents:UIControlEventValueChanged];
     self.refreshControl = refresh;
     
-
 }
 
 -(void)refreshFeed {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         [VideoController queryVideosForFeed];
-        [self.tableView reloadData];
+        [self reloadTable];
         [self stopRefresh];
     });
 }

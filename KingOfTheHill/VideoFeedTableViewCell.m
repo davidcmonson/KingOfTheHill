@@ -22,7 +22,7 @@
         [self.contentView addSubview:_photoImageView];
         _cellHeight = _photoImageView.frame.size.height;
         
-        _votes = [[NSArray alloc] init];
+        _arrayOfUsers = [[NSArray alloc] init];
         
         _voteCount = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 300, 50)];
         _voteCount.textColor = [UIColor whiteColor];
@@ -40,11 +40,7 @@
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:YES];
     
-    // Configure the view for the selected state
 }
 
-//+ (CGFloat)cellHeight {
-//    return 550;
-//}
 
 @end

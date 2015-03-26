@@ -43,32 +43,19 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     VideoFeedTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([VideoFeedTableViewCell class])];
+    if (cell == nil){
+        cell = [VideoFeedTableViewCell new];
+    }
     UIImage *thumbnail = [VideoController sharedInstance].arrayOfThumbnails[indexPath.row];
     cell.photoImageView.image = thumbnail;
     cell.contentView.backgroundColor = [UIColor blackColor];
     
     Video *currentVideo = [VideoController sharedInstance].arrayOfVideoForFeed[indexPath.row];
-    
-    [[VideoController sharedInstance] queryForVotesOnVideo:currentVideo];
-    cell.voteCount.text = [NSString stringWithFormat:@"%lu", [VideoController sharedInstance].voteCount];
-    
-    //    NSMutableArray *mutable = [[NSMutableArray alloc] initWithArray:[VideoController sharedInstance].arrayOfVotes];
-    //
-    //    for (NSArray *array in mutable) {
-    //
-    //        for (NSInteger index = 0; index < array.count; index++)
-    //        {
-    //            NSArray *voteCount = mutable[indexPath.row];
-    //           cell.voteCount.text = [NSString stringWithFormat:@"%ld", (long)voteCount.count];
-    //        }
-    //}
-    
-    //    for (NSArray *array in [VideoController sharedInstance].arrayOfVotes) {
-    //        NSArray *voteCount = array[indexPath.row];
-    //        cell.voteCount.text = [NSString stringWithFormat:@"%ld", (long)voteCount.count];
-    //    }
+    cell.arrayOfUsers = [[VideoController sharedInstance] queryForVotesOnVideo:currentVideo];
+    cell.voteCount.text = [NSString stringWithFormat:@"%lu", cell.arrayOfUsers.count];
     
     return cell;
 }
+
 
 @end

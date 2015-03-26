@@ -27,6 +27,15 @@
     
     //[Parse enableLocalDatastore];
     
+//    [PFCloud callFunctionInBackground:@"hello"
+//                       withParameters:@{}
+//                                block:^(NSString *result, NSError *error) {
+//        if(error) {
+//            NSLog(@"%@", error);
+//        }
+//    }];
+    
+    
     // Initialize Parse.
     [Parse setApplicationId:@"031Fu6MXK8wj6Ntaxi9Z9GLsZILifm8JoMNRzA01"
                   clientKey:@"EPLWlxSsjGDbv7reE1E22smS02PxQbnSJSyrUoC2"];

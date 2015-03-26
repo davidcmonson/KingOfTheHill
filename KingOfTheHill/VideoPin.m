@@ -181,7 +181,7 @@
     if (self) {
         _thumbnailImagePath = video[urlOfThumbnail];
         _title = video[titleOfVideoKey];
-        _subtitle = @"temp subtitle";
+        _subtitle = nil;
         _coordinate = [self convertPFGeoPointToLocationCoordinate2D:video[locationKeyOfVideo]];
         _currentVideo = video;
     }

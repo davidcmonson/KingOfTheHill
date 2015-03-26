@@ -124,9 +124,35 @@
     }
 }
 
+/*
+- (void)populateWorldWithAllPhotoAnnotations {
+    
+    // add a temporary loading view
+    
+    LoadingStatus *loadingStatus = [LoadingStatus defaultLoadingStatusWithWidth:CGRectGetWidth(self.view.frame)];
+    [self.view addSubview:loadingStatus];
+    // loading/processing photos might take a while -- do it asynchronously
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        NSArray *thumbnails = [self thumbnailSetFromPath:@"PhotoSet"];
+        NSAssert(thumbnails != nil, @"No videos found");
+        
+        self.thumbnails = thumbnails;
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [_allAnnotationsMapView addAnnotations:self.thumbnails];
+            [self updateVisibleAnnotations];
+            
+            [loadingStatus removeFromSuperviewWithFade];
+        });
+    });
+}
+*/
+
+
 - (void)queryForAllVideosNearLocation:(CLLocationCoordinate2D)coordinates
                      withinMileRadius:(double)radiusFromLocationInMiles
 {
+    
     // Parse query calls.
     
     PFQuery *queryForVideos = [PFQuery queryWithClassName:@"Video"];
@@ -135,7 +161,6 @@
     [queryForVideos whereKey:locationKeyOfVideo
                 nearGeoPoint:geoPoint
                  withinMiles:radiusFromLocationInMiles];
-    
     [queryForVideos findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (error) {
             NSLog(@"%@", error);
@@ -151,9 +176,8 @@
             self.arrayOfAllVideoPins = mutableArray;
             
             [VideoController sharedInstance].arrayOfVideosNearLocation = arrayOfVideos;
-
             [self.mainMapView addAnnotations:mutableArray];
-            
+            [self updateVisibleAnnotations];
             
             NSLog(@"Videos Near Location: %ld",[VideoController sharedInstance].arrayOfVideosNearLocation.count);
         }
@@ -171,6 +195,7 @@
 
 
 #pragma mark Annotations section
+// Dresses the pin
 // This checks whether annotation is a VideoPin class, if it is, creates a "i" button/ "more info" button
 - (MKAnnotationView *)mapView:(MKMapView *)aMapView viewForAnnotation:(id<MKAnnotation>)annotation
 {
@@ -203,8 +228,6 @@
     
     return nil;
 }
-
-
 
 // user tapped the call out accessory or the "i"/the "bubble" in the annotation
 - (void)mapView:(MKMapView *)aMapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control {
@@ -327,27 +350,7 @@
  return thumbnails;
  }
  
- - (void)populateWorldWithAllPhotoAnnotations {
- 
- // add a temporary loading view
- LoadingStatus *loadingStatus = [LoadingStatus defaultLoadingStatusWithWidth:CGRectGetWidth(self.view.frame)];
- [self.view addSubview:loadingStatus];
- 
- // loading/processing photos might take a while -- do it asynchronously
- dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
- NSArray *thumbnails = [self thumbnailSetFromPath:@"PhotoSet"];
- NSAssert(thumbnails != nil, @"No videos found");
- 
- self.thumbnails = thumbnails;
- 
- dispatch_async(dispatch_get_main_queue(), ^{
- [_allAnnotationsMapView addAnnotations:self.thumbnails];
- [self updateVisibleAnnotations];
- 
- [loadingStatus removeFromSuperviewWithFade];
- });
- });
- }
+
  
  */
 

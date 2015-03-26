@@ -58,11 +58,10 @@
 
 - (void) setUpZoomToCurrentLocationButton {
     UIButton *zoom = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    zoom.layer.cornerRadius = 35;
-    zoom.frame = CGRectMake(240, 490, 70, 70);
+    zoom.layer.cornerRadius = 25;
+    zoom.frame = CGRectMake(self.view.frame.size.width - 65, self.view.frame.size.height - 65, 50, 50);
     UIImageView *icon = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"homelocation"]];
-    icon.frame = CGRectMake(5, 5, zoom.frame.size.width * 0.85, zoom.frame.size.width * 0.85);
-    //    icon.center = zoom.frame.bounds.center;
+    icon.frame = CGRectMake(5, 5, zoom.frame.size.width * 0.75, zoom.frame.size.width * 0.75);
     [zoom addSubview:icon];
     zoom.tintColor = [UIColor whiteColor];
     zoom.backgroundColor = [UIColor alphaRed];
@@ -118,36 +117,11 @@
     self.myCoordinates = self.mainMapView.userLocation.location.coordinate;
     if (self.zoomedOnce == NO) {
         [self centerAndZoomToLocation:self.mainMapView.userLocation.location.coordinate];
-        [self queryForAllVideosNearLocation:self.myCoordinates withinMileRadius:0.5];
+        [self queryForAllVideosNearLocation:self.myCoordinates withinMileRadius:200];
         // [self dropPinAtCoordinatesForVideosInVideosArray:[VideoController sharedInstance].arrayOfVideos];
         self.zoomedOnce = YES;
     }
 }
-
-/*
- - (void)populateWorldWithAllPhotoAnnotations {
- 
- // add a temporary loading view
- 
- LoadingStatus *loadingStatus = [LoadingStatus defaultLoadingStatusWithWidth:CGRectGetWidth(self.view.frame)];
- [self.view addSubview:loadingStatus];
- // loading/processing photos might take a while -- do it asynchronously
- dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
- NSArray *thumbnails = [self thumbnailSetFromPath:@"PhotoSet"];
- NSAssert(thumbnails != nil, @"No videos found");
- 
- self.thumbnails = thumbnails;
- 
- dispatch_async(dispatch_get_main_queue(), ^{
- [_allAnnotationsMapView addAnnotations:self.thumbnails];
- [self updateVisibleAnnotations];
- 
- [loadingStatus removeFromSuperviewWithFade];
- });
- });
- }
- */
-
 
 - (void)queryForAllVideosNearLocation:(CLLocationCoordinate2D)coordinates
                      withinMileRadius:(double)radiusFromLocationInMiles
@@ -244,7 +218,7 @@
         annotationView.animatesDrop = NO;
         
         // Disabled: Pins show up too fast for custom image to be initialized.
-        //annotationView.image = [UIImage imageNamed:@"Skateboarding-50"];
+        annotationView.image = [UIImage imageNamed:@"Skateboarding-50"];
         
         UIButton *disclosureButton = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
         annotationView.rightCalloutAccessoryView = disclosureButton;
@@ -324,65 +298,6 @@
     }
     return _locationManager;
 }
-
-
-/*
- - (NSArray *)thumbnailSetFromPath:(NSString *)path {
- 
- NSMutableArray *thumbnails = [[NSMutableArray alloc] init];
- 
- // The bulk of our work here is going to be loading the files and looking up metadata
- // Thus, we see a major speed improvement by loading multiple photos simultaneously
- //
- NSOperationQueue *queue = [[NSOperationQueue alloc] init];
- [queue setMaxConcurrentOperationCount: 8];
- 
- NSArray *thumbnailPaths = [[NSBundle mainBundle] pathsForResourcesOfType:@"jpg" inDirectory:path];
- for (NSString *thumbnailPath in thumbnailPaths) {
- [queue addOperationWithBlock:^{
- NSData *imageData = [NSData dataWithContentsOfFile:thumbnailPath];
- CGDataProviderRef dataProvider = CGDataProviderCreateWithCFData((CFDataRef)imageData);
- CGImageSourceRef imageSource = CGImageSourceCreateWithDataProvider(dataProvider, NULL);
- NSDictionary *imageProperties = (NSDictionary *)CFBridgingRelease(CGImageSourceCopyPropertiesAtIndex(imageSource,0, NULL));
- 
- // check if the image is geotagged
- NSDictionary *gpsInfo = imageProperties[(NSString *)kCGImagePropertyGPSDictionary];
- if (gpsInfo) {
- CLLocationCoordinate2D coord;
- coord.latitude = [gpsInfo[(NSString *)kCGImagePropertyGPSLatitude] doubleValue];
- coord.longitude = [gpsInfo[(NSString *)kCGImagePropertyGPSLongitude] doubleValue];
- if ([gpsInfo[(NSString *)kCGImagePropertyGPSLatitudeRef] isEqualToString:@"S"])
- coord.latitude = coord.latitude * -1;
- if ([gpsInfo[(NSString *)kCGImagePropertyGPSLongitudeRef] isEqualToString:@"W"])
- coord.longitude = coord.longitude * -1;
- 
- NSString *fileName = [[thumbnailPath lastPathComponent] stringByDeletingPathExtension];
- VideoPin *photo = [[VideoPin alloc] initWithThumbnailImagePath:thumbnailPath title:fileName description:@"test" coordinate:coord];
- 
- @synchronized(thumbnails) {
- [thumbnails addObject:photo];
- }
- }
- 
- if (imageSource)
- CFRelease(imageSource);
- 
- if (imageProperties)
- CFRelease(CFBridgingRetain(imageProperties));
- 
- if (dataProvider)
- CFRelease(dataProvider);
- }];
- }
- 
- [queue waitUntilAllOperationsAreFinished];
- 
- return thumbnails;
- }
- 
- 
- 
- */
 
 
 

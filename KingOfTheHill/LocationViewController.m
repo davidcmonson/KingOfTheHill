@@ -125,28 +125,28 @@
 }
 
 /*
-- (void)populateWorldWithAllPhotoAnnotations {
-    
-    // add a temporary loading view
-    
-    LoadingStatus *loadingStatus = [LoadingStatus defaultLoadingStatusWithWidth:CGRectGetWidth(self.view.frame)];
-    [self.view addSubview:loadingStatus];
-    // loading/processing photos might take a while -- do it asynchronously
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        NSArray *thumbnails = [self thumbnailSetFromPath:@"PhotoSet"];
-        NSAssert(thumbnails != nil, @"No videos found");
-        
-        self.thumbnails = thumbnails;
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [_allAnnotationsMapView addAnnotations:self.thumbnails];
-            [self updateVisibleAnnotations];
-            
-            [loadingStatus removeFromSuperviewWithFade];
-        });
-    });
-}
-*/
+ - (void)populateWorldWithAllPhotoAnnotations {
+ 
+ // add a temporary loading view
+ 
+ LoadingStatus *loadingStatus = [LoadingStatus defaultLoadingStatusWithWidth:CGRectGetWidth(self.view.frame)];
+ [self.view addSubview:loadingStatus];
+ // loading/processing photos might take a while -- do it asynchronously
+ dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+ NSArray *thumbnails = [self thumbnailSetFromPath:@"PhotoSet"];
+ NSAssert(thumbnails != nil, @"No videos found");
+ 
+ self.thumbnails = thumbnails;
+ 
+ dispatch_async(dispatch_get_main_queue(), ^{
+ [_allAnnotationsMapView addAnnotations:self.thumbnails];
+ [self updateVisibleAnnotations];
+ 
+ [loadingStatus removeFromSuperviewWithFade];
+ });
+ });
+ }
+ */
 
 
 - (void)queryForAllVideosNearLocation:(CLLocationCoordinate2D)coordinates
@@ -194,7 +194,37 @@
 }
 
 
+
 #pragma mark Annotations section
+
+- (void)mapView:(MKMapView *)aMapView didAddAnnotationViews:(NSArray *)views {
+    
+    for (MKAnnotationView *annotationView in views) {
+        if (![annotationView.annotation isKindOfClass:[VideoPin class]]) {
+            continue;
+        }
+        
+        VideoPin *annotation = (VideoPin *)annotationView.annotation;
+        
+        if (annotation.clusterAnnotation != nil) {
+            // animate the annotation from it's old container's coordinate, to its actual coordinate
+            CLLocationCoordinate2D actualCoordinate = annotation.coordinate;
+            CLLocationCoordinate2D containerCoordinate = annotation.clusterAnnotation.coordinate;
+            
+            // since it's displayed on the map, it is no longer contained by another annotation,
+            // (We couldn't reset this in -updateVisibleAnnotations because we needed the reference to it here
+            // to get the containerCoordinate)
+            annotation.clusterAnnotation = nil;
+            
+            annotation.coordinate = containerCoordinate;
+            
+            [UIView animateWithDuration:0.3 animations:^{
+                annotation.coordinate = actualCoordinate;
+            }];
+        }
+    }
+}
+
 // Dresses the pin
 // This checks whether annotation is a VideoPin class, if it is, creates a "i" button/ "more info" button
 - (MKAnnotationView *)mapView:(MKMapView *)aMapView viewForAnnotation:(id<MKAnnotation>)annotation
@@ -350,7 +380,7 @@
  return thumbnails;
  }
  
-
+ 
  
  */
 
@@ -416,8 +446,15 @@
     // determine how wide each bucket will be, as a MKMapRect square
     CLLocationCoordinate2D leftCoordinate = [self.mainMapView convertPoint:CGPointZero toCoordinateFromView:self.view];
     CLLocationCoordinate2D rightCoordinate = [self.mainMapView convertPoint:CGPointMake(bucketSize, 0) toCoordinateFromView:self.view];
-    double gridSize = MKMapPointForCoordinate(rightCoordinate).x - MKMapPointForCoordinate(leftCoordinate).x;
+   double gridSize = MKMapPointForCoordinate(rightCoordinate).x - MKMapPointForCoordinate(leftCoordinate).x;
     MKMapRect gridMapRect = MKMapRectMake(0, 0, gridSize, gridSize);
+    
+
+    
+    NSLog(@"%f, %f", leftCoordinate.latitude, leftCoordinate.longitude);
+    NSLog(@"/////////////////  %f, %f", rightCoordinate.latitude, rightCoordinate.longitude);
+    
+    
     
     // condense annotations, with a padding of two squares, around the visibleMapRect
     double startX = floor(MKMapRectGetMinX(adjustedVisibleMapRect) / gridSize) * gridSize;
@@ -481,33 +518,7 @@
 
 
 
-- (void)mapView:(MKMapView *)aMapView didAddAnnotationViews:(NSArray *)views {
-    
-    for (MKAnnotationView *annotationView in views) {
-        if (![annotationView.annotation isKindOfClass:[VideoPin class]]) {
-            continue;
-        }
-        
-        VideoPin *annotation = (VideoPin *)annotationView.annotation;
-        
-        if (annotation.clusterAnnotation != nil) {
-            // animate the annotation from it's old container's coordinate, to its actual coordinate
-            CLLocationCoordinate2D actualCoordinate = annotation.coordinate;
-            CLLocationCoordinate2D containerCoordinate = annotation.clusterAnnotation.coordinate;
-            
-            // since it's displayed on the map, it is no longer contained by another annotation,
-            // (We couldn't reset this in -updateVisibleAnnotations because we needed the reference to it here
-            // to get the containerCoordinate)
-            annotation.clusterAnnotation = nil;
-            
-            annotation.coordinate = containerCoordinate;
-            
-            [UIView animateWithDuration:0.3 animations:^{
-                annotation.coordinate = actualCoordinate;
-            }];
-        }
-    }
-}
+
 
 
 //  // now load all photos from Resources and add them as annotations to the mapview

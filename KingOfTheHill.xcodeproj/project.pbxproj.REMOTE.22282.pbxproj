@@ -225,8 +225,6 @@
 		49F462D01AA93BC300E56599 /* Location */ = {
 			isa = PBXGroup;
 			children = (
-				496F47A31AC5F26C00E773DF /* AnnotationTableViewViewController.h */,
-				496F47A41AC5F26C00E773DF /* AnnotationTableViewViewController.m */,
 				49F462C91AA93A5400E56599 /* Location.h */,
 				49F462CA1AA93A5400E56599 /* Location.m */,
 				708554B81AAE6BA8006DEB38 /* LocationViewController.h */,
@@ -359,9 +357,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		77D6FB231AA92CAC00E97862 /* Alpha */ = {
+		77D6FB231AA92CAC00E97862 /* KingOfTheHill */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 77D6FB471AA92CAC00E97862 /* Build configuration list for PBXNativeTarget "Alpha" */;
+			buildConfigurationList = 77D6FB471AA92CAC00E97862 /* Build configuration list for PBXNativeTarget "KingOfTheHill" */;
 			buildPhases = (
 				77D6FB201AA92CAC00E97862 /* Sources */,
 				77D6FB211AA92CAC00E97862 /* Frameworks */,
@@ -371,7 +369,7 @@
 			);
 			dependencies = (
 			);
-			name = Alpha;
+			name = KingOfTheHill;
 			productName = KingOfTheHill;
 			productReference = 77D6FB241AA92CAC00E97862 /* KingOfTheHill.app */;
 			productType = "com.apple.product-type.application";
@@ -435,7 +433,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				77D6FB231AA92CAC00E97862 /* Alpha */,
+				77D6FB231AA92CAC00E97862 /* KingOfTheHill */,
 				77D6FB3C1AA92CAC00E97862 /* KingOfTheHillTests */,
 			);
 		};
@@ -492,7 +490,6 @@
 				77D6FB2D1AA92CAC00E97862 /* AppDelegate.m in Sources */,
 				12CD76BB1ABCA65400438D7E /* UILabel+DynamicLabel.m in Sources */,
 				77D6FB2A1AA92CAC00E97862 /* main.m in Sources */,
-				496F47A51AC5F26C00E773DF /* AnnotationTableViewViewController.m in Sources */,
 				12CD76BE1ABCC08200438D7E /* DocsViewController.m in Sources */,
 				12D28EAB1AC606600090299E /* CustomSignUpViewController.m in Sources */,
 				708554BA1AAE6BA8006DEB38 /* LocationViewController.m in Sources */,
@@ -513,7 +510,7 @@
 /* Begin PBXTargetDependency section */
 		77D6FB3F1AA92CAC00E97862 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 77D6FB231AA92CAC00E97862 /* Alpha */;
+			target = 77D6FB231AA92CAC00E97862 /* KingOfTheHill */;
 			targetProxy = 77D6FB3E1AA92CAC00E97862 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -700,7 +697,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		77D6FB471AA92CAC00E97862 /* Build configuration list for PBXNativeTarget "Alpha" */ = {
+		77D6FB471AA92CAC00E97862 /* Build configuration list for PBXNativeTarget "KingOfTheHill" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				77D6FB481AA92CAC00E97862 /* Debug */,

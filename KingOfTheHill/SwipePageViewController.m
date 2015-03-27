@@ -13,7 +13,8 @@
 #import <ParseUI/ParseUI.h>
 #import "User.h"
 #import "AnnotationVideoPlayerViewViewController.h"
-
+#import "CustomLoginViewController.h"
+#import "CustomSignUpViewController.h"
 #import "AAPLCameraViewController.h"
 #import "VideoController.h"
 
@@ -40,11 +41,12 @@
     
     if (![PFUser currentUser]) { // No user logged in
         // Create the log in view controller
-        PFLogInViewController *logInViewController = [[PFLogInViewController alloc] init];
+        CustomLoginViewController *logInViewController = [[CustomLoginViewController alloc] init];
         [logInViewController setDelegate:self]; // Set ourselves as the delegate
         
+        
         // Create the sign up view controller
-        PFSignUpViewController *signUpViewController = [[PFSignUpViewController alloc] init];
+        CustomSignUpViewController *signUpViewController = [[CustomSignUpViewController alloc] init];
         [signUpViewController setDelegate:self]; // Set ourselves as the delegate
         
         // Assign our sign up controller to be displayed from the login controller

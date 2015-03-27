@@ -218,7 +218,7 @@
         annotationView.animatesDrop = NO;
         
         // Disabled: Pins show up too fast for custom image to be initialized.
-        annotationView.image = [UIImage imageNamed:@"Skateboarding-50"];
+        // annotationView.image = [UIImage imageNamed:@"Skateboarding-50"];
         
         UIButton *disclosureButton = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
         annotationView.rightCalloutAccessoryView = disclosureButton;
@@ -371,8 +371,8 @@
     MKMapRect gridMapRect = MKMapRectMake(0, 0, gridSize, gridSize);
 
     
-    NSLog(@"%f, %f", leftCoordinate.latitude, leftCoordinate.longitude);
-    NSLog(@"/////////////////  %f, %f", rightCoordinate.latitude, rightCoordinate.longitude);
+    //NSLog(@"%f, %f", leftCoordinate.latitude, leftCoordinate.longitude);
+    //NSLog(@"/////////////////  %f, %f", rightCoordinate.latitude, rightCoordinate.longitude);
     
     
     

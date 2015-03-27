@@ -30,6 +30,7 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
+    [self registerForNotifications];
     [self reloadTable];
 }
 

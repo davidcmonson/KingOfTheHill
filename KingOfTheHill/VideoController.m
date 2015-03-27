@@ -15,7 +15,7 @@
 - (id) init {
     self = [super init];
     if (self) {
-    self.arrayOfArrayAllVotes = [NSMutableArray new];
+        self.arrayOfArrayAllVotes = [NSMutableArray new];
     }
     return self;
 }
@@ -90,39 +90,44 @@
             // add "missing thumbnail" picture if video doesn't have thumbnail
             [mutableArray addObject:[UIImage imageNamed:@"blank"]];
             NSLog(@"added blank thumbnail for video %ld", (long)index);
-        
+            
         } else {
-
-            //[[VideoController sharedInstance] queryForVotesOnVideo:video];
-
+            
+            [[VideoController sharedInstance] queryForVotesOnVideo:video];
+            
             PFFile *thumbnailImage = video[urlOfThumbnail];
             NSURL *urlOfThumbnail = [NSURL URLWithString:thumbnailImage.url];
             NSData *dataOfThumbnail = [NSData dataWithContentsOfURL:urlOfThumbnail];
             UIImage *thumbnail = [UIImage imageWithData:dataOfThumbnail];
             [mutableArray addObject:thumbnail];
+            NSLog(@"Thumbnail %ld", (long)index);
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"updateCellVotes" object:nil];
+            
         }
     }
     [VideoController sharedInstance].arrayOfThumbnails = mutableArray;
 }
 
 
-- (NSArray *)queryForVotesOnVideo:(Video *)object
+- (void)queryForVotesOnVideo:(Video *)object
 {
     NSMutableArray *arrayOfUsers = [NSMutableArray new];
     PFQuery *voteQuery = [Vote query];
     [voteQuery whereKey:@"toVideo" equalTo:object];
-    NSArray *objects = [voteQuery findObjects];
-//    [voteQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-       // if (error) return;
+    //   NSArray *objects = [voteQuery findObjects];
+    [voteQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if (error) return;
         
         for (Vote *vote in objects) {
             // This does not require a network access.
             PFUser *user = [vote objectForKey:@"fromUser"];
             [arrayOfUsers addObject:user];
+            //            NSLog(@"Vote");
         }
-//        [[NSNotificationCenter defaultCenter] postNotificationName:@"updateCellVotes" object:nil];
-    //}];
-    return arrayOfUsers;
+        [[VideoController sharedInstance].arrayOfArrayAllVotes addObject:arrayOfUsers];
+        
+    }];
+    //    return arrayOfUsers;
 }
 
 //- (void)populateArrayOfUsers:(NSArray *)voteArray {
@@ -138,8 +143,8 @@
 //    [VideoController sharedInstance].arrayOfUsersForCurrentVideo = arrayOfUsers;
 //
 //    [[VideoController sharedInstance].arrayOfArrayAllVotes addObject:arrayOfUsers];
-//    
-//    
+//
+//
 //    NSLog(@"%lu", arrayOfUsers.count);
 //    //[[NSNotificationCenter defaultCenter] postNotificationName:@"updateCellVotes" object:nil];
 //}

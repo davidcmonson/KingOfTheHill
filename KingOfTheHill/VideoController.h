@@ -28,7 +28,7 @@
                 andThumbnail:(PFFile *)thumbnailFile andName:(NSString *)name;
 
 + (void)queryVideosForFeed;
-- (NSArray *)queryForVotesOnVideo:(Video *)object;
+- (void)queryForVotesOnVideo:(Video *)object;
 
 
 @end

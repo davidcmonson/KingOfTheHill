@@ -37,7 +37,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
-    return [VideoController sharedInstance].arrayOfVideoForFeed.count;
+    return [VideoController sharedInstance].arrayOfThumbnails.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -50,9 +50,10 @@
     cell.photoImageView.image = thumbnail;
     cell.contentView.backgroundColor = [UIColor blackColor];
     
-    Video *currentVideo = [VideoController sharedInstance].arrayOfVideoForFeed[indexPath.row];
-    cell.arrayOfUsers = [[VideoController sharedInstance] queryForVotesOnVideo:currentVideo];
-    cell.voteCount.text = [NSString stringWithFormat:@"%lu", cell.arrayOfUsers.count];
+    //Video *currentVideo = [VideoController sharedInstance].arrayOfVideoForFeed[indexPath.row];
+    //cell.arrayOfUsers = [[VideoController sharedInstance] queryForVotesOnVideo:currentVideo];
+    NSArray *arrayOfUsersForCell = [VideoController sharedInstance].arrayOfArrayAllVotes[indexPath.row];
+    cell.voteCount.text = [NSString stringWithFormat:@"%lu", arrayOfUsersForCell.count];
     
     return cell;
 }

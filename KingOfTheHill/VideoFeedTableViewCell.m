@@ -24,16 +24,31 @@
         
         _arrayOfUsers = [[NSArray alloc] init];
         
-        _voteCount = [[UILabel alloc] initWithFrame:CGRectMake(self.bounds.size.width - 30, self.bounds.size.height - 34 , 300, 24)];
+        _voteCount = [[UILabel alloc] initWithFrame:CGRectMake(self.bounds.size.width, self.bounds.size.height , 300, 24)];
         _voteCount.textColor = [UIColor whiteColor];
         
-        UIImageView *thumb = [[UIImageView alloc]initWithFrame:CGRectMake(self.bounds.size.width - 60,
-                                                                          self.bounds.size.height - 34,
+        UIImageView *thumb = [[UIImageView alloc]initWithFrame:CGRectMake(self.bounds.size.width - 30,
+                                                                          self.bounds.size.height,
                                                                           24, 24)];
         thumb.image = [UIImage imageNamed:@"thumb24"];
         thumb.tintColor = [UIColor whiteColor];
+        
+        _thumbTabView = [[UIView alloc] initWithFrame:CGRectMake(self.bounds.size.width - 40, self.bounds.size.height-2, 200, 30)];
+        _thumbTabView.backgroundColor = [UIColor colorWithRed:0.1 green:0.1 blue:0.1 alpha:0.3];
+        _thumbTabView.clipsToBounds = YES;
+        _thumbTabView.layer.cornerRadius = 15;
+
+        [_photoImageView addSubview:_thumbTabView];
         [_photoImageView addSubview:thumb];
         [_photoImageView addSubview:_voteCount];
+
+        
+        
+    
+
+        
+        
+        
     }
     return self;
 }

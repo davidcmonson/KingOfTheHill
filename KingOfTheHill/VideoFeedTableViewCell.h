@@ -16,7 +16,7 @@
 @property (nonatomic) NSInteger cellHeight;
 @property (nonatomic, strong) UILabel *voteCount;
 @property (nonatomic, strong) NSArray *arrayOfUsers;
-
+@property (nonatomic, strong) UIView *thumbTabView;
 
 
 @end

@@ -59,10 +59,10 @@
 - (void) setUpZoomToCurrentLocationButton {
     UIButton *zoom = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     zoom.layer.cornerRadius = 25;
-    zoom.frame = CGRectMake(self.view.frame.size.width - 65, self.view.frame.size.height - 65, 50, 50);
-    UIImageView *icon = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"homelocation"]];
-    icon.frame = CGRectMake(5, 5, zoom.frame.size.width * 0.75, zoom.frame.size.width * 0.75);
-    [zoom addSubview:icon];
+    zoom.frame = CGRectMake(self.view.frame.size.width - 80, self.view.frame.size.height - 80, 50, 50);
+    UIImageView *homeIcon = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"homelocation"]];
+    homeIcon.frame = CGRectMake(5, 5, zoom.frame.size.width * 0.75, zoom.frame.size.width * 0.75);
+    [zoom addSubview:homeIcon];
     zoom.tintColor = [UIColor whiteColor];
     zoom.backgroundColor = [UIColor alphaRed];
     [self.view addSubview:zoom];
@@ -73,7 +73,7 @@
 - (void)setUpSwipeBar {
     
     //UIView *thumbTabView = [[UIView alloc] initWithFrame:CGRectMake(-20, 581, 103, 55)];
-    UIView *thumbTabView = [[UIView alloc] initWithFrame:CGRectMake(-20, 500, 103, 55)];
+    UIView *thumbTabView = [[UIView alloc] initWithFrame:CGRectMake(-20, self.view.frame.size.height - 80, 103, 55)];
     thumbTabView.backgroundColor = [UIColor colorWithRed:0.4 green:0.4 blue:0.4 alpha:0.55];
     thumbTabView.clipsToBounds = YES;
     thumbTabView.layer.cornerRadius = thumbTabView.bounds.size.width/4.0f;
@@ -81,7 +81,7 @@
     [self.mainMapView clipsToBounds];
     
     UIButton *cameraButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    cameraButton.frame = CGRectMake(16, 584, 53, 46);
+    cameraButton.frame = CGRectMake(16, self.view.frame.size.height - 78, 46, 46);
     cameraButton.clipsToBounds = YES;
     cameraButton.layer.cornerRadius = cameraButton.bounds.size.width/3.0f;
     cameraButton.layer.borderWidth = 1.0f;

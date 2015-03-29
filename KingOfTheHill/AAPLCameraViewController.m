@@ -126,6 +126,7 @@ static float EXPOSURE_MINIMUM_DURATION = 1.0/1000; // Limit exposure duration to
     return [[self session] isRunning] && [self isDeviceAuthorized];
 }
 
+
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
     self.currentLocation = [locations lastObject];
     self.foundUserLocation = YES;
@@ -429,53 +430,6 @@ static float EXPOSURE_MINIMUM_DURATION = 1.0/1000; // Limit exposure duration to
         }
         else
         {
-            
-            /////////////////////////////////////////////////////////////////////
-            ///        attaches location to PFGeoPoint when video gets uploaded later
-            /////////////////////////////////////////////////////////////////////
-            
-            AVCaptureMovieFileOutput *aMovieFileOutput = self.movieFileOutput;
-            NSArray *existingMetadataArray = aMovieFileOutput.metadata;
-            NSMutableArray *newMetadataArray = nil;
-            if (existingMetadataArray) {
-                newMetadataArray = [existingMetadataArray mutableCopy];
-            }
-            else {
-                newMetadataArray = [[NSMutableArray alloc] init];
-            }
-            
-            AVMutableMetadataItem *item = [[AVMutableMetadataItem alloc] init];
-            item.keySpace = AVMetadataKeySpaceCommon;
-            item.key = AVMetadataCommonKeyLocation;
-            
-            LoadingStatus *loadingStatus = [LoadingStatus defaultLoadingStatusWithWidth:CGRectGetWidth(self.view.frame)
-                                                                                 Height:CGRectGetHeight(self.view.frame)];
-            if (self.currentLocation == nil) {
-                self.foundUserLocation = NO;
-
-                [self.view addSubview:loadingStatus];
-                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-                    
-                    NSLog(@"Getting User Location...");
-                    self.currentLocation = locationManager.location;
-                    [loadingStatus removeFromSuperviewWithFade];
-                    
-                });
-            } else {
-                CLLocation *location = self.currentLocation;
-                item.value = [NSString stringWithFormat:@"%+08.4lf%+09.4lf/",
-                              location.coordinate.latitude, location.coordinate.longitude];
-                self.currentLocationGeoPoint = [PFGeoPoint geoPointWithLatitude:self.currentLocation.coordinate.latitude
-                                                                      longitude:self.currentLocation.coordinate.longitude];
-                
-                [newMetadataArray addObject:item];
-                
-                aMovieFileOutput.metadata = newMetadataArray;
-                
-                self.foundUserLocation = YES;
-            }
-            
-            /////////////////////////////////////////////////////////////////////
             
             [[self movieFileOutput] stopRecording];
             
@@ -946,12 +900,60 @@ static float EXPOSURE_MINIMUM_DURATION = 1.0/1000; // Limit exposure duration to
     [exporter exportAsynchronouslyWithCompletionHandler:^(void){
         dispatch_async(dispatch_get_main_queue(), ^{
             
+            /////////////////////////////////////////////////////////////////////
+            ///        attaches location to PFGeoPoint when video gets uploaded later
+            /////////////////////////////////////////////////////////////////////
+            
+            AVCaptureMovieFileOutput *aMovieFileOutput = self.movieFileOutput;
+            NSArray *existingMetadataArray = aMovieFileOutput.metadata;
+            NSMutableArray *newMetadataArray = nil;
+            if (existingMetadataArray) {
+                newMetadataArray = [existingMetadataArray mutableCopy];
+            }
+            else {
+                newMetadataArray = [[NSMutableArray alloc] init];
+            }
+            
+            AVMutableMetadataItem *item = [[AVMutableMetadataItem alloc] init];
+            item.keySpace = AVMetadataKeySpaceCommon;
+            item.key = AVMetadataCommonKeyLocation;
+            
+            LoadingStatus *loadingStatus = [LoadingStatus defaultLoadingStatusWithWidth:CGRectGetWidth(self.view.frame)
+                                                                                 Height:CGRectGetHeight(self.view.frame)
+                                                                            withMessage:@"Finding Location"];
+            if (self.currentLocation == nil) {
+                self.foundUserLocation = NO;
+                
+                [self.view addSubview:loadingStatus];
+                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                    
+                    NSLog(@"Getting User Location...");
+                    self.currentLocation = locationManager.location;
+                    [loadingStatus removeFromSuperviewWithFade];
+                    
+                });
+            } else {
+                CLLocation *location = self.currentLocation;
+                item.value = [NSString stringWithFormat:@"%+08.4lf%+09.4lf/",
+                              location.coordinate.latitude, location.coordinate.longitude];
+                self.currentLocationGeoPoint = [PFGeoPoint geoPointWithLatitude:self.currentLocation.coordinate.latitude
+                                                                      longitude:self.currentLocation.coordinate.longitude];
+                
+                [newMetadataArray addObject:item];
+                
+                aMovieFileOutput.metadata = newMetadataArray;
+                
+                self.foundUserLocation = YES;
+            }
+            
+            /////////////////////////////////////////////////////////////////////
+            
             self.upLoading = [LoadingStatus defaultLoadingStatusWithWidth:CGRectGetWidth(self.view.frame)
                                                                    Height:CGRectGetHeight(self.view.frame)
                                                               withMessage:@"Uploading..."];
             [self.view addSubview:self.upLoading];
             [self.view bringSubviewToFront:self.upLoading];
-            
+
             
             // If user location has yet to be found, video will not upload
             if (self.foundUserLocation == YES) {

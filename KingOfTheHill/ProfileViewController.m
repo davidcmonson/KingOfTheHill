@@ -58,23 +58,24 @@
 
 
 - (void)alphaLabel {
-    UILabel *alphaLabel = [[UILabel alloc] initWithFrame:CGRectMake(25, 100, 325, 250)];
-    alphaLabel.text = @"Alpha";
+    UILabel *alphaLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.view.frame.size.width /2 - 162.5, self.view.frame.size.height / 2 - 125 , 325, 250)];
+    alphaLabel.text = @"ALPHA";
+    alphaLabel.textAlignment = NSTextAlignmentCenter;
     alphaLabel.textColor = [UIColor whiteColor];
-    alphaLabel.font = [UIFont fontWithName:@"Zapfino" size:72];
+    alphaLabel.font = [UIFont fontWithName:@"Futura-Medium" size:48];
     [self.view addSubview:alphaLabel];
 
 }
 
 -(void)goToDocsButton {
     UIButton *goToDocs = [UIButton buttonWithType:UIButtonTypeCustom];
-    goToDocs.frame = CGRectMake(120, 500, 125, 75);
+    goToDocs.frame = CGRectMake(self.view.frame.size.width /2 - 62.5 , self.view.frame.size.height - 100, 125, 40);
     goToDocs.clipsToBounds = YES;
-    goToDocs.layer.cornerRadius = goToDocs.bounds.size.width/3.0f;
+//    goToDocs.layer.cornerRadius = 5;
     goToDocs.layer.borderWidth = 3.0f;
-    goToDocs.layer.borderColor = [UIColor blueColor].CGColor;
-    [goToDocs setTitle:@"Legal Docs" forState:UIControlStateNormal];
-    goToDocs.titleLabel.font = [UIFont fontWithName:@"BradleyHandITCTT-Bold" size:24];
+    goToDocs.layer.borderColor = [UIColor whiteColor].CGColor;
+    [goToDocs setTitle:@"LEGAL" forState:UIControlStateNormal];
+    goToDocs.titleLabel.font = [UIFont fontWithName:@"Futura-Medium" size:14];
     [goToDocs setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [goToDocs addTarget:self action:@selector(docsPage:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:goToDocs];

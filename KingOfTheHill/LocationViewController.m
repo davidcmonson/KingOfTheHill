@@ -59,9 +59,9 @@
 - (void) setUpZoomToCurrentLocationButton {
     UIButton *zoom = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     zoom.layer.cornerRadius = 25;
-    zoom.frame = CGRectMake(self.view.frame.size.width - 80, self.view.frame.size.height - 80, 50, 50);
+    zoom.frame = CGRectMake(self.view.frame.size.width - 65, self.view.frame.size.height - 80, 50, 50);
     UIImageView *homeIcon = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"homelocation"]];
-    homeIcon.frame = CGRectMake(5, 5, zoom.frame.size.width * 0.75, zoom.frame.size.width * 0.75);
+    homeIcon.frame = CGRectMake(zoom.frame.size.width / 2 - zoom.frame.size.width * 0.75 / 2, zoom.frame.size.height / 2 - zoom.frame.size.height * 0.75 / 2 , zoom.frame.size.width * 0.75, zoom.frame.size.height * 0.75);
     [zoom addSubview:homeIcon];
     zoom.tintColor = [UIColor whiteColor];
     zoom.backgroundColor = [UIColor alphaRed];

@@ -62,7 +62,7 @@
     self.dataSource.dimensionsOfScreen = self.view.frame;
     [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     self.tableView.delegate = self;
-    self.tableView.backgroundColor = [UIColor alphaRed];
+    self.tableView.backgroundColor = [UIColor blackColor];
     
     // This allows each cell to "snap" to the top/bottom edges as user scrolls through the cells
     //self.tableView.pagingEnabled = YES; // DISABLED: snaps weirdly

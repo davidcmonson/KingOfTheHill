@@ -51,10 +51,9 @@
 
 @property (nonatomic, strong) UIActivityIndicatorView *progress;
 @property (nonatomic, strong) UILabel *loadingLabel;
-@property (nonatomic, strong) NSString *message;
+
 
 @end
-
 
 #pragma mark -
 
@@ -78,10 +77,10 @@
     }
     
     if ((self = [super initWithFrame:frame])) {
-        self.backgroundColor = [UIColor colorWithRed:0.0f green:0.0f blue:0.0f alpha:1.0f];
+        //self.backgroundColor = [UIColor colorWithRed:0.0f green:0.0f blue:0.0f alpha:1.0f];
 #warning fix alignment of progressFrame
         NSString *loadingString = self.message;
-        UIFont *loadingFont = [UIFont boldSystemFontOfSize:17.0f];
+        UIFont *loadingFont = [UIFont boldSystemFontOfSize:12.0f];
         NSDictionary *attrs = @{NSFontAttributeName:loadingFont};
         CGRect rect = [loadingString boundingRectWithSize:CGSizeMake(CGRectGetWidth(frame), CGRectGetHeight(frame))
                                                   options:(NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading)
@@ -89,20 +88,37 @@
                                                   context:nil];
         CGSize labelSize = rect.size;
         
-        CGFloat centerX = floor(CGRectGetWidth(frame) / 2.0f); //- (labelSize.width / 2.0f));
-        CGFloat centerY = floor(CGRectGetHeight(frame) / 2.0f); //- (labelSize.height / 2.0f));
+        CGFloat centerX = floor(CGRectGetWidth(frame) / 2.0f); //- (labelSize.width / 2.0f);
+        CGFloat centerY = floor(CGRectGetHeight(frame) / 2.0f); //- (labelSize.height / 2.0f);
         
-        _loadingLabel = [[UILabel alloc] initWithFrame: CGRectMake(centerX, centerY, labelSize.width, labelSize.height)];
-        self.loadingLabel.backgroundColor = [UIColor clearColor];
+        //_loadingLabel = [[UILabel alloc] initWithFrame: CGRectMake(0, centerY + (labelSize.height) * 2, self.frame.size.width, labelSize.height)];
+        _loadingLabel = [[UILabel alloc] initWithFrame: CGRectMake(0, centerY + (labelSize.height) * 1.5, self.frame.size.width, labelSize.height)];
+        
+        //self.loadingLabel.backgroundColor = [UIColor blackColor];
+        self.loadingLabel.layer.cornerRadius = 15;
         self.loadingLabel.textColor = [UIColor whiteColor];
         self.loadingLabel.text = loadingString;
         self.loadingLabel.font = loadingFont;
+        self.loadingLabel.textAlignment = NSTextAlignmentCenter;
         
         _progress = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+        
         CGRect progressFrame = self.progress.frame;
         
-        progressFrame.origin.x = centerX; //- CGRectGetWidth(progressFrame) - 8.0f;
-        progressFrame.origin.y = centerY;
+        progressFrame.size.height = 90;
+        progressFrame.size.width = 90;
+        progressFrame.origin.x = centerX - CGRectGetWidth(progressFrame) / 2;
+        progressFrame.origin.y = centerY - CGRectGetHeight(progressFrame) / 2;;
+        
+        
+        
+        self.progress.layer.cornerRadius = 15;
+        self.progress.backgroundColor = [UIColor blackColor];
+        self.progress.alpha = 0.6;
+        
+        
+        
+        
         
         self.progress.frame = progressFrame;
         

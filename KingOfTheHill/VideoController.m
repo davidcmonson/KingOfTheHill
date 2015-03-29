@@ -43,6 +43,7 @@
     [video saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         
         if (succeeded) {
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"uploadComplete" object:nil];
             NSLog(@"Video has been uploaded to Parse");
             UIAlertView *uploadSuccess = [[UIAlertView alloc] initWithTitle:@"Upload Successful" message:@"Your video was successfully uploaded to Alpha" delegate:self cancelButtonTitle:@"Awesome!" otherButtonTitles: nil];
             [uploadSuccess show];
@@ -96,12 +97,48 @@
             [[VideoController sharedInstance] queryForVotesOnVideo:video];
             
             PFFile *thumbnailImage = video[urlOfThumbnail];
-            NSURL *urlOfThumbnail = [NSURL URLWithString:thumbnailImage.url];
-            NSData *dataOfThumbnail = [NSData dataWithContentsOfURL:urlOfThumbnail];
-            UIImage *thumbnail = [UIImage imageWithData:dataOfThumbnail];
+            
+            
+            
+            // caching
+            NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+            NSString *basePath = ([paths count] > 0) ? [paths objectAtIndex:0] : nil;
+            NSString *cachePath;
+            if (basePath) {
+                cachePath = [NSString stringWithFormat:@"%@/cache", basePath];
+            }
+            if (![[NSFileManager defaultManager] fileExistsAtPath:cachePath isDirectory:nil]) {
+                [[NSFileManager defaultManager] createDirectoryAtPath:cachePath withIntermediateDirectories:NO attributes:nil error:nil];
+            }
+            NSString *thumbnailPath = [NSString stringWithFormat:@"%@/%@", cachePath, thumbnailImage.url.lastPathComponent];
+            
+            UIImage *thumbnail = [UIImage imageWithContentsOfFile:thumbnailPath];
+            
+            // fetch thumbnail
+            if (!thumbnail) {
+                NSURL *urlOfThumbnail = [NSURL URLWithString:thumbnailImage.url];
+                NSData *dataOfThumbnail = [NSData dataWithContentsOfURL:urlOfThumbnail];
+                thumbnail = [UIImage imageWithData:dataOfThumbnail];
+                NSLog(@"Thumbnail %ld", (long)index);
+                NSData *thumbnailData = UIImagePNGRepresentation(thumbnail);
+                
+                // save thumbnail to directory
+                [thumbnailData writeToFile:thumbnailPath atomically:YES];
+                
+                // deletes old thumbnails that exceed cache limit
+                NSArray *contents = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:cachePath error:nil];
+                if (contents.count > 10) {
+                    NSString *oldThumbnailPath = [NSString stringWithFormat:@"%@/%@", cachePath, [contents lastObject]];
+                    [[NSFileManager defaultManager] removeItemAtPath:oldThumbnailPath error:nil];
+                }
+            }
+            
+            
+            
+            
             [mutableArray addObject:thumbnail];
-            NSLog(@"Thumbnail %ld", (long)index);
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"updateCellVotes" object:nil];
+            
+            //[[NSNotificationCenter defaultCenter] postNotificationName:@"updateCellVotes" object:nil];
             
         }
     }

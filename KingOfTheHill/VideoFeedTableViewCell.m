@@ -15,8 +15,8 @@
     
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        self.contentView.backgroundColor = [UIColor blackColor];
-        [self.contentView setBackgroundColor:[UIColor blackColor]];
+        
+        [self.contentView setBackgroundColor:[UIColor clearColor]];
         _photoImageView = [[UIImageView alloc] initWithFrame:CGRectZero];
         _photoImageView.contentMode = UIViewContentModeScaleAspectFit;
         [self.contentView addSubview:_photoImageView];

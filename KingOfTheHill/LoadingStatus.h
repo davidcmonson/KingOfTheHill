@@ -48,6 +48,9 @@
 #import <UIKit/UIKit.h>
 
 @interface LoadingStatus : UIView
+
+@property (nonatomic, strong) NSString *message;
+
 + (id)defaultLoadingStatusWithWidth:(CGFloat)width Height:(CGFloat)height;
 + (id)defaultLoadingStatusWithWidth:(CGFloat)width Height:(CGFloat)height withMessage:(NSString *)message;
 

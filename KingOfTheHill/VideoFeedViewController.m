@@ -23,13 +23,15 @@
 
 @property (nonatomic, strong) UIButton *headerButton;
 @property (nonatomic, strong) Video *videoSelected;
+@property (nonatomic, strong) LoadingStatus *feedLoad;
 
 @end
 
 @implementation VideoFeedViewController
 
-- (void)viewDidAppear:(BOOL)animated
+- (void)viewWillAppear:(BOOL)animated
 {
+    [super viewWillAppear:animated];
     [self registerForNotifications];
     [self reloadTable];
 }
@@ -37,7 +39,10 @@
 - (void)reloadTable
 {
     NSLog(@"refreshing...");
-    [self.tableView reloadData];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.tableView reloadData];
+    [self.feedLoad removeFromSuperviewWithFade];
+    });
 }
 
 // Dealloc / unregister methods at the bottom
@@ -47,7 +52,12 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.view.backgroundColor = [UIColor blackColor];
+    self.feedLoad = [LoadingStatus defaultLoadingStatusWithWidth:CGRectGetWidth(self.view.frame)
+                                                                      Height:CGRectGetHeight(self.view.frame)
+                                                                 withMessage:@"Loading Feed"];
+    [self.view addSubview:self.feedLoad];
+    
+    //self.view.backgroundColor = [UIColor blackColor];
     self.dataSource = [VideoFeedDataSource new];
     self.dataSource.dimensionsOfScreen = self.view.frame;
     [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];

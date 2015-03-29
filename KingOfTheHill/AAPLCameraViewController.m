@@ -49,6 +49,7 @@ static void *DeviceWhiteBalanceGainsContext = &DeviceWhiteBalanceGainsContext;
 @property (nonatomic, strong) NSString *name;
 @property (nonatomic, strong) NSString *outputFilePath;
 @property (nonatomic) BOOL foundUserLocation;
+@property (nonatomic, strong) LoadingStatus *upLoading;
 
 
 @property (nonatomic, strong) NSArray *focusModes;
@@ -136,12 +137,24 @@ static float EXPOSURE_MINIMUM_DURATION = 1.0/1000; // Limit exposure duration to
     NSLog(@"%@", error);
 }
 
+// Registers notification in videoToParse in VideoController
+- (void) registerForNotifications {
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(removeUploadIcon) name:@"uploadComplete" object:nil];
+}
+
+// removes the Uploading Video icon when upload is complete
+- (void) removeUploadIcon {
+    [self.upLoading removeFromSuperviewWithFade];
+}
+
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self registerForNotifications];
     LoadingStatus *cameraLoad = [LoadingStatus defaultLoadingStatusWithWidth:CGRectGetWidth(self.view.frame)
-                                                                      Height:CGRectGetHeight(self.view.frame)];
+                                                                      Height:CGRectGetHeight(self.view.frame)
+                                                                 withMessage:@"Loading Camera"];
     [self.view addSubview:cameraLoad];
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
@@ -312,7 +325,7 @@ static float EXPOSURE_MINIMUM_DURATION = 1.0/1000; // Limit exposure duration to
     dispatch_async([self sessionQueue], ^{
         [[self session] stopRunning];
         
-        //[self removeObservers];
+        // [self removeObservers];
     });
     
     [super viewDidDisappear:animated];
@@ -381,6 +394,7 @@ static float EXPOSURE_MINIMUM_DURATION = 1.0/1000; // Limit exposure duration to
 - (void)toggleMovieRecording
 {
     [[self recordButton] setEnabled:NO];
+    self.recordButton.backgroundColor = [UIColor alphaRed];
     dispatch_async([self sessionQueue], ^{
         if (![[self movieFileOutput] isRecording])
         {
@@ -406,7 +420,6 @@ static float EXPOSURE_MINIMUM_DURATION = 1.0/1000; // Limit exposure duration to
         }
         else
         {
-            
             
             /////////////////////////////////////////////////////////////////////
             ///        attaches location to PFGeoPoint when video gets uploaded later
@@ -453,7 +466,7 @@ static float EXPOSURE_MINIMUM_DURATION = 1.0/1000; // Limit exposure duration to
             }
             
             /////////////////////////////////////////////////////////////////////
-            
+
             [[self movieFileOutput] stopRecording];
             
         }
@@ -915,7 +928,7 @@ static float EXPOSURE_MINIMUM_DURATION = 1.0/1000; // Limit exposure duration to
     NSURL *exportURL = [NSURL fileURLWithPath:exportPath];
     
     AVURLAsset *outputAsset = [[AVURLAsset alloc] initWithURL:outputFileURL options:nil];
-    AVAssetExportSession *exporter = [[AVAssetExportSession alloc] initWithAsset:outputAsset presetName:AVAssetExportPresetHighestQuality] ;
+    AVAssetExportSession *exporter = [[AVAssetExportSession alloc] initWithAsset:outputAsset presetName:AVAssetExportPresetMediumQuality] ;
     exporter.videoComposition = videoComposition;
     exporter.outputURL = exportURL;
     exporter.outputFileType = AVFileTypeQuickTimeMovie;
@@ -923,7 +936,13 @@ static float EXPOSURE_MINIMUM_DURATION = 1.0/1000; // Limit exposure duration to
     [exporter exportAsynchronouslyWithCompletionHandler:^(void){
         dispatch_async(dispatch_get_main_queue(), ^{
             
-            
+            self.upLoading = [LoadingStatus defaultLoadingStatusWithWidth:CGRectGetWidth(self.view.frame)
+                                                                              Height:CGRectGetHeight(self.view.frame)
+                                                                         withMessage:@"Uploading..."];
+            [self.view addSubview:self.upLoading];
+            [self.view bringSubviewToFront:self.upLoading];
+
+
             // If user location has yet to be found, video will not upload
             if (self.foundUserLocation == YES) {
                 
@@ -948,6 +967,7 @@ static float EXPOSURE_MINIMUM_DURATION = 1.0/1000; // Limit exposure duration to
                                                            andLocation:self.currentLocationGeoPoint
                                                           andThumbnail:thumbnailFile
                                                                andName:self.name];
+
                 
                 
             } else {
@@ -1397,5 +1417,16 @@ static float EXPOSURE_MINIMUM_DURATION = 1.0/1000; // Limit exposure duration to
     
     return g;
 }
+
+- (void)unregisterForNotifications
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"updateCellVotes" object:nil];
+}
+
+- (void)dealloc
+{
+    [self unregisterForNotifications];
+}
+
 
 @end

@@ -49,9 +49,11 @@
             [uploadSuccess show];
         }
         else {
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"uploadComplete" object:nil];
             UIAlertView *uploadSuccess = [[UIAlertView alloc] initWithTitle:@"Uh-oh..." message:@"Your video was unable to be uploaded to Alpha" delegate:self cancelButtonTitle:@"Okay" otherButtonTitles: nil];
             [uploadSuccess show];
             NSLog(@"%@", error);
+            
         }
     }];
 }

@@ -36,7 +36,11 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    
+//    if (self.getFromFeed == YES) {
+//        count = [VideoController sharedInstance].arrayOfThumbnails.count;
+//    } else {
+//        count = [VideoController sharedInstance].arrayOfVideosNearLocation.count;
+//    }
     return [VideoController sharedInstance].arrayOfThumbnails.count;
 }
 

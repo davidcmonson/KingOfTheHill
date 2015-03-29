@@ -20,8 +20,9 @@
 -(id)initWithFrame:(CGRect)frame {
     if ((self = [super initWithFrame:frame])) {
         self.backgroundColor = [UIColor clearColor];
-        _thumbImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0,0,100, 100)];
-        _thumbImageView.image = [UIImage imageNamed:@"thumb100"];
+        _thumbImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0,0,150, 86)];
+        _thumbImageView.image = [UIImage imageNamed:@"thumb150"];
+        _thumbImageView.alpha = 0.9;
         [self addSubview:_thumbImageView];
         
     }
@@ -30,7 +31,7 @@
 
 - (void)removeFromSuperviewWithFade {
     
-    [UIView animateWithDuration:0.6f animations:^(void) {
+    [UIView animateWithDuration:1.0f animations:^(void) {
         self.alpha = 0.0f;
     } completion:^(BOOL finished) {
         if (finished) {

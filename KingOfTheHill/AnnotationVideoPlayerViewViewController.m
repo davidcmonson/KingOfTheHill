@@ -78,8 +78,8 @@
     newVote[@"fromUser"] = [PFUser currentUser];
     newVote[@"toVideo"] = self.video;
     
-    ThumbAnimation *thumb = [[ThumbAnimation alloc]initWithFrame:CGRectMake(self.view.frame.size.width / 2 - 50,
-                                                                            self.view.frame.size.height / 2 - 50,
+    ThumbAnimation *thumb = [[ThumbAnimation alloc]initWithFrame:CGRectMake(self.view.frame.size.width / 2 - 75,
+                                                                            self.view.frame.size.height / 2 - 43,
                                                                             100, 100)];
     [self.view addSubview:thumb];
     [thumb removeFromSuperviewWithFade];

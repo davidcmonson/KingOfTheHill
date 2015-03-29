@@ -128,7 +128,8 @@ static float EXPOSURE_MINIMUM_DURATION = 1.0/1000; // Limit exposure duration to
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
     self.currentLocation = [locations lastObject];
-//    NSLog(@"Current Location: %@",self.currentLocation);
+    self.foundUserLocation = YES;
+    //    NSLog(@"Current Location: %@",self.currentLocation);
     
 }
 
@@ -165,7 +166,7 @@ static float EXPOSURE_MINIMUM_DURATION = 1.0/1000; // Limit exposure duration to
         if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0)
             [locationManager requestWhenInUseAuthorization];
         self.currentLocation = locationManager.location;
-        NSLog(@"Initital User Location %@", self.currentLocation);
+        NSLog(@"Initial User Location %@", self.currentLocation);
         [locationManager startUpdatingLocation];
     });
     
@@ -398,6 +399,14 @@ static float EXPOSURE_MINIMUM_DURATION = 1.0/1000; // Limit exposure duration to
     dispatch_async([self sessionQueue], ^{
         if (![[self movieFileOutput] isRecording])
         {
+            // set maximum time a video will record
+            Float64 maximumVideoLength = 10; //Whatever value you wish to set as the maximum, in seconds
+            int32_t preferedTimeScale = 30; //Frames per second
+            
+            CMTime maxDuration = CMTimeMakeWithSeconds(maximumVideoLength, preferedTimeScale);
+            
+            self.movieFileOutput.maxRecordedDuration = maxDuration;
+            
             [self setLockInterfaceRotation:YES];
             
             if ([[UIDevice currentDevice] isMultitaskingSupported])
@@ -443,11 +452,12 @@ static float EXPOSURE_MINIMUM_DURATION = 1.0/1000; // Limit exposure duration to
                                                                                  Height:CGRectGetHeight(self.view.frame)];
             if (self.currentLocation == nil) {
                 self.foundUserLocation = NO;
+
                 [self.view addSubview:loadingStatus];
                 dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
                     
                     NSLog(@"Getting User Location...");
-                    
+                    self.currentLocation = locationManager.location;
                     [loadingStatus removeFromSuperviewWithFade];
                     
                 });
@@ -466,7 +476,7 @@ static float EXPOSURE_MINIMUM_DURATION = 1.0/1000; // Limit exposure duration to
             }
             
             /////////////////////////////////////////////////////////////////////
-
+            
             [[self movieFileOutput] stopRecording];
             
         }
@@ -937,12 +947,12 @@ static float EXPOSURE_MINIMUM_DURATION = 1.0/1000; // Limit exposure duration to
         dispatch_async(dispatch_get_main_queue(), ^{
             
             self.upLoading = [LoadingStatus defaultLoadingStatusWithWidth:CGRectGetWidth(self.view.frame)
-                                                                              Height:CGRectGetHeight(self.view.frame)
-                                                                         withMessage:@"Uploading..."];
+                                                                   Height:CGRectGetHeight(self.view.frame)
+                                                              withMessage:@"Uploading..."];
             [self.view addSubview:self.upLoading];
             [self.view bringSubviewToFront:self.upLoading];
-
-
+            
+            
             // If user location has yet to be found, video will not upload
             if (self.foundUserLocation == YES) {
                 
@@ -967,11 +977,11 @@ static float EXPOSURE_MINIMUM_DURATION = 1.0/1000; // Limit exposure duration to
                                                            andLocation:self.currentLocationGeoPoint
                                                           andThumbnail:thumbnailFile
                                                                andName:self.name];
-
+                
                 
                 
             } else {
-                
+                            [[NSNotificationCenter defaultCenter] postNotificationName:@"uploadComplete" object:nil];
                 UIAlertView *didNotRecordAlert = [[UIAlertView alloc] initWithTitle:@"No Location Found" message:@"The user location was not found. Video cannot be uploaded to Alpha. Video saved to Camera Roll." delegate:self cancelButtonTitle:@"Okay" otherButtonTitles:nil];
                 [didNotRecordAlert show];
             }

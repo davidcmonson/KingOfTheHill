@@ -70,12 +70,15 @@
         }
         else {
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+
                 //[VideoController sharedInstance].objectArrayFromParse = objects;
                 [VideoController sharedInstance].arrayOfVideoForFeed = objects;
                 [[VideoController sharedInstance] populateThumbnailArray:objects];
                 NSLog(@"%ld videos with thumbnails",(long)[VideoController sharedInstance].arrayOfVideoForFeed.count);
                 NSLog(@"Thumbnails Loaded!");
+                                [[NSNotificationCenter defaultCenter] postNotificationName:@"removeLoaderIcon" object:nil];
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"updateCellVotes" object:nil];
+
             });
         }
     }];

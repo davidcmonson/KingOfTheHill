@@ -32,6 +32,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+
     [self registerForNotifications];
     [self reloadTable];
 }
@@ -41,23 +42,34 @@
     NSLog(@"refreshing...");
     dispatch_async(dispatch_get_main_queue(), ^{
         [self.tableView reloadData];
-    [self.feedLoad removeFromSuperviewWithFade];
+
     });
 }
 
+- (void)removeLoader {
+        NSLog(@"removing Loader...");
+        [self.feedLoad removeFromSuperviewWithFade];
+}
+
+
 // Dealloc / unregister methods at the bottom
 - (void) registerForNotifications {
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(removeLoader) name:@"removeLoaderIcon" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadTable) name:@"updateCellVotes" object:nil];
+
 }
+
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     self.feedLoad = [LoadingStatus defaultLoadingStatusWithWidth:CGRectGetWidth(self.view.frame)
-                                                                      Height:CGRectGetHeight(self.view.frame)
-                                                                 withMessage:@"Loading Feed"];
+                                                          Height:CGRectGetHeight(self.view.frame)
+                                                     withMessage:@"Loading Feed"];
     [self.view addSubview:self.feedLoad];
     
-    //self.view.backgroundColor = [UIColor blackColor];
+    self.view.backgroundColor = [UIColor blackColor];
     self.dataSource = [VideoFeedDataSource new];
     self.dataSource.dimensionsOfScreen = self.view.frame;
     [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
@@ -74,12 +86,13 @@
     //    UITapGestureRecognizer *snowboardTapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(goToSnowboardFeed:)];
     //    [snowboardTapGesture setNumberOfTouchesRequired:1];
     //    [snowboarderView addGestureRecognizer:snowboardTapGesture];
-
+    
     // Refresh Table View
     NSAttributedString *title = [[NSAttributedString alloc] initWithString:@"Pull to Refresh"
                                                                 attributes: @{NSForegroundColorAttributeName:[UIColor whiteColor]}];
     UIRefreshControl *refresh = [UIRefreshControl new];
     refresh.attributedTitle = [[NSAttributedString alloc] initWithAttributedString:title];
+    refresh.backgroundColor = [UIColor alphaRed];
     refresh.tintColor = [UIColor whiteColor];
     [refresh addTarget:self action:@selector(refreshFeed) forControlEvents:UIControlEventValueChanged];
     self.refreshControl = refresh;
@@ -101,14 +114,14 @@
 
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-
+    
     UIImage *image = [VideoController sharedInstance].arrayOfThumbnails[indexPath.row];
     UIImageView *imageViewInCell = [[UIImageView alloc]initWithImage:image];
     imageViewInCell.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.width);
     imageViewInCell.contentMode = UIViewContentModeScaleAspectFit;
-
+    
     return self.view.frame.size.width;
-
+    
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -136,25 +149,25 @@
 //}
 //
 //- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-//    
+//
 //    CGRect frame = CGRectMake(0, 0, tableView.frame.size.width, [SectionHeaderView headerHeight]);
-//    
+//
 //    SectionHeaderView *sectionHeader = [[SectionHeaderView alloc] initWithFrame:frame];
 //    [sectionHeader updateWithUserName:@"Ted" votes:1 andUpVotes:self.headerButton];
-//    
+//
 //    return sectionHeader;
-//    
+//
 //}
 
 //- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-//    
+//
 //    CGRect frame = CGRectMake(0, 0, tableView.frame.size.width, [SectionHeaderView headerHeight]);
-//    
+//
 //    SectionHeaderView *sectionHeader = [[SectionHeaderView alloc] initWithFrame:frame];
 //    [sectionHeader updateWithUserName:@"Ted" votes:1 andUpVotes:self.headerButton];
-//    
+//
 //    return sectionHeader;
-//    
+//
 //}
 
 //

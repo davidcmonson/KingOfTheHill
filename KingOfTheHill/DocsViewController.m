@@ -12,6 +12,7 @@
 @implementation DocsViewController
 
 -(void)viewDidLoad {
+    [super viewDidLoad];
     [self.view setBackgroundColor:[UIColor colorWithRed:0.1 green:0.1 blue:0.1 alpha:0.8]];
     [self legal];
     [self fakeNavigationView];

@@ -41,11 +41,11 @@
 }
 
 - (void)viewDidLayoutSubviews {
-    [self.logInView.usernameField setFrame:CGRectMake(0, 350, self.view.frame.size.width, 50)];
-    [self.logInView.passwordField setFrame:CGRectMake(0, 400, self.view.frame.size.width, 50)];
-    [self.logInView.passwordForgottenButton setFrame:CGRectMake(0, 460, self.view.frame.size.width, 30)];
-    [self.logInView.logInButton setFrame:CGRectMake(0, 525, self.view.frame.size.width, 75)];
-    [self.logInView.signUpButton setFrame:CGRectMake(0, 600, self.view.frame.size.width, 50)];
+    [self.logInView.usernameField setFrame:CGRectMake(0, self.view.frame.size.height * 0.5, self.view.frame.size.width, 50)];
+    [self.logInView.passwordField setFrame:CGRectMake(0, self.view.frame.size.height * 0.6, self.view.frame.size.width, 50)];
+    [self.logInView.passwordForgottenButton setFrame:CGRectMake(0, self.view.frame.size.height * 0.7, self.view.frame.size.width, 30)];
+    [self.logInView.logInButton setFrame:CGRectMake(0, self.view.frame.size.height * 0.75, self.view.frame.size.width, 75)];
+    [self.logInView.signUpButton setFrame:CGRectMake(0, self.view.frame.size.height * 0.9, self.view.frame.size.width, 50)];
     
 }
 

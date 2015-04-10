@@ -26,6 +26,7 @@
 
 
 - (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:YES];
     // add a temporary loading view
     LoadingStatus *loadingStatus = [LoadingStatus defaultLoadingStatusWithWidth:CGRectGetWidth(self.view.frame)
                                                                          Height:CGRectGetHeight(self.view.frame)];

@@ -38,7 +38,6 @@
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
-    
     if (![PFUser currentUser]) { // No user logged in
         // Create the log in view controller
         CustomLoginViewController *logInViewController = [[CustomLoginViewController alloc] init];
@@ -67,7 +66,6 @@
     
     self.view.backgroundColor = [UIColor blackColor];
     
-
     self.cameraVC = [AAPLCameraViewController new];
     
     self.videoVC = [VideoFeedViewController new];
@@ -79,8 +77,8 @@
     self.pageViewController = [[UIPageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStyleScroll navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal options:nil];
     self.pageViewController.delegate = self;
     self.pageViewController.dataSource = self;
-
-  [self.pageViewController setViewControllers:@[self.cameraVC] direction:UIPageViewControllerNavigationDirectionForward animated:YES completion:nil];
+    
+    [self.pageViewController setViewControllers:@[self.cameraVC] direction:UIPageViewControllerNavigationDirectionForward animated:YES completion:nil];
     
     [self addChildViewController:self.pageViewController];
     [self.pageViewController didMoveToParentViewController:self];
